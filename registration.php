@@ -1,5 +1,7 @@
 <?php
-
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 
 require_once('config.php')
@@ -53,17 +55,17 @@ require_once('config.php')
             $firstname 		= $_POST['firstname'];
             $lastname 		= $_POST['lastname'];
             $email 			= $_POST['email'];
-            $username	= $_POST['username'];
-            $password 		= sha1($_POST['password']);
+            $username	    = $_POST['username'];
+            $password 		= $_POST['password'];
         
-                $sql = "INSERT INTO users (firstname, lastname, email, username, password ) VALUES(?,?,?,?,?)";
-                $stmtinsert = $db->prepare($sql);
-                $result = $stmtinsert->execute([$firstname, $lastname, $email, $username, $password]);
-                if($result){
-                    echo 'Successfully saved.';
-                }else{
-                    echo 'There were erros while saving the data.';
-                }
+            $sql = "INSERT INTO users (firstname, lastname, email, username, password ) VALUES(?,?,?,?,?)";
+            $stmtinsert = $db->prepare($sql);
+            $result = $stmtinsert->execute([$firstname, $lastname, $email, $username, $password]);
+            if($result){
+                echo 'Successfully saved.';
+            }else{
+                echo 'There were erros while saving the data.';
+            }
 
 
         ?>
