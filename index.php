@@ -38,14 +38,37 @@ if (isset($_GET['logout'])) {
 <body>
     <div class="nav">
         <div class="mt-4 ">
-            <div class="btn_logout">
-                <button type="button" name="button" id="logOut" class="btn login_btn">Log Out</button>
-            </div>
+            
+                <button type="button" name="button" id="logOut" class="btn btn_logout">Log Out</button>
+            
         </div>
     </div>
     <div class="container h-50">
         <div class="d-flex justify-content-left form-container">
-            <form action=""></form>
+            <div class="user_card">
+                    <div class="d-flex justify-content-center p-5">
+                        <h3>Availability</h3>
+                    </div>
+                    <div class="d-flex justify-content-center form-container">
+                        <form action="">
+                            <div class="input-group mb-3">
+                                <div class="input-group-append text">
+                                    <p>Monday</p>
+                                </div>
+                                <input type="text" placeholder="Monday" name="username" id="username" class="form-control input_user" required>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="user_card">
+                    <div class="d-flex justify-content-center p-5">
+                        <h3>Wanted days</h3>
+                    </div>
+                    <div class="d-flex justify-content-center form-container">
+
+                    </div>
+                </div>
+
         </div>
                         
     </div>
@@ -53,11 +76,11 @@ if (isset($_GET['logout'])) {
 
 
     <script>
-    $(function() {
-        $('#logOut').click(function() {
-            window.location.href = "index.php?logout=true";
-        })
-    });
+        $(function() {
+            $('#logOut').click(function() {
+                window.location.href = "index.php?logout=true";
+            })
+        });
     </script>
 	<div class="footer">
 		<footer>
