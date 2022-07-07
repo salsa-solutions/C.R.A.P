@@ -51,11 +51,41 @@ if (isset($_GET['logout'])) {
                     </div>
                     <div class="d-flex justify-content-center form-container">
                         <form action="">
-                            <div class="input-group mb-3">
+                            <div class="input-group mb-1">
                                 <div class="input-group-append text">
                                     <p>Monday</p>
                                 </div>
-                                <input type="text" placeholder="Monday" name="username" id="username" class="form-control input_user" required>
+                                <input type="text" placeholder="Monday" name="monday" id="monday" class="form-control form-control-sm input_user " required>
+                            </div>
+                            <div class="input-group mb-1">
+                                <div class="input-group-append text">
+                                    <p>Tuesday</p>
+                                </div>
+                                <input type="text" placeholder="Tuesday" name="tuesday" id="tuesday" class="form-control form-control-sm input_user " required>
+                            </div>
+                            <div class="input-group mb-1">
+                                <div class="input-group-append text">
+                                    <p>Wednesday</p>
+                                </div>
+                                <input type="text" placeholder="Wednesday" name="wednesday" id="wednesday" class="form-control form-control-sm input_user " required>
+                            </div>
+                            <div class="input-group mb-1">
+                                <div class="input-group-append text">
+                                    <p>Thursday</p>
+                                </div>
+                                <input type="text" placeholder="Thursday" name="thursday" id="thursday" class="form-control form-control-sm input_user " required>
+                            </div>
+                            <div class="input-group mb-1">
+                                <div class="input-group-append text">
+                                    <p>Friday</p>
+                                </div>
+                                <input type="text" placeholder="Friday" name="friday" id="friday" class="form-control form-control-sm input_user " required>
+                            </div>
+                            <div class="input-group mb-1">
+                                <div class="input-group-append text">
+                                    <p>Saturday</p>
+                                </div>
+                                <input type="text" placeholder="Saturday" name="saturday" id="saturday" class="form-control form-control-sm input_user " required>
                             </div>
                         </form>
                     </div>
@@ -65,7 +95,44 @@ if (isset($_GET['logout'])) {
                         <h3>Wanted days</h3>
                     </div>
                     <div class="d-flex justify-content-center form-container">
-
+                        <form action="">
+                            <div class="input-group mb-1">
+                                <div class="input-group-append text">
+                                    <p>Monday</p>
+                                </div>
+                                <input type="text" placeholder="Monday" name="monday" id="monday" class="form-control form-control-sm input_user " required>
+                            </div>
+                            <div class="input-group mb-1">
+                                <div class="input-group-append text">
+                                    <p>Tuesday</p>
+                                </div>
+                                <input type="text" placeholder="Tuesday" name="tuesday" id="tuesday" class="form-control form-control-sm input_user " required>
+                            </div>
+                            <div class="input-group mb-1">
+                                <div class="input-group-append text">
+                                    <p>Wednesday</p>
+                                </div>
+                                <input type="text" placeholder="Wednesday" name="wednesday" id="wednesday" class="form-control form-control-sm input_user " required>
+                            </div>
+                            <div class="input-group mb-1">
+                                <div class="input-group-append text">
+                                    <p>Thursday</p>
+                                </div>
+                                <input type="text" placeholder="Thursday" name="thursday" id="thursday" class="form-control form-control-sm input_user " required>
+                            </div>
+                            <div class="input-group mb-1">
+                                <div class="input-group-append text">
+                                    <p>Friday</p>
+                                </div>
+                                <input type="text" placeholder="Friday" name="friday" id="friday" class="form-control form-control-sm input_user " required>
+                            </div>
+                            <div class="input-group mb-1">
+                                <div class="input-group-append text">
+                                    <p>Saturday</p>
+                                </div>
+                                <input type="text" placeholder="Saturday" name="saturday" id="saturday" class="form-control form-control-sm input_user " required>
+                            </div>
+                        </form>
                     </div>
                 </div>
 

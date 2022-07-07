@@ -26,7 +26,7 @@ footer {
 }
 
 .user_card {
-    height: 500px;
+    height: 550px;
     width: 350px;
     margin-top: 10px;
     margin-bottom: auto;
@@ -54,6 +54,10 @@ footer {
     /* position: fixed; */
     text-align: center;
     top: 10%;
-    transform: translate(-50%, -50%);
+    /* transform: translate(-50%, -50%); */
     color: white;
+}
+
+.input-size {
+    width: 100px;
 }
