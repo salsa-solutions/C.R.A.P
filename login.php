@@ -122,7 +122,7 @@ if (isset($_SESSION['userlogin'])) {
                         error: function(data) {
                             Swal.fire(
                                 'Errors',
-                                'there was a error completing the task',
+                                'well... shit',
                                 'error'
                             )
 

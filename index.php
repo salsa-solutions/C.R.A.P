@@ -20,126 +20,178 @@ if (isset($_GET['logout'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
-        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="css/backround.css">
     <link rel="stylesheet" href="css/home.css">
     <title>Home | Capriotti's Regional Attendance Program</title>
 </head>
 
 <body>
+    <?php
+    echo $_SESSION['userlogin'];
+    ?>
     <div class="nav">
         <div class="mt-4 ">
-            
-                <button type="button" name="button" id="logOut" class="btn btn_logout">Log Out</button>
-            
+
+            <button type="button" name="button" id="logOut" class="btn btn_logout">Log Out</button>
+
         </div>
     </div>
     <div class="container h-50">
         <div class="d-flex justify-content-left form-container">
             <div class="user_card">
-                    <div class="d-flex justify-content-center p-5">
-                        <h3>Availability</h3>
-                    </div>
-                    <div class="d-flex justify-content-center form-container">
-                        <form action="">
-                            <div class="input-group mb-1">
-                                <div class="input-group-append text">
-                                    <p>Monday</p>
-                                </div>
-                                <input type="text" placeholder="Monday" name="monday" id="monday" class="form-control form-control-sm input_user " required>
-                            </div>
-                            <div class="input-group mb-1">
-                                <div class="input-group-append text">
-                                    <p>Tuesday</p>
-                                </div>
-                                <input type="text" placeholder="Tuesday" name="tuesday" id="tuesday" class="form-control form-control-sm input_user " required>
-                            </div>
-                            <div class="input-group mb-1">
-                                <div class="input-group-append text">
-                                    <p>Wednesday</p>
-                                </div>
-                                <input type="text" placeholder="Wednesday" name="wednesday" id="wednesday" class="form-control form-control-sm input_user " required>
-                            </div>
-                            <div class="input-group mb-1">
-                                <div class="input-group-append text">
-                                    <p>Thursday</p>
-                                </div>
-                                <input type="text" placeholder="Thursday" name="thursday" id="thursday" class="form-control form-control-sm input_user " required>
-                            </div>
-                            <div class="input-group mb-1">
-                                <div class="input-group-append text">
-                                    <p>Friday</p>
-                                </div>
-                                <input type="text" placeholder="Friday" name="friday" id="friday" class="form-control form-control-sm input_user " required>
-                            </div>
-                            <div class="input-group mb-1">
-                                <div class="input-group-append text">
-                                    <p>Saturday</p>
-                                </div>
-                                <input type="text" placeholder="Saturday" name="saturday" id="saturday" class="form-control form-control-sm input_user " required>
-                            </div>
-                        </form>
-                    </div>
+                <div class="d-flex justify-content-center p-5">
+                    <h3>Availability</h3>
                 </div>
-                <div class="user_card">
-                    <div class="d-flex justify-content-center p-5">
-                        <h3>Wanted days</h3>
-                    </div>
-                    <div class="d-flex justify-content-center form-container">
-                        <form action="">
-                            <div class="input-group mb-1">
-                                <div class="input-group-append text">
-                                    <p>Monday</p>
-                                </div>
-                                <input type="text" placeholder="Monday" name="monday" id="monday" class="form-control form-control-sm input_user " required>
+                <div class="d-flex justify-content-center form-container">
+                    <form action="">
+                        <div class="input-group mb-1">
+                            <div class="input-group-append text">
+                                <p>Monday</p>
                             </div>
-                            <div class="input-group mb-1">
-                                <div class="input-group-append text">
-                                    <p>Tuesday</p>
-                                </div>
-                                <input type="text" placeholder="Tuesday" name="tuesday" id="tuesday" class="form-control form-control-sm input_user " required>
+                            <input type="text" placeholder="Monday" name="monday-avil" id="monday-avil" class="form-control form-control-sm input_user " required>
+                        </div>
+                        <div class="input-group mb-1">
+                            <div class="input-group-append text">
+                                <p>Tuesday</p>
                             </div>
-                            <div class="input-group mb-1">
-                                <div class="input-group-append text">
-                                    <p>Wednesday</p>
-                                </div>
-                                <input type="text" placeholder="Wednesday" name="wednesday" id="wednesday" class="form-control form-control-sm input_user " required>
+                            <input type="text" placeholder="Tuesday" name="tuesday-avil" id="tuesday-avil" class="form-control form-control-sm input_user " required>
+                        </div>
+                        <div class="input-group mb-1">
+                            <div class="input-group-append text">
+                                <p>Wednesday</p>
                             </div>
-                            <div class="input-group mb-1">
-                                <div class="input-group-append text">
-                                    <p>Thursday</p>
-                                </div>
-                                <input type="text" placeholder="Thursday" name="thursday" id="thursday" class="form-control form-control-sm input_user " required>
+                            <input type="text" placeholder="Wednesday" name="wednesday-avil" id="wednesday-avil" class="form-control form-control-sm input_user " required>
+                        </div>
+                        <div class="input-group mb-1">
+                            <div class="input-group-append text">
+                                <p>Thursday</p>
                             </div>
-                            <div class="input-group mb-1">
-                                <div class="input-group-append text">
-                                    <p>Friday</p>
-                                </div>
-                                <input type="text" placeholder="Friday" name="friday" id="friday" class="form-control form-control-sm input_user " required>
+                            <input type="text" placeholder="Thursday" name="thursday-avil" id="thursday-avil" class="form-control form-control-sm input_user " required>
+                        </div>
+                        <div class="input-group mb-1">
+                            <div class="input-group-append text">
+                                <p>Friday</p>
                             </div>
-                            <div class="input-group mb-1">
-                                <div class="input-group-append text">
-                                    <p>Saturday</p>
-                                </div>
-                                <input type="text" placeholder="Saturday" name="saturday" id="saturday" class="form-control form-control-sm input_user " required>
+                            <input type="text" placeholder="Friday" name="friday-avil" id="friday-avil" class="form-control form-control-sm input_user " required>
+                        </div>
+                        <div class="input-group mb-1">
+                            <div class="input-group-append text">
+                                <p>Saturday</p>
                             </div>
-                        </form>
-                    </div>
+                            <input type="text" placeholder="Saturday" name="saturday-avil" id="saturday-avil" class="form-control form-control-sm input_user " required>
+                        </div>
+                        <div class="d-flex justify-content-center mt-3 submit-container">
+                            <button type="button" name="button" id="submit_avil" class="btn submit_btn">submit</button>
+                        </div>
+                    </form>
                 </div>
+            </div>
+            <div class="user_card">
+                <div class="d-flex justify-content-center p-5">
+                    <h3>Wanted days</h3>
+                </div>
+                <div class="d-flex justify-content-center form-container">
+                    <form action="">
+                        <div class="input-group mb-1">
+                            <div class="input-group-append text">
+                                <p>Monday</p>
+                            </div>
+                            <input type="text" placeholder="Monday" name="monday" id="monday" class="form-control form-control-sm input_user " required>
+                        </div>
+                        <div class="input-group mb-1">
+                            <div class="input-group-append text">
+                                <p>Tuesday</p>
+                            </div>
+                            <input type="text" placeholder="Tuesday" name="tuesday" id="tuesday" class="form-control form-control-sm input_user " required>
+                        </div>
+                        <div class="input-group mb-1">
+                            <div class="input-group-append text">
+                                <p>Wednesday</p>
+                            </div>
+                            <input type="text" placeholder="Wednesday" name="wednesday" id="wednesday" class="form-control form-control-sm input_user " required>
+                        </div>
+                        <div class="input-group mb-1">
+                            <div class="input-group-append text">
+                                <p>Thursday</p>
+                            </div>
+                            <input type="text" placeholder="Thursday" name="thursday" id="thursday" class="form-control form-control-sm input_user " required>
+                        </div>
+                        <div class="input-group mb-1">
+                            <div class="input-group-append text">
+                                <p>Friday</p>
+                            </div>
+                            <input type="text" placeholder="Friday" name="friday" id="friday" class="form-control form-control-sm input_user " required>
+                        </div>
+                        <div class="input-group mb-1">
+                            <div class="input-group-append text">
+                                <p>Saturday</p>
+                            </div>
+                            <input type="text" placeholder="Saturday" name="saturday" id="saturday" class="form-control form-control-sm input_user " required>
+                        </div>
+                        <div class="d-flex justify-content-center mt-3 sumbit-container">
+                            <button type="button" name="button" id="sumbit-pref" class="btn sumbit_btn">sumbit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
 
         </div>
-                        
+
     </div>
 
+    <script>
+        $(function() {
+            $('#submit-avil').click(function(e) {
+
+                var valid = this.form.checkValidity();
+
+                if (valid) {
+                    var username = $('#username').val();
+                    var password = $('#password').val();
+                    var date = new Date().toDateString();
+                    var name = 
+
+
+                    e.preventDefault();
+
+                    $.ajax({
+                        type: 'POST',
+                        url: 'jssumbit.php',
+                        data: {
+                            username: username,
+                            password: password
+                        },
+                        success: function(data) {
+                            // alert(data);
+                            if ($.trim(data) === "1") {
+                                setTimeout(' window.location.href =  "index.php"', 1000);
+                            } else {
+                                Swal.fire(
+                                    'Errors',
+                                    data,
+                                    'error'
+                                )
+                            }
+                        },
+                        error: function(data) {
+                            Swal.fire(
+                                'Errors',
+                                'there was a error completing the task',
+                                'error'
+                            )
+
+                        }
+                    });
+                }
+            });
+        });
+    </script>
 
 
     <script>
@@ -149,11 +201,11 @@ if (isset($_GET['logout'])) {
             })
         });
     </script>
-	<div class="footer">
-		<footer>
-			<h1></h1>
-		</footer>
-	</div>
+    <div class="footer">
+        <footer>
+            <h1></h1>
+        </footer>
+    </div>
 </body>
 
 </html>
