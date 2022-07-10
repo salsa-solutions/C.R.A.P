@@ -135,8 +135,11 @@ if (isset($_GET['logout'])) {
                             </div>
                             <input type="text" placeholder="Saturday" name="saturday" id="saturday" class="form-control form-control-sm input_user " required>
                         </div>
+                        <div class="input-group mb-1">
+                            <input type="number" placeholder="Hours" name="hours" id="hours" class="form-control form-control-sm input_user" min=1 max=40 required>
+                        </div>
                         <div class="d-flex justify-content-center mt-3 sumbit-container">
-                            <button type="button" name="button" id="sumbit-pref" class="btn sumbit_btn">sumbit</button>
+                            <button type="button" name="button" id="sumbit-pref" class="btn submit_btn">sumbit</button>
                         </div>
                     </form>
                 </div>
@@ -148,19 +151,47 @@ if (isset($_GET['logout'])) {
 
     <script>
         $(function() {
-            $('#submit-avil').click(function(e) {
+            $('#submit_avil').click(function(e) {
 
                 var valid = this.form.checkValidity();
 
                 if (valid) {
-                    var username = $('#username').val();
-                    var password = $('#password').val();
                     var date = new Date().toDateString();
-                    var name = 
+                    var name = "<?php echo $_SESSION['userlogin']; ?>";
+                    var monday_avil = $('#monday-avil').val();
+                    var tuesday_avil = $('#tuesday-avil').val();
+                    var wednesday_avil = $('#wednesday-avil').val();
+                    var thursday_avil = $('#thursday-avil').val();
+                    var friday_avil = $('#friday-avil').val();
+                    var saturday_avil = $('#saturday-avil').val();
+                    $.ajax({
+                        url: 'add_avil.php',
+                        type: 'POST',
+                        data: {
+                            date: date,
+                            name: name,
+                            monday: monday_avil,
+                            tuesday: tuesday_avil,
+                            wednesday: wednesday_avil,
+                            thursday: thursday_avil,
+                            friday: friday_avil,
+                            saturday: saturday_avil
+                        },
+                        success: function(data) {
+                            alert(data);
+                        },
+                        error: function(data) {
+                            Swal.fire(
+                                'Errors',
+                                'how did you fuck up this bad',
+                                'error'
+                            )
 
-
+                        }
+                    });
+                    console.log(name);
                     e.preventDefault();
-
+                    
                     $.ajax({
                         type: 'POST',
                         url: 'jssumbit.php',
