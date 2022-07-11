@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jul 06, 2022 at 10:21 PM
+-- Generation Time: Jul 11, 2022 at 05:31 AM
 -- Server version: 10.3.34-MariaDB-0ubuntu0.20.04.1
 -- PHP Version: 7.4.3
 
@@ -30,18 +30,14 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `pref_day` (
   `id` int(100) NOT NULL,
-  `monday-start` varchar(4) NOT NULL,
-  `monday-end` varchar(4) NOT NULL,
-  `tuesday-start` varchar(4) NOT NULL,
-  `tuesday-end` varchar(4) NOT NULL,
-  `wednesday-start` varchar(4) NOT NULL,
-  `wednesday-end` varchar(4) NOT NULL,
-  `thursday-start` varchar(4) NOT NULL,
-  `thursday-end` varchar(4) NOT NULL,
-  `friday-start` varchar(4) NOT NULL,
-  `friday-end` varchar(4) NOT NULL,
-  `saturday-start` varchar(4) NOT NULL,
-  `saturday-end` varchar(4) NOT NULL,
+  `date` varchar(100) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `monday` varchar(10) NOT NULL,
+  `tuesday` varchar(10) NOT NULL,
+  `wednesday` varchar(10) NOT NULL,
+  `thursday` varchar(10) NOT NULL,
+  `friday` varchar(10) NOT NULL,
+  `saturday` varchar(10) NOT NULL,
   `hours` int(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -63,7 +59,7 @@ ALTER TABLE `pref_day`
 -- AUTO_INCREMENT for table `pref_day`
 --
 ALTER TABLE `pref_day`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

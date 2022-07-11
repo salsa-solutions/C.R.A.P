@@ -1,19 +1,28 @@
 <?php
-require_once('config.php')
+require_once('config.php');
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 ?>
 
 
-<?php
+<?php  
+    $currentDate = new DateTime();
+    
     if(isset($_POST)){
-        $firstname         = $_POST['firstname'];
-        $lastname         = $_POST['lastname'];
-        $email             = $_POST['email'];
-        $username        = $_POST['username'];
-        $password         = sha1($_POST['password']);
+        $date              = $currentDate->format('Y-m-d H:i:s');
+        $name              = $_POST['name'];
+        $monday            = $_POST['monday'];
+        $tuesday           = $_POST['tuesday'];
+        $wednesday         = $_POST['wednesday'];
+        $thursday          = $_POST['thursday'];
+        $friday            = $_POST['friday'];
+        $saturday          = $_POST['saturday'];
 
-        $sql = "INSERT INTO users (firstname, lastname, email, username, password ) VALUES(?,?,?,?,?)";
+        $sql = "INSERT INTO avil_day (date, name, monday, tuesday, wednesday, thursday, friday, saturday ) VALUES(?,?,?,?,?,?,?,?)";
         $stmtinsert = $db->prepare($sql);
-        $result = $stmtinsert->execute([$firstname, $lastname, $email, $username, $password]);
+        $result = $stmtinsert->execute([$date, $name, $monday, $tuesday, $wednesday, $thursday, $friday, $saturday]);
         if ($result) {
             echo 'Successfully saved.';
         } else {
