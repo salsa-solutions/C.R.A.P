@@ -11,6 +11,8 @@ if (isset($_GET['logout'])) {
     unset($_SESSION);
     header("Location: login.php");
 }
+$user = $_SESSION['userlogin'][0];
+$roll = $_SESSION['userlogin'][1];
 ?>
 
 
@@ -34,18 +36,24 @@ if (isset($_GET['logout'])) {
 </head>
 
 <body>
-    <div class="nav">
-        <ul>
-            <div class="nav-links">
-                <li><a href="/index.php">Home</a></li>
-                <li><a href="/schedule.php">Schedule</a></li>
-                <li><a href="/test.php">Test</a></li>
-            </div>
-            <div class="mt-2 ">
-                <button type="button" name="button" id="logOut" class="btn btn_logout">Log Out</button>
-            </div>
-        </ul>
-    </div>
+<div class="nav">
+		<ul>
+			<div class="nav-links">
+				<li><a href="/index.php">Home</a></li>
+				<li><a href="/schedule.php">Schedule</a></li>
+				<li><a href="/test.php">Test</a></li>
+				<?php
+					if($roll == 'admin') {
+						echo '<li><a href="/admin.php">Admin</a></li>';
+					}
+				?>
+
+			</div>
+			<div class="mt-2 ">
+				<button type="button" name="button" id="logOut" class="btn btn_logout">Log Out</button>
+			</div>
+		</ul>
+	</div>
 
     <div class="container h-50">
         <div class="d-flex justify-content-left form-container">
@@ -182,7 +190,7 @@ if (isset($_GET['logout'])) {
                         success: function(data) {
                             Swal.fire(
                                 'Successful',
-                                '<a href="login.php" class="ml-2">Log in</a>',
+                                '<a href="schedule.php" class="ml-2">Schedule</a>',
                                 'success'
                             )
                         },
@@ -206,7 +214,7 @@ if (isset($_GET['logout'])) {
                 var valid = this.form.checkValidity();
 
                 if (valid) {
-                    var name = "<?php echo $_SESSION['userlogin']; ?>";
+                    var name = "<?php echo $user; ?>";
                     var monday_pref = $('#monday-pref').val();
                     var tuesday_pref = $('#tuesday-pref').val();
                     var wednesday_pref = $('#wednesday-pref').val();
@@ -260,7 +268,7 @@ if (isset($_GET['logout'])) {
     </script>
     <div class="footer">
         <footer>
-            <p>you are logged in as: <?php echo $_SESSION['userlogin']; ?> </p>
+            <p>you are logged in as: <?php echo $user; ?> </p>
         </footer>
     </div>
 </body>
