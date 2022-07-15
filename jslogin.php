@@ -1,19 +1,22 @@
-
 <?php
-	// $result_name = $db->prepare("SELECT * FROM users WHERE username = ? AND password = ? "  );
-	// $stmtselect  = $db->prepare($sql);
-	
-	// $stmtselect->execute([$username]);
-	// // $result_name->execute();
-	// for($i=0; $row = $result_name->fetch(); $i++){
+	// error_reporting(E_ALL);
+	// ini_set('display_errors', 1);
+	// ini_set('display_startup_errors', 1);
+	require_once('config.php');
+	$username = $_POST['username'];	
+	// $username = 'macifoe';
 
-	// 	$name = $row['firstname'] . ' ' . $row['lastname'];
-	// 	$roll = $row['roll'];
-	// }
-	
+	// selecting name from database by username
+	$sql = "SELECT firstname, lastname, roll FROM users WHERE username = ? LIMIT 1";
+	$stmtselect  = $db->prepare($sql);
+	$result = $stmtselect->execute([$username]);
+	$user = $stmtselect->fetch(PDO::FETCH_ASSOC);
+	// echo '<pre>'; print_r($user); echo '</pre>';
+	$name = $user['firstname'] . ' ' . $user['lastname'];
+	$roll = $user['roll'];
+
 	// echo $name;
 ?>
-
 
 
 <?php
@@ -30,9 +33,9 @@ $result = $stmtselect->execute([$username, $password]);
 // echo $result;
 
 if($result){
-	$user = $stmtselect->fetch(PDO::FETCH_ASSOC);
+	// $user = $stmtselect->fetch(PDO::FETCH_ASSOC);
 	if($stmtselect->rowCount() > 0){
-		$_SESSION['userlogin'] = $user;
+		$_SESSION['userlogin'] = [$name, $roll];
 		echo '1';
 	}else{
 		echo 'Incorrect Login';		
@@ -40,4 +43,6 @@ if($result){
 }else{
 	echo 'There were errors while connecting to database.';
 }
+?>
+
 

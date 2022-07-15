@@ -5,6 +5,10 @@ require_once('config.php');
 if (!isset($_SESSION['userlogin'])) {
     header("Location: login.php");
 }
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
+
 
 if (isset($_GET['logout'])) {
     session_destroy();
@@ -12,7 +16,9 @@ if (isset($_GET['logout'])) {
     header("Location: login.php");
 }
 $user = $_SESSION['userlogin'][0];
-$roll = $_SESSION['userlogin'][1];
+$role = $_SESSION['userlogin'][1];
+$WEB_TITLE = 'Home';
+// echo '<pre>'; print_r($_SESSION['userlogin']); echo '</pre>';
 ?>
 
 
@@ -32,7 +38,8 @@ $roll = $_SESSION['userlogin'][1];
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="css/backround.css">
     <link rel="stylesheet" href="css/home.css">
-    <title>Home | Capriotti's Regional Attendance Program</title>
+    <title><?php echo $WEB_TITLE ?> | Capriotti's Regional Attendance Program</title>
+
 </head>
 
 <body>
@@ -41,10 +48,10 @@ $roll = $_SESSION['userlogin'][1];
 			<div class="nav-links">
 				<li><a href="/index.php">Home</a></li>
 				<li><a href="/schedule.php">Schedule</a></li>
-				<li><a href="/test.php">Test</a></li>
 				<?php
-					if($roll == 'admin') {
+					if($role == 'admin') {
 						echo '<li><a href="/admin.php">Admin</a></li>';
+                        echo '<li><a href="/scheduling.php">Scheduling</a></li>';
 					}
 				?>
 
@@ -156,10 +163,33 @@ $roll = $_SESSION['userlogin'][1];
                     </form>
                 </div>
             </div>
+            <div class="user_card">
+                <div class="d-flex justify-content-center p-5">
+                    <h3>Special request</h3>
+                </div>
+                <form action="">
+                    <div class="d-flex justify-content-center form-container">
+                        <div class=" mb-1">
+                            <textarea type="text" name="textarea" id="message" cols="30" rows="10" placeholder="I need so and so off because... "   class="form-control form-control-sm input_user "  required></textarea>    
+                        
+                        
+                        <!-- <text type="text" placeholder="I need so and so off because... " name="request" id="message"  class="form-control form-control-sm input_user input-size"  required> -->
+                        </div>
+                        
+                    </div>
+                    <div class="d-flex justify-content-center mt-3 sumbit-container">
+                        <button type="button" name="button" id="submit_sr" class="btn submit_btn">sumbit</button>
+                    </div>
+                </form>
+            </div>
 
         </div>
 
     </div>
+    <script>
+        document.getElementById('message').style.height = '322px';
+        document.getElementById('message').style.width = '250px';
+    </script>
 
     <script>
         $(function() {
@@ -168,7 +198,7 @@ $roll = $_SESSION['userlogin'][1];
                 var valid = this.form.checkValidity();
 
                 if (valid) {
-                    var name = "<?php echo $_SESSION['userlogin']; ?>";
+                    var name = "<?php echo $user; ?>";
                     var monday_avil = $('#monday-avil').val();
                     var tuesday_avil = $('#tuesday-avil').val();
                     var wednesday_avil = $('#wednesday-avil').val();
@@ -239,7 +269,7 @@ $roll = $_SESSION['userlogin'][1];
                         success: function(data) {
                             Swal.fire(
                                 'Successful',
-                                '<a href="login.php" class="ml-2">Log in</a>',
+                                '<a href="schedule.php" class="ml-2">Schedule</a>',
                                 'success'
                             )
                         },
@@ -256,7 +286,43 @@ $roll = $_SESSION['userlogin'][1];
             });
         });
     </script>
+    <script>
+        $(function() {
+            $('#submit_sr').click(function(e) {
 
+                var valid = this.form.checkValidity();
+
+                if (valid) { 
+                    var name = "<?php echo $user; ?>";
+                    var message = $('#message').val();
+                    $.ajax({
+                        url: 'add_sr.php',
+                        type: 'POST',
+                        data: {
+                            name: name,
+                            message: message
+                        },
+                        success: function(data) {
+                            Swal.fire(
+                                'Successful',
+                                'Your request has been sent',
+                                'success'
+                            )
+                        },
+                        error: function(data) {
+                            Swal.fire(
+                                'Errors',
+                                'how did you',
+
+                                'error'
+                            )
+                        }
+                    });
+                }
+            });
+        });
+
+    </script>
 
 
     <script>
@@ -268,7 +334,8 @@ $roll = $_SESSION['userlogin'][1];
     </script>
     <div class="footer">
         <footer>
-            <p>you are logged in as: <?php echo $user; ?> </p>
+            <p>You are logged in as: <?php echo $user; ?> </p>
+            <p>Role: <?php echo $role; ?> </p>
         </footer>
     </div>
 </body>

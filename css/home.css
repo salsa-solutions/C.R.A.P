@@ -10,6 +10,10 @@ html {
     background-color: rgb(49, 49, 49);
 }
 
+p {
+    margin-bottom: 0%;
+}
+
 .nav ul {
     list-style-type: none;
     margin: 0;
@@ -61,10 +65,10 @@ html {
 
 .footer {
     position: absolute;
-    padding: 5px;
+    /* padding: 5px; */
     bottom: 0;
     width: 100%;
-    height: 54px;
+    height: auto;
     background-color: rgb(189, 0, 0);
     color: white;
 }
@@ -74,7 +78,7 @@ html {
     width: 350px;
     margin-top: 50px;
     margin-bottom: auto;
-    margin-left: 120px;
+    margin-left: 50px;
     background: #ff1212;
     position: relative;
     display: flex;
@@ -90,8 +94,8 @@ html {
 .text {
     font-size: 100%;
     background-color: rgba(19, 19, 19, 0.7);
-    border-radius: .25em;
-    box-shadow: 0 0 .25em rgba(0, 0, 0, .25);
+    border-radius: 0.25em;
+    box-shadow: 0 0 0.25em rgba(0, 0, 0, 0.25);
     box-sizing: border-box;
     left: 50%;
     padding: 1vmin;
@@ -102,6 +106,6 @@ html {
     color: white;
 }
 
-.input-size {
-    width: 100px;
+textarea {
+    resize: none;
 }

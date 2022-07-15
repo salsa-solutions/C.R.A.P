@@ -14,8 +14,8 @@ if (isset($_GET['logout'])) {
 	unset($_SESSION);
 	header("Location: login.php");
 }
-$user = $_SESSION['userlogin'][0];
-$roll = $_SESSION['userlogin'][1];
+$name = $_SESSION['userlogin'][0];
+$role = $_SESSION['userlogin'][1];
 
 ?>
 
@@ -40,24 +40,24 @@ $roll = $_SESSION['userlogin'][1];
 </head>
 
 <body>
-	<div class="nav">
-		<ul>
-			<div class="nav-links">
-				<li><a href="/index.php">Home</a></li>
-				<li><a href="/schedule.php">Schedule</a></li>
-				<li><a href="/test.php">Test</a></li>
-				<?php
-					if($roll == 'admin') {
-						echo '<li><a href="/admin.php">Admin</a></li>';
-					}
-				?>
+<div class="nav">
+        <ul>
+            <div class="nav-links">
+                <li><a href="/index.php">Home</a></li>
+                <li><a href="/schedule.php">Schedule</a></li>
+                <?php
+                if ($role == 'admin') {
+                    echo '<li><a href="/admin.php">Admin</a></li>';
+                    echo '<li><a href="/scheduling.php">Scheduling</a></li>';
+                }
+                ?>
 
-			</div>
-			<div class="mt-2 ">
-				<button type="button" name="button" id="logOut" class="btn btn_logout">Log Out</button>
-			</div>
-		</ul>
-	</div>
+            </div>
+            <div class="mt-2 ">
+                <button type="button" name="button" id="logOut" class="btn btn_logout">Log Out</button>
+            </div>
+        </ul>
+    </div>
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
@@ -83,7 +83,7 @@ $roll = $_SESSION['userlogin'][1];
 						<tbody>
 							<?php
 								include('config.php');
-								$result = $db->prepare("SELECT * FROM pref_day");
+								$result = $db->prepare("SELECT * FROM current_schedule");
 								$result->execute();
 								for ($i = 0; $row = $result->fetch(); $i++) {
 							?>
@@ -99,6 +99,9 @@ $roll = $_SESSION['userlogin'][1];
 						</tbody>
 					<?php
 							}
+							if ($i == 0) {
+								echo '<td colspan="8">Schedule has not been posted yet</td>';
+							}
 					?>
 					</table>
 				</div>
@@ -113,11 +116,12 @@ $roll = $_SESSION['userlogin'][1];
 					})
 				});
 			</script>
-			<div class="footer">
-				<footer>
-					<p>you are logged in as: <?php echo $user; ?> </p>
-				</footer>
-			</div>
+		    <div class="footer">
+            <footer>
+                <p>You are logged in as: <?php echo $name; ?> </p>
+                <p>Role: <?php echo $role; ?> </p>
+            </footer>
+        </div>
 </body>
 
 </html>

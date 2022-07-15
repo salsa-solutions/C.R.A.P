@@ -1,0 +1,9 @@
+.message_container {
+    /* padding: 0 2rem; */
+    margin: 2rem;
+    overflow-y: scroll;
+    height: 600px;
+    width: 450px;
+    background-color: rgb(216, 216, 216);
+    right: 40px;
+}
