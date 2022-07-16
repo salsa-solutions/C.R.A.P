@@ -5,9 +5,9 @@ require_once('config.php');
 if (!isset($_SESSION['userlogin'])) {
     header("Location: login.php");
 }
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
 
 
 if (isset($_GET['logout'])) {
@@ -22,6 +22,22 @@ if ($role == 'admin') {
     header("Location: index.php");
 }
 $WEB_TITLE = 'Scheduling';
+
+
+?>
+
+<?php
+require_once('config.php');
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
+
+    $result = $db->prepare("SELECT hours FROM pref_day ORDER BY date DESC");
+    $result->execute();
+    for ($i = 0; $row = $result->fetch(); $i++) {
+        $hours = $row['hours'];
+
+    }
 
 
 ?>
@@ -73,70 +89,76 @@ $WEB_TITLE = 'Scheduling';
         </ul>
     </div>
     <div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<h1>Scheduling</h1>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="table-responsive">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th scope="col">Name</th>
+								<th scope="col">Monday</th>
+								<th scope="col">Tuesday</th>
+								<th scope="col">Wednesday</th>
+								<th scope="col">Thursday</th>
+								<th scope="col">Friday</th>
+								<th scope="col">Saturday</th>
+								<th scope="col">hours</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php
+								include('config.php');
+								$result = $db->prepare("SELECT name, date, monday, tuesday, wednesday, thursday, friday, saturday FROM avil_day  ORDER BY date DESC");
+								$result->execute();
+								for ($i = 0; $row = $result->fetch(); $i++) {
+							?>
 
-        <?php
-            ini_set('display_errors', 1);
-            ini_set('display_startup_errors', 1);
-            error_reporting(E_ALL);
-                
-	    	include('config.php');
-	    	$result = $db->prepare("SELECT name FROM avil_day ORDER BY date DESC");
-	    	$result->execute();
-	    	for ($i = 0; $row = $result->fetch(); $i++) {
-                $name = $row['name'];
-		?>
+								<td><?php echo $row['name']; ?></td>
+                                <td><input style="width: 90px ;" placeholder="<?php echo $row['monday']; ?>"></td>
+								<td><input style="width: 90px ;" placeholder="<?php echo $row['tuesday']; ?>"></td>
+                                <td><input style="width: 90px ;" placeholder="<?php echo $row['wednesday']; ?>"></td>
+                                <td><input style="width: 90px ;" placeholder="<?php echo $row['thursday']; ?>"></td>
+                                <td><input style="width: 90px ;" placeholder="<?php echo $row['friday']; ?>"></td>
+                                <td><input style="width: 90px ;" placeholder="<?php echo $row['saturday']; ?>"></td>
+                                <td><input style="width: 90px ;" placeholder="<?php echo $hours; ?>"></td>
 
-        <div class="grid">
-            <div class="content">
-                <p><?php echo $name; ?></p>
-            </div>
-            <div class="content">
-                <input class="input-group input-group-append " type="text" placeholder="One">
-            </div>
-            <div class="content">
-                <input class="input-group input-group-append " type="text" placeholder="One">
-            </div>
-            <div class="content">
-                <input class="input-group input-group-append " type="text" placeholder="One">
-            </div>
-            <div class="content">
-                <input class="input-group input-group-append " type="text" placeholder="One">
-            </div>
-            <div class="content">
-                <input class="input-group input-group-append " type="text" placeholder="One">
-            </div>
-            <div class="content">
-                <input class="input-group input-group-append " type="text" placeholder="One">
-            </div>
-            <div class="content">
-                <input class="input-group input-group-append " type="text" placeholder="One">
-            </div>
-
-        </div>
-        <?php
-			}
-							if ($i == 0) {
-								echo '<td colspan="8">No new messages</td>';
+						</tbody>
+					<?php
 							}
-        ?>
+							if ($i == 0) {
+								echo '<td colspan="8">Schedule has not been posted yet</td>';
+							}
+					?>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+    <!-- <input class="input-group input-group-append " type="text" placeholder="<?php echo $monday; ?>"> -->
 
 
 
 
-        
+
     </div>
 
     <script>
-        $(function() {
-            $('#logOut').click(function() {
-                window.location.href = "logout.php?logout=true";
-            })
-        });
+    $(function() {
+        $('#logOut').click(function() {
+            window.location.href = "logout.php?logout=true";
+        })
+    });
     </script>
     <div class="footer">
         <footer>
             <p>You are logged in as: <?php echo $user; ?> </p>
-        <p>Role: <?php echo $role; ?> </p>
+            <p>Role: <?php echo $role; ?> </p>
         </footer>
     </div>
 </body>

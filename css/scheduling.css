@@ -1,16 +1,23 @@
 .grid {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     justify-items: center;
     align-items: stretch;
-    column-gap: 21px;
+    column-gap: 0%;
     row-gap: 20px;
 }
 
 .content {
-    font-weight: 600;
+    font-weight: 6;
     text-align: center;
-    box-sizing: border-box;
-    height: 100%;
+    /* box-sizing: border-box; */
+    height: 10%;
+    width: 10%;
     padding: 10px;
+}
+
+.btn_submit_sched {
+    width: 75%;
+    background: black !important;
+    color: white !important;
 }
