@@ -15,8 +15,9 @@ if (isset($_GET['logout'])) {
     unset($_SESSION);
     header("Location: login.php");
 }
-$user = $_SESSION['userlogin'][0];
+$name = $_SESSION['userlogin'][0];
 $role = $_SESSION['userlogin'][1];
+$username = $_SESSION['userlogin'][2];
 $WEB_TITLE = 'Home';
 // echo '<pre>'; print_r($_SESSION['userlogin']); echo '</pre>';
 ?>
@@ -43,6 +44,7 @@ $WEB_TITLE = 'Home';
 </head>
 
 <body>
+<div class="wrap">
 <div class="nav">
 		<ul>
 			<div class="nav-links">
@@ -198,7 +200,8 @@ $WEB_TITLE = 'Home';
                 var valid = this.form.checkValidity();
 
                 if (valid) {
-                    var name = "<?php echo $user; ?>";
+                    var name = "<?php echo $name; ?>";
+                    var username = "<?php echo $username; ?>";
                     var monday_avil = $('#monday-avil').val();
                     var tuesday_avil = $('#tuesday-avil').val();
                     var wednesday_avil = $('#wednesday-avil').val();
@@ -206,10 +209,11 @@ $WEB_TITLE = 'Home';
                     var friday_avil = $('#friday-avil').val();
                     var saturday_avil = $('#saturday-avil').val();
                     $.ajax({
-                        url: 'add_avil.php',
+                        url: '/php/db_handling/add_avil.php',
                         type: 'POST',
                         data: {
                             name: name,
+                            username: username,
                             monday: monday_avil,
                             tuesday: tuesday_avil,
                             wednesday: wednesday_avil,
@@ -244,7 +248,8 @@ $WEB_TITLE = 'Home';
                 var valid = this.form.checkValidity();
 
                 if (valid) {
-                    var name = "<?php echo $user; ?>";
+                    var name = "<?php echo $name; ?>";
+                    var username = "<?php echo $username; ?>";
                     var monday_pref = $('#monday-pref').val();
                     var tuesday_pref = $('#tuesday-pref').val();
                     var wednesday_pref = $('#wednesday-pref').val();
@@ -254,10 +259,11 @@ $WEB_TITLE = 'Home';
                     var hours = $('#hours').val();
                     // console.log(hours);
                     $.ajax({
-                        url: 'add_pref.php',
+                        url: '/php/db_handling/add_pref.php',
                         type: 'POST',
                         data: {
                             name: name,
+                            username: username,
                             monday: monday_pref,
                             tuesday: tuesday_pref,
                             wednesday: wednesday_pref,
@@ -293,10 +299,10 @@ $WEB_TITLE = 'Home';
                 var valid = this.form.checkValidity();
 
                 if (valid) { 
-                    var name = "<?php echo $user; ?>";
+                    var name = "<?php echo $name; ?>";
                     var message = $('#message').val();
                     $.ajax({
-                        url: 'add_sr.php',
+                        url: '/php/db_handling/add_sr.php',
                         type: 'POST',
                         data: {
                             name: name,
@@ -334,10 +340,12 @@ $WEB_TITLE = 'Home';
     </script>
     <div class="footer">
         <footer>
-            <p>You are logged in as: <?php echo $user; ?> </p>
+            <p>You are logged in as: <?php echo $name; ?> </p>
             <p>Role: <?php echo $role; ?> </p>
         </footer>
     </div>
+</div>
+
 </body>
 
 </html>

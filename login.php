@@ -102,7 +102,7 @@ if (isset($_SESSION['userlogin'])) {
 
                     $.ajax({
                         type: 'POST',
-                        url: 'jslogin.php',
+                        url: '/php/login_registration/jslogin.php',
                         data: {
                             username: username,
                             password: password
