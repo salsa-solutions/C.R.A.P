@@ -83,7 +83,7 @@ $role = $_SESSION['userlogin'][1];
 						<tbody>
 							<?php
 								include('config.php');
-								$result = $db->prepare("SELECT * FROM current_schedule");
+								$result = $db->prepare("SELECT * FROM current_schedule ORDER BY name ASC");
 								$result->execute();
 								for ($i = 0; $row = $result->fetch(); $i++) {
 							?>
