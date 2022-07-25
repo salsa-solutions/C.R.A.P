@@ -1,1 +1,1 @@
-chmod -R 755 *
+chmod -R 777 *

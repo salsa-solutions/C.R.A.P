@@ -7,3 +7,82 @@
     background-color: rgb(216, 216, 216);
     right: 40px;
 }
+
+.message_container::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
+
+.avil_schedule_container {
+    /* padding: 0 2rem; */
+    position: absolute;
+    margin: 2rem;
+    overflow-y: scroll;
+    height: 300px;
+    width: 900px;
+    background-color: rgb(216, 216, 216);
+    right: 0px;
+    top: 40px;
+}
+
+.avil_schedule_container::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
+
+.pref_schedule_container {
+    /* padding: 0 2rem; */
+    position: absolute;
+    margin: 2rem;
+    overflow-y: scroll;
+    height: 300px;
+    width: 900px;
+    background-color: rgb(216, 216, 216);
+    right: 0px;
+    top: 40%;
+}
+
+.pref_schedule_container::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
+
+@media screen and (min-width: 0px) and (max-width: 720px) {
+    .scroll{
+        overflow-y: auto;
+    }
+
+    .pref_schedule_container {
+        /* padding: 0 2rem; */
+        position: relative;
+        margin: 1rem;
+        overflow-y: scroll;
+        height: 300/2px;
+        width: 900/2px;
+        background-color: rgb(216, 216, 216);
+        right: 0px;
+        top: 40%;
+    }
+    .avil_schedule_container {
+        /* padding: 0 2rem; */
+        position: relative;
+        margin: 1rem;
+        overflow-y: scroll;
+        height: 300/2px;
+        width: 900/2px;
+        background-color: rgb(216, 216, 216);
+        right: 0px;
+        top: 40px;
+    }
+    .message_container {
+        position: relative;
+        /* padding: 0 2rem; */
+        margin: 2rem;
+        overflow-y: scroll;
+        height: 600px;
+        width: 450px;
+        background-color: rgb(216, 216, 216);
+        right: 40px;
+    }
+    
+}

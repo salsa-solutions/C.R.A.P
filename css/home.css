@@ -112,9 +112,11 @@ textarea {
 }
 
 @media screen and (min-width: 0px) and (max-width: 720px) {
+    .scroll{
+        overflow-y: auto;
+    }
     .page-wrap {
         min-height: 100%;
-        /* equal to footer height */
         margin-bottom: -142px;
     }
     .page-wrap:after {
@@ -125,7 +127,20 @@ textarea {
     .page-wrap:after {
         height: 142px;
     }
-    .site-footer {
-        position: null;
+    .btn_logout {
+        position: relative;
+        right: 0px;
+        background: rgb(0, 0, 0) !important;
+        color: white !important;
+    }
+    .footer {
+        position: absolute;
+        /* padding: 5px; */
+        overflow: hidden;
+        bottom: 0;
+        width: 100%;
+        height: auto;
+        background-color: rgb(189, 0, 0);
+        color: white;
     }
 }

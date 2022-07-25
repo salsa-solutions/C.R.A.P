@@ -27,25 +27,21 @@ $WEB_TITLE = 'Scheduling';
 
 ?>
 
-<?php
+<!-- <?php
 require_once('config.php');
 
 
 
-$result = $db->prepare("SELECT username, hours FROM pref_day ");
+$result = $db->prepare("SELECT username, monday, tuesday, wednesday, thursday, friday, saturday, hours FROM pref_day ORDER BY date DESC");
 $result->execute();
-for ($i = 0; $row = $result->fetch(); $i++) {
+for ($i = 0; $pref = $result->fetch(); $i++) {
 
-
-    $hours = $row['hours'];
-    $h_username = $row['username'];
-    // echo '<pre>';
-    // print_r($h_username);
-    // echo '</pre>';
+    return $pref;
 }
 
 
-?>
+
+?> -->
 
 
 <!DOCTYPE html>
@@ -68,6 +64,17 @@ for ($i = 0; $row = $result->fetch(); $i++) {
     <title><?php echo $WEB_TITLE ?> | Capriotti's Regional Attendance Program</title>
 
 </head>
+
+<!-- <?php
+
+echo '<pre>';
+print_r($pref);
+echo '</pre>';
+// echo $pref['tuesday'];
+
+?> -->
+
+
 
 <body>
     <div class="nav">
@@ -119,13 +126,18 @@ for ($i = 0; $row = $result->fetch(); $i++) {
                             ?>
                                 <form action="">
                                     <td><?php echo $row['name']; ?></td>
-                                    <td><input style="width: 90px ;" id="monday-sched" placeholder="<?php echo $row['monday']; ?>"></td>
+                                    <td><input style="width: 90px ;" id="monday-sched" placeholder="<?php echo $row['monday']; ?>" list="avil_day">
+                                        <!-- <datalist id="avil_day">
+                                            <option value="<?php echo $row['monday']; ?>"><?php echo $row['monday']; ?></option>       
+                                            <option value="<?php echo $pref['monday']; ?>"><?php echo $pref['monday']; ?></option>                     -->
+                                        
+                                    </td>
                                     <td><input style="width: 90px ;" id="tuesday-sched" placeholder="<?php echo $row['tuesday']; ?>"></td>
                                     <td><input style="width: 90px ;" id="wednesday-sched" placeholder="<?php echo $row['wednesday']; ?>"></td>
                                     <td><input style="width: 90px ;" id="thursday-sched" placeholder="<?php echo $row['thursday']; ?>"></td>
                                     <td><input style="width: 90px ;" id="friday-sched" placeholder="<?php echo $row['friday']; ?>"></td>
                                     <td><input style="width: 90px ;" id="saturday-sched" placeholder="<?php echo $row['saturday']; ?>"></td>
-                                    <td><input style="width: 90px ;" id="hours-sched" placeholder="<?php echo $hours; ?>"></td>
+                                    <td><input style="width: 90px ;" id="hours-sched"></td>
                                     <!-- <td><input style="width: 90px ;" id="hours" placeholder="<?php echo $row['username']; ?>"></td> -->
                                     <td><button type="button" name="button" id="<?php echo $row['username'] . "_sumbit_approved_sched"; ?>" class="btn">sumbit</button></td>
                                 </form>

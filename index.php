@@ -64,7 +64,7 @@ $WEB_TITLE = 'Home';
 		</ul>
 	</div>
 
-    <div class="container h-50">
+    <div class="container h-50 scroll">
         <div class="d-flex justify-content-left form-container">
             <div class="user_card">
                 <div class="d-flex justify-content-center p-5">
@@ -231,7 +231,7 @@ $WEB_TITLE = 'Home';
                         error: function(data) {
                             Swal.fire(
                                 'Errors',
-                                'how did you fuck up this bad',
+                                'Whoops!',
                                 'error'
                             )
 
@@ -275,17 +275,16 @@ $WEB_TITLE = 'Home';
                         success: function(data) {
                             Swal.fire(
                                 'Successful',
-                                '<a href="schedule.php" class="ml-2">Schedule</a>',
+                                'Your request has been sent',
                                 'success'
                             )
                         },
                         error: function(data) {
                             Swal.fire(
                                 'Errors',
-                                'how did you fuck up this bad',
+                                'Whoops!',
                                 'error'
                             )
-
                         }
                     });
                 }
@@ -318,8 +317,7 @@ $WEB_TITLE = 'Home';
                         error: function(data) {
                             Swal.fire(
                                 'Errors',
-                                'how did you',
-
+                                'Whoops!',
                                 'error'
                             )
                         }

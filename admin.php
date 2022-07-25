@@ -5,6 +5,7 @@ require_once('config.php');
 if (!isset($_SESSION['userlogin'])) {
     header("Location: login.php");
 }
+
 // ini_set('display_errors', 1);
 // ini_set('display_startup_errors', 1);
 // error_reporting(E_ALL);
@@ -110,6 +111,120 @@ $WEB_TITLE = 'Admin';
 							}
 							if ($i == 0) {
 								echo '<td colspan="8">No new messages</td>';
+							}
+					?>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="avil_schedule_container">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Availability</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Monday</th>
+                                    <th scope="col">Tuesday</th>
+                                    <th scope="col">Wednesday</th>
+                                    <th scope="col">Thursday</th>
+                                    <th scope="col">Friday</th>
+                                    <th scope="col">Saturday</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                // ini_set('display_errors', 1);
+                                // ini_set('display_startup_errors', 1);
+                                // error_reporting(E_ALL);
+                                
+								include('config.php');
+								$result = $db->prepare("SELECT date, name, monday, tuesday, wednesday, thursday, friday, saturday FROM avil_day ORDER BY date DESC");
+								$result->execute();
+								for ($i = 0; $row = $result->fetch(); $i++) {
+							?>
+
+                                <td><?php echo $row['date']; ?></td>
+                                <td><?php echo $row['name']; ?></td>
+                                <td><?php echo $row['monday']; ?></td>
+                                <td><?php echo $row['tuesday']; ?></td>
+                                <td><?php echo $row['wednesday']; ?></td>
+                                <td><?php echo $row['thursday']; ?></td>
+                                <td><?php echo $row['friday']; ?></td>
+                                <td><?php echo $row['saturday']; ?></td>
+                            </tbody>
+                            <?php
+							}
+							if ($i == 0) {
+								echo '<td colspan="8">No schedules</td>';
+							}
+					?>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pref_schedule_container">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Wanted days</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Monday</th>
+                                    <th scope="col">Tuesday</th>
+                                    <th scope="col">Wednesday</th>
+                                    <th scope="col">Thursday</th>
+                                    <th scope="col">Friday</th>
+                                    <th scope="col">Saturday</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                // ini_set('display_errors', 1);
+                                // ini_set('display_startup_errors', 1);
+                                // error_reporting(E_ALL);
+                                
+								include('config.php');
+								$result = $db->prepare("SELECT date, name, monday, tuesday, wednesday, thursday, friday, saturday FROM pref_day ORDER BY date DESC");
+								$result->execute();
+								for ($i = 0; $row = $result->fetch(); $i++) {
+							?>
+
+                                <td><?php echo $row['date']; ?></td>
+                                <td><?php echo $row['name']; ?></td>
+                                <td><?php echo $row['monday']; ?></td>
+                                <td><?php echo $row['tuesday']; ?></td>
+                                <td><?php echo $row['wednesday']; ?></td>
+                                <td><?php echo $row['thursday']; ?></td>
+                                <td><?php echo $row['friday']; ?></td>
+                                <td><?php echo $row['saturday']; ?></td>
+                            </tbody>
+                            <?php
+							}
+							if ($i == 0) {
+								echo '<td colspan="8">No schedules</td>';
 							}
 					?>
                         </table>
