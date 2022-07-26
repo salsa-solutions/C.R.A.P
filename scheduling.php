@@ -30,19 +30,18 @@ $result->execute();
 for ($i = 0; $pref = $result->fetch(); $i++) {
 
     $current_schedule_name = $pref['name'];
-    if($i = 0){
+    if($i == 0)
         $current_schedule_name = 'null';
-    }
+        
+
+    
+}
+if ($i == 0) {
+    $current_schedule_name = 'null';
 }
 
 
-
-?> 
-<pre>
-<?php 
- print_r ($current_schedule_name);
- ?> 
-</pre>
+?>
 
 
 <!DOCTYPE html>
