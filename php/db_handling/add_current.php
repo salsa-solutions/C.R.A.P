@@ -21,11 +21,11 @@ error_reporting(E_ALL);
         $thursday          = $_POST['thursday'];
         $friday            = $_POST['friday'];
         $saturday          = $_POST['saturday'];
-        $hours             = $_POST['hours'];
-        $sql = "INSERT INTO current_schedule (date, name, username, monday, tuesday, wednesday, thursday, friday, saturday, hours ) VALUES(?,?,?,?,?,?,?,?,?, ?)";
+        // $hours             = $_POST['hours'];
+        $sql = "INSERT INTO current_schedule (date, name, username, monday, tuesday, wednesday, thursday, friday, saturday) VALUES(?,?,?,?,?,?,?,?, ?)";
         $stmtinsert = $db->prepare($sql);
         // print_r($stmtinsert) ;
-        $result = $stmtinsert->execute([$date, $name, $username, $monday, $tuesday, $wednesday, $thursday, $friday, $saturday, $hours]);
+        $result = $stmtinsert->execute([$date, $name, $username, $monday, $tuesday, $wednesday, $thursday, $friday, $saturday]);
         if ($result) {
             echo 'Successfully saved.';
         } else {

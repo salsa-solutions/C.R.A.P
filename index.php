@@ -76,37 +76,37 @@ $WEB_TITLE = 'Home';
                             <div class="input-group-append text">
                                 <p>Monday</p>
                             </div>
-                            <input type="text" placeholder="9am-4pm" name="monday-avil" id="monday-avil" class="form-control form-control-sm input_user " required>
+                            <input type="text" placeholder="9am-4pm" name="monday-avil" id="monday-avil" class="form-control form-control-sm input_user " >
                         </div>
                         <div class="input-group mb-1">
                             <div class="input-group-append text">
                                 <p>Tuesday</p>
                             </div>
-                            <input type="text" placeholder="9am-4pm" name="tuesday-avil" id="tuesday-avil" class="form-control form-control-sm input_user " required>
+                            <input type="text" placeholder="9am-4pm" name="tuesday-avil" id="tuesday-avil" class="form-control form-control-sm input_user " >
                         </div>
                         <div class="input-group mb-1">
                             <div class="input-group-append text">
                                 <p>Wednesday</p>
                             </div>
-                            <input type="text" placeholder="9am-4pm" name="wednesday-avil" id="wednesday-avil" class="form-control form-control-sm input_user " required>
+                            <input type="text" placeholder="9am-4pm" name="wednesday-avil" id="wednesday-avil" class="form-control form-control-sm input_user " >
                         </div>
                         <div class="input-group mb-1">
                             <div class="input-group-append text">
                                 <p>Thursday</p>
                             </div>
-                            <input type="text" placeholder="9am-4pm" name="thursday-avil" id="thursday-avil" class="form-control form-control-sm input_user " required>
+                            <input type="text" placeholder="9am-4pm" name="thursday-avil" id="thursday-avil" class="form-control form-control-sm input_user " >
                         </div>
                         <div class="input-group mb-1">
                             <div class="input-group-append text">
                                 <p>Friday</p>
                             </div>
-                            <input type="text" placeholder="9am-4pm" name="friday-avil" id="friday-avil" class="form-control form-control-sm input_user " required>
+                            <input type="text" placeholder="9am-4pm" name="friday-avil" id="friday-avil" class="form-control form-control-sm input_user " >
                         </div>
                         <div class="input-group mb-1">
                             <div class="input-group-append text">
                                 <p>Saturday</p>
                             </div>
-                            <input type="text" placeholder="9am-4pm" name="saturday-avil" id="saturday-avil" class="form-control form-control-sm input_user " required>
+                            <input type="text" placeholder="9am-4pm" name="saturday-avil" id="saturday-avil" class="form-control form-control-sm input_user " >
                         </div>
                         <div class="d-flex justify-content-center mt-3 submit-container">
                             <button type="button" name="button" id="submit_avil" class="btn submit_btn">submit</button>
@@ -124,40 +124,40 @@ $WEB_TITLE = 'Home';
                             <div class="input-group-append text">
                                 <p>Monday</p>
                             </div>
-                            <input type="text" placeholder="9am-4pm" name="monday-pref" id="monday-pref" class="form-control form-control-sm input_user " required>
+                            <input type="text" placeholder="9am-4pm" name="monday-pref" id="monday-pref" class="form-control form-control-sm input_user " >
                         </div>
                         <div class="input-group mb-1">
                             <div class="input-group-append text">
                                 <p>Tuesday</p>
                             </div>
-                            <input type="text" placeholder="9am-4pm" name="tuesday-pref" id="tuesday-pref" class="form-control form-control-sm input_user " required>
+                            <input type="text" placeholder="9am-4pm" name="tuesday-pref" id="tuesday-pref" class="form-control form-control-sm input_user " >
                         </div>
                         <div class="input-group mb-1">
                             <div class="input-group-append text">
                                 <p>Wednesday</p>
                             </div>
-                            <input type="text" placeholder="9am-4pm" name="wednesday-pref" id="wednesday-pref" class="form-control form-control-sm input_user " required>
+                            <input type="text" placeholder="9am-4pm" name="wednesday-pref" id="wednesday-pref" class="form-control form-control-sm input_user " >
                         </div>
                         <div class="input-group mb-1">
                             <div class="input-group-append text">
                                 <p>Thursday</p>
                             </div>
-                            <input type="text" placeholder="9am-4pm" name="thursday-pref" id="thursday-pref" class="form-control form-control-sm input_user " required>
+                            <input type="text" placeholder="9am-4pm" name="thursday-pref" id="thursday-pref" class="form-control form-control-sm input_user " >
                         </div>
                         <div class="input-group mb-1">
                             <div class="input-group-append text">
                                 <p>Friday</p>
                             </div>
-                            <input type="text" placeholder="9am-4pm" name="friday-pref" id="friday-pref" class="form-control form-control-sm input_user " required>
+                            <input type="text" placeholder="9am-4pm" name="friday-pref" id="friday-pref" class="form-control form-control-sm input_user " >
                         </div>
                         <div class="input-group mb-1">
                             <div class="input-group-append text">
                                 <p>Saturday</p>
                             </div>
-                            <input type="text" placeholder="9am-4pm" name="saturday" id="saturday-pref" class="form-control form-control-sm input_user " required>
+                            <input type="text" placeholder="9am-4pm" name="saturday" id="saturday-pref" class="form-control form-control-sm input_user " >
                         </div>
                         <div class="input-group mb-1">
-                            <input type="number" placeholder="Hours" name="hours" id="hours" class="form-control form-control-sm input_user" min=1 max=40 required>
+                            <input type="number" placeholder="Hours" name="hours" id="hours" class="form-control form-control-sm input_user" min=1 max=40 >
                         </div>
                         <div class="d-flex justify-content-center mt-3 sumbit-container">
                             <button type="button" name="button" id="sumbit-pref" class="btn submit_btn">sumbit</button>
@@ -172,10 +172,10 @@ $WEB_TITLE = 'Home';
                 <form action="">
                     <div class="d-flex justify-content-center form-container">
                         <div class=" mb-1">
-                            <textarea type="text" name="textarea" id="message" cols="30" rows="10" placeholder="I need so and so off because... "   class="form-control form-control-sm input_user "  required></textarea>    
+                            <textarea type="text" name="textarea" id="message" cols="30" rows="10" placeholder="I need so and so off because... "   class="form-control form-control-sm input_user " required ></textarea>    
                         
                         
-                        <!-- <text type="text" placeholder="I need so and so off because... " name="request" id="message"  class="form-control form-control-sm input_user input-size"  required> -->
+                        <!-- <text type="text" placeholder="I need so and so off because... " name="request" id="message"  class="form-control form-control-sm input_user input-size"  > -->
                         </div>
                         
                     </div>
@@ -224,7 +224,7 @@ $WEB_TITLE = 'Home';
                         success: function(data) {
                             Swal.fire(
                                 'Successful',
-                                '<a href="schedule.php" class="ml-2">Schedule</a>',
+                                'Your request has been submited',
                                 'success'
                             )
                         },
@@ -275,7 +275,7 @@ $WEB_TITLE = 'Home';
                         success: function(data) {
                             Swal.fire(
                                 'Successful',
-                                'Your request has been sent',
+                                'Your request has been submited',
                                 'success'
                             )
                         },
@@ -310,7 +310,7 @@ $WEB_TITLE = 'Home';
                         success: function(data) {
                             Swal.fire(
                                 'Successful',
-                                'Your request has been sent',
+                                'Your request has been submited',
                                 'success'
                             )
                         },

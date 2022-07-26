@@ -5,20 +5,15 @@ require_once('config.php');
 if (!isset($_SESSION['userlogin'])) {
     header("Location: login.php");
 }
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 
 
-if (isset($_GET['logout'])) {
-    session_destroy();
-    unset($_SESSION);
-    header("Location: login.php");
-}
 $name = $_SESSION['userlogin'][0];
 $role = $_SESSION['userlogin'][1];
 $username = $_SESSION['userlogin'][2];
 if ($role == 'admin') {
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
 } else {
     header("Location: index.php");
 }
@@ -27,21 +22,27 @@ $WEB_TITLE = 'Scheduling';
 
 ?>
 
-<!-- <?php
+<?php
 require_once('config.php');
 
-
-
-$result = $db->prepare("SELECT username, monday, tuesday, wednesday, thursday, friday, saturday, hours FROM pref_day ORDER BY date DESC");
+$result = $db->prepare("SELECT name FROM current_schedule ORDER BY date DESC");
 $result->execute();
 for ($i = 0; $pref = $result->fetch(); $i++) {
 
-    return $pref;
+    $current_schedule_name = $pref['name'];
+    if($i = 0){
+        $current_schedule_name = 'null';
+    }
 }
 
 
 
-?> -->
+?> 
+<pre>
+<?php 
+ print_r ($current_schedule_name);
+ ?> 
+</pre>
 
 
 <!DOCTYPE html>
@@ -119,25 +120,25 @@ echo '</pre>';
                         </thead>
                         <tbody>
                             <?php
+
                             include('config.php');
-                            $result = $db->prepare("SELECT date, username ,name, monday, tuesday, wednesday, thursday, friday, saturday FROM avil_day  ORDER BY date DESC");
+                            $result = $db->prepare("SELECT date, username, name, monday, tuesday, wednesday, thursday, friday, saturday FROM avil_day  ORDER BY date DESC");
                             $result->execute();
                             for ($i = 0; $row = $result->fetch(); $i++) {
+                                if($current_schedule_name === $row['name']){
+                                    echo 'fuck';
+                                }
+
                             ?>
                                 <form action="">
                                     <td><?php echo $row['name']; ?></td>
-                                    <td><input style="width: 90px ;" id="monday-sched" placeholder="<?php echo $row['monday']; ?>" list="avil_day">
-                                        <!-- <datalist id="avil_day">
-                                            <option value="<?php echo $row['monday']; ?>"><?php echo $row['monday']; ?></option>       
-                                            <option value="<?php echo $pref['monday']; ?>"><?php echo $pref['monday']; ?></option>                     -->
-                                        
-                                    </td>
-                                    <td><input style="width: 90px ;" id="tuesday-sched" placeholder="<?php echo $row['tuesday']; ?>"></td>
-                                    <td><input style="width: 90px ;" id="wednesday-sched" placeholder="<?php echo $row['wednesday']; ?>"></td>
-                                    <td><input style="width: 90px ;" id="thursday-sched" placeholder="<?php echo $row['thursday']; ?>"></td>
-                                    <td><input style="width: 90px ;" id="friday-sched" placeholder="<?php echo $row['friday']; ?>"></td>
-                                    <td><input style="width: 90px ;" id="saturday-sched" placeholder="<?php echo $row['saturday']; ?>"></td>
-                                    <td><input style="width: 90px ;" id="hours-sched"></td>
+                                    <td><input style="width: 90px ;" id="<?php echo $row['username'] . "_monday-sched"; ?>" placeholder="<?php echo $row['monday']; ?>"></td>
+                                    <td><input style="width: 90px ;" id="<?php echo $row['username'] . "_tuesday-sched"; ?>" placeholder="<?php echo $row['tuesday']; ?>"></td>
+                                    <td><input style="width: 90px ;" id="<?php echo $row['username'] . "_wednesday-sched"; ?>" placeholder="<?php echo $row['wednesday']; ?>"></td>
+                                    <td><input style="width: 90px ;" id="<?php echo $row['username'] . "_thursday-sched"; ?>" placeholder="<?php echo $row['thursday']; ?>"></td>
+                                    <td><input style="width: 90px ;" id="<?php echo $row['username'] . "_friday-sched"; ?>" placeholder="<?php echo $row['friday']; ?>"></td>
+                                    <td><input style="width: 90px ;" id="<?php echo $row['username'] . "_saturday-sched"; ?>" placeholder="<?php echo $row['saturday']; ?>"></td>
+                                    <!-- <td><input style="width: 90px ;" id="hours-sched"></td> -->
                                     <!-- <td><input style="width: 90px ;" id="hours" placeholder="<?php echo $row['username']; ?>"></td> -->
                                     <td><button type="button" name="button" id="<?php echo $row['username'] . "_sumbit_approved_sched"; ?>" class="btn">sumbit</button></td>
                                 </form>
@@ -148,15 +149,15 @@ echo '</pre>';
                                             var valid = this.form.checkValidity();
 
                                             if (valid) {
-                                                var name = "<?php echo $name; ?>";
-                                                var username = "<?php echo $username; ?>";
-                                                var monday_sched = $('#monday-sched').val();
-                                                var tuesday_sched = $('#tuesday-sched').val();
-                                                var wednesday_sched = $('#wednesday-sched').val();
-                                                var thursday_sched = $('#thursday-sched').val();
-                                                var friday_sched = $('#friday-sched').val();
-                                                var saturday_sched = $('#saturday-sched').val();
-                                                var hours = $('#hours-sched').val();
+                                                var name = "<?php echo $row['name']; ?>";
+                                                var username = "<?php echo $row['username']; ?>";
+                                                var monday_sched = $('#<?php echo $row['username'] . '_monday-sched'; ?>').val();
+                                                var tuesday_sched = $('#<?php echo $row['username'] . '_tuesday-sched'; ?>').val();
+                                                var wednesday_sched = $('#<?php echo $row['username'] . '_wednesday-sched'; ?>').val();
+                                                var thursday_sched = $('#<?php echo $row['username'] . '_thursday-sched'; ?>').val();
+                                                var friday_sched = $('#<?php echo $row['username'] . '_friday-sched'; ?>').val();
+                                                var saturday_sched = $('#<?php echo $row['username'] . '_saturday-sched'; ?>').val();
+                                                // var hours = $('#hours-sched').val();
                                                 // console.log(hours);
                                                 e.preventDefault();
                                                 $.ajax({
@@ -171,15 +172,14 @@ echo '</pre>';
                                                         thursday: thursday_sched,
                                                         friday: friday_sched,
                                                         saturday: saturday_sched,
-                                                        hours: hours
                                                     },
-                                                    // success: function(data) {
-                                                    //     Swal.fire(
-                                                    //         'Successful',
-                                                    //         '<a href="schedule.php" class="ml-2">Schedule</a>',
-                                                    //         'success'
-                                                    //     )
-                                                    // },
+                                                    success: function(data) {
+                                                        Swal.fire(
+                                                            'Successful',
+                                                            '<a href="schedule.php" class="ml-2">Schedule</a>',
+                                                            'success'
+                                                        )
+                                                    },
                                                     error: function(data) {
                                                         Swal.fire(
                                                             'Errors',

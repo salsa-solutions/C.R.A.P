@@ -136,7 +136,7 @@ require_once('config.php')
 
                     $.ajax({
                         type: 'POST',
-                        url: 'process.php',
+                        url: '/php/login_registration/process.php',
                         data: {
                             firstname: firstname,
                             lastname: lastname,
