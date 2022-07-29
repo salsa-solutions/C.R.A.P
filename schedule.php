@@ -3,21 +3,25 @@ session_start();
 require_once('config.php');
 
 if (!isset($_SESSION['userlogin'])) {
-	header("Location: login.php");
+    header("Location: login.php");
 }
 // ini_set('display_errors', 1);
 // ini_set('display_startup_errors', 1);
 // error_reporting(E_ALL);
 
+
 if (isset($_GET['logout'])) {
-	session_destroy();
-	unset($_SESSION);
-	header("Location: login.php");
+    session_destroy();
+    unset($_SESSION);
+    header("Location: login.php");
 }
 $name = $_SESSION['userlogin'][0];
 $role = $_SESSION['userlogin'][1];
-
+$username = $_SESSION['userlogin'][2];
+$WEB_TITLE = 'Schedule';
+// echo '<pre>'; print_r($_SESSION['userlogin']); echo '</pre>';
 ?>
+
 
 
 <!DOCTYPE html>
@@ -36,7 +40,7 @@ $role = $_SESSION['userlogin'][1];
 	<link rel="stylesheet" href="css/backround.css">
 	<link rel="stylesheet" href="css/home.css">
 	<link rel="stylesheet" href="css/schedule.css">
-	<title>Schedule | Capriotti's Regional Attendance Program</title>
+	<title><?php echo $WEB_TITLE ?> | Capriotti's Regional Attendance Program</title>
 </head>
 
 <body>
@@ -77,7 +81,7 @@ $role = $_SESSION['userlogin'][1];
 								<th scope="col">Thursday</th>
 								<th scope="col">Friday</th>
 								<th scope="col">Saturday</th>
-								<th scope="col">hours</th>
+								<!-- <th scope="col">hours</th> -->
 							</tr>
 						</thead>
 						<tbody>

@@ -4,7 +4,9 @@
 // error_reporting(E_ALL);
 
 
-require_once('config.php')
+require_once('config.php');
+
+$WEB_TITLE = 'User Registration';
 ?>
 
 
@@ -25,7 +27,7 @@ require_once('config.php')
     <link rel="stylesheet" href="css/login-signup.css">
 
 
-    <title>User Registration | Capriotti's Regional Attendance Program </title>
+    <title><?php echo $WEB_TITLE ?> | Capriotti's Regional Attendance Program</title>
 </head>
 
 <body>

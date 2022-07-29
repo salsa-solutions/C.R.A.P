@@ -5,7 +5,7 @@ session_start();
 if (isset($_SESSION['userlogin'])) {
     header("Location: index.php");
 }
-
+$WEB_TITLE = 'Login';
 
 ?>
 
@@ -25,9 +25,7 @@ if (isset($_SESSION['userlogin'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="css/backround.css">
     <link rel="stylesheet" href="css/login-signup.css">
-
-
-    <title>login | Capriotti's Regional Attendance Program</title>
+    <title><?php echo $WEB_TITLE ?> | Capriotti's Regional Attendance Program</title>
 </head>
 
 <body>

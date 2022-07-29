@@ -5,9 +5,9 @@ require_once('config.php');
 if (!isset($_SESSION['userlogin'])) {
     header("Location: login.php");
 }
-// ini_set('display_errors', 1);
-// ini_set('display_startup_errors', 1);
-// error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 
 if (isset($_GET['logout'])) {
@@ -19,10 +19,17 @@ $name = $_SESSION['userlogin'][0];
 $role = $_SESSION['userlogin'][1];
 $username = $_SESSION['userlogin'][2];
 $WEB_TITLE = 'Home';
+$_DEV = TRUE;
+if ( ($role == 'admin') || ($role == 'manager')) {
+    $admin_page='<li><a href="/admin.php">Admin</a></li>';
+    $scheduling_page='<li><a href="/scheduling.php">Scheduling</a></li>';
+}
+else {
+    $admin_page= NULL;
+    $scheduling_page= NULL;
+}
 // echo '<pre>'; print_r($_SESSION['userlogin']); echo '</pre>';
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -39,31 +46,23 @@ $WEB_TITLE = 'Home';
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="css/backround.css">
     <link rel="stylesheet" href="css/home.css">
-    <title><?php echo $WEB_TITLE ?> | Capriotti's Regional Attendance Program</title>
+    <title><?php echo $WEB_TITLE; ?> | Capriotti's Regional Attendance Program</title>
 
 </head>
 
-<body>
-<div class="wrap">
-<div class="nav">
-		<ul>
-			<div class="nav-links">
-				<li><a href="/index.php">Home</a></li>
-				<li><a href="/schedule.php">Schedule</a></li>
-				<?php
-					if($role == 'admin') {
-						echo '<li><a href="/admin.php">Admin</a></li>';
-                        echo '<li><a href="/scheduling.php">Scheduling</a></li>';
-					}
-				?>
 
-			</div>
-			<div class="mt-2 ">
-				<button type="button" name="button" id="logOut" class="btn btn_logout">Log Out</button>
-			</div>
-		</ul>
-	</div>
+    <?php
+    include_once("php/template.php");
+    echo $_DEV;
+echo $header;
+if (($_DEV) && ($role == 'CaShEiR') || ($role == 'manager')) {
+        ?>
 
+    <h1 class="">t</h1>
+    <?php
+    }
+    else {
+    ?>
     <div class="container h-50 scroll">
         <div class="d-flex justify-content-left form-container">
             <div class="user_card">
@@ -327,23 +326,10 @@ $WEB_TITLE = 'Home';
         });
 
     </script>
+    <?php
+}
 
+include_once("php/template.php");
+echo $footer;
+?>
 
-    <script>
-        $(function() {
-            $('#logOut').click(function() {
-                window.location.href = "logout.php?logout=true";
-            })
-        });
-    </script>
-    <div class="footer">
-        <footer>
-            <p>You are logged in as: <?php echo $name; ?> </p>
-            <p>Role: <?php echo $role; ?> </p>
-        </footer>
-    </div>
-</div>
-
-</body>
-
-</html>
