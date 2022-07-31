@@ -6,11 +6,6 @@ if (!isset($_SESSION['userlogin'])) {
     header("Location: login.php");
 }
 
-// ini_set('display_errors', 1);
-// ini_set('display_startup_errors', 1);
-// error_reporting(E_ALL);
-
-
 if (isset($_GET['logout'])) {
     session_destroy();
     unset($_SESSION);
@@ -29,8 +24,17 @@ else {
     $admin_page= NULL;
     $scheduling_page= NULL;
 }
-if ($role == 'admin') {
-} else {
+if ( ($role == 'admin')) {
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+
+}elseif ($role == 'manager'){
+
+}
+
+
+else {
     header("Location: index.php");
 }
 
@@ -67,8 +71,8 @@ if ($role == 'admin') {
 
     <?php
     include('php/template.php');
-    echo $header
-
+    echo $header;
+    
 
     ?>
 

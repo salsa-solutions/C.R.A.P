@@ -43,4 +43,8 @@ $footer = <<<FOOTER
 </html>
 FOOTER;
 
+// Out of Service
+$oos = <<< OOS
+<h1 class="">t</h1>
+OOS;
 ?>

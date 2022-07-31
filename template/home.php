@@ -5,9 +5,9 @@ require_once('config.php');
 if (!isset($_SESSION['userlogin'])) {
     header("Location: login.php");
 }
-// ini_set('display_errors', 1);
-// ini_set('display_startup_errors', 1);
-// error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 
 if (isset($_GET['logout'])) {
@@ -49,25 +49,9 @@ else {
     <title><?php echo $WEB_TITLE; ?> | Capriotti's Regional Attendance Program</title>
 
 </head>
+<?php require("php/template.php"); echo $header ?>
 
 
-    <?php
-    include_once("php/template.php");
-echo $header;
-if (($_DEV) && ($role == 'CaShEiR') || ($role == 'manager')) {
-    ?>
-
-    <h1 class=""></h1>
-    <?php
-}else {
-    ?>
-
-<!-- content -->
-
-    <?php
-}
-
-include_once("php/template.php");
-echo $footer;
-?>
+<?php require("php/template.php"); echo $footer ?>
+</html>
 

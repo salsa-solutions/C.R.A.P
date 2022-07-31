@@ -53,13 +53,11 @@ else {
 
     <?php
     include_once("php/template.php");
-    echo $_DEV;
-echo $header;
-if (($_DEV) && ($role == 'CaShEiR') || ($role == 'manager')) {
-        ?>
-
-    <h1 class="">t</h1>
-    <?php
+    // echo $_DEV;
+    echo $header;
+    // echo (($_DEV) && ($role == 'CaShIeR') || ($role == 'manager'));
+    if (($_DEV) && ($role == 'CaShIeR') || ($role == 'manager')) {
+        echo $oos;
     }
     else {
     ?>
