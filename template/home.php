@@ -9,12 +9,6 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-
-if (isset($_GET['logout'])) {
-    session_destroy();
-    unset($_SESSION);
-    header("Location: login.php");
-}
 $name = $_SESSION['userlogin'][0];
 $role = $_SESSION['userlogin'][1];
 $username = $_SESSION['userlogin'][2];

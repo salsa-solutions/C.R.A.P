@@ -19,7 +19,21 @@ $name = $_SESSION['userlogin'][0];
 $role = $_SESSION['userlogin'][1];
 $username = $_SESSION['userlogin'][2];
 $WEB_TITLE = 'Schedule';
-// echo '<pre>'; print_r($_SESSION['userlogin']); echo '</pre>';
+// to turn off a site uncomment the following line:
+// $_DEV = true;
+if (($role == 'admin')) {
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+}
+if ( ($role == 'admin') || ($role == 'manager')) {
+    $admin_page='<li><a href="/admin.php">Admin</a></li>';
+    $scheduling_page='<li><a href="/scheduling.php">Scheduling</a></li>';
+}
+else {
+    $admin_page= NULL;
+    $scheduling_page= NULL;
+}
 ?>
 
 
@@ -44,24 +58,14 @@ $WEB_TITLE = 'Schedule';
 </head>
 
 <body>
-<div class="nav">
-        <ul>
-            <div class="nav-links">
-                <li><a href="/index.php">Home</a></li>
-                <li><a href="/schedule.php">Schedule</a></li>
-                <?php
-                if ($role == 'admin') {
-                    echo '<li><a href="/admin.php">Admin</a></li>';
-                    echo '<li><a href="/scheduling.php">Scheduling</a></li>';
-                }
-                ?>
-
-            </div>
-            <div class="mt-2 ">
-                <button type="button" name="button" id="logOut" class="btn btn_logout">Log Out</button>
-            </div>
-        </ul>
-    </div>
+<?php
+    include_once("php/template.php");
+    echo $header;
+    if (($_DEV) && (($role == 'CaShIeR') || ($role == 'manager')) == '1') {
+        echo $out_of_service;
+    }
+    else {
+    ?>
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
@@ -113,19 +117,9 @@ $WEB_TITLE = 'Schedule';
 		</div>
 	</div>
 
-			<script>
-				$(function() {
-					$('#logOut').click(function() {
-						window.location.href = "logout.php?logout=true";
-					})
-				});
-			</script>
-		    <div class="footer">
-            <footer>
-                <p>You are logged in as: <?php echo $name; ?> </p>
-                <p>Role: <?php echo $role; ?> </p>
-            </footer>
-        </div>
-</body>
+	<?php
+}
 
-</html>
+include_once("php/template.php");
+echo $footer;
+?>

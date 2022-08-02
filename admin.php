@@ -15,7 +15,7 @@ $name = $_SESSION['userlogin'][0];
 $role = $_SESSION['userlogin'][1];
 $username = $_SESSION['userlogin'][2];
 $WEB_TITLE = 'Admin';
-$_DEV = false;
+// $_DEV = false;
 if ( ($role == 'admin') || ($role == 'manager')) {
     $admin_page='<li><a href="/admin.php">Admin</a></li>';
     $scheduling_page='<li><a href="/scheduling.php">Scheduling</a></li>';
@@ -68,12 +68,10 @@ else {
 </head>
 
 <body>
-
-    <?php
-    include('php/template.php');
-    echo $header;
-    
-
+<?php require("php/template.php"); echo $header ?>
+    <?php if (($_DEV) && (($role == 'CaShIeR') || ($role == 'manager')) == '1') {
+        echo $out_of_service;
+    }else{
     ?>
 
     <div class="message_container">
@@ -239,6 +237,7 @@ else {
 
 
 <?php
+    }
 include('php/template.php');
 echo $footer;
 ?>

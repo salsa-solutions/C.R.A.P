@@ -12,11 +12,10 @@ $header = <<<HEADER
             <li><a href="/schedule.php">Schedule</a></li>
             $admin_page
             $scheduling_page
-                
-        </div>
-            <div class="mt-2 ">
-                <button type="button" name="button" id="logOut" class="btn btn_logout">Log Out</button>
-            </div>
+            <li><button type="button" name="button" id="logOut" class="btn btn_logout">Log Out</button></li>
+            
+        </div>      
+        
     </ul>
 </div>
 
@@ -43,8 +42,19 @@ $footer = <<<FOOTER
 </html>
 FOOTER;
 
-// Out of Service
-$oos = <<< OOS
-<h1 class="">t</h1>
+// Out of Service text
+$out_of_service = <<<OOS
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Out of Service</h1>
+        </div>
+    </div>
+    
+        <p>The website is under maintenance.</p>
+</div>
 OOS;
+
+
+
 ?>

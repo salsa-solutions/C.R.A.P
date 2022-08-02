@@ -5,10 +5,6 @@ require_once('config.php');
 if (!isset($_SESSION['userlogin'])) {
     header("Location: login.php");
 }
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 
 if (isset($_GET['logout'])) {
     session_destroy();
@@ -19,7 +15,13 @@ $name = $_SESSION['userlogin'][0];
 $role = $_SESSION['userlogin'][1];
 $username = $_SESSION['userlogin'][2];
 $WEB_TITLE = 'Home';
-$_DEV = TRUE;
+// to turn off a site uncomment the following line:
+// $_DEV = true;
+if (($role == 'admin')) {
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+}
 if ( ($role == 'admin') || ($role == 'manager')) {
     $admin_page='<li><a href="/admin.php">Admin</a></li>';
     $scheduling_page='<li><a href="/scheduling.php">Scheduling</a></li>';
@@ -51,15 +53,10 @@ else {
 </head>
 
 
-    <?php
-    include_once("php/template.php");
-    // echo $_DEV;
-    echo $header;
-    // echo (($_DEV) && ($role == 'CaShIeR') || ($role == 'manager'));
-    if (($_DEV) && ($role == 'CaShIeR') || ($role == 'manager')) {
-        echo $oos;
-    }
-    else {
+<?php require("php/template.php"); echo $header ?>
+    <?php if (($_DEV) && (($role == 'CaShIeR') || ($role == 'manager')) == '1') {
+        echo $out_of_service;
+    }else{
     ?>
     <div class="container h-50 scroll">
         <div class="d-flex justify-content-left form-container">

@@ -43,8 +43,9 @@ p {
 }
 
 .btn_logout {
-    position: absolute;
-    right: 20px;
+    /* position: relative; */
+    float: right !important;
+    /* right: 0px; */
     background: rgb(0, 0, 0) !important;
     color: white !important;
 }
@@ -112,7 +113,7 @@ textarea {
 }
 
 @media screen and (min-width: 0px) and (max-width: 720px) {
-    .scroll{
+    .scroll {
         overflow-y: auto;
     }
     .page-wrap {

@@ -38,7 +38,7 @@ if($result){
 		$_SESSION['userlogin'] = [$name, $roll, $username];
 		echo '1';
 	}else{
-		echo 'Incorrect Login';		
+		echo 'Ha, I really hope you didnt forget your password';		
 	}
 }else{
 	echo 'There were errors while connecting to database.';
