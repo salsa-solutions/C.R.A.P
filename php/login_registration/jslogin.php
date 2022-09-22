@@ -1,17 +1,17 @@
 <?php
-	error_reporting(E_ALL);
-	ini_set('display_errors', 1);
-	ini_set('display_startup_errors', 1);
+//	error_reporting(E_ALL);
+//	ini_set('display_errors', 1);
+//	ini_set('display_startup_errors', 1);
 	require_once('../../config.php');
 	$username = $_POST['username'];	
-	// $username = 'macifoe';
+//	$username = 'macifoe';
 
 	// selecting name from database by username
 	$sql = "SELECT firstname, lastname, roll FROM users WHERE username = ? LIMIT 1";
 	$stmtselect  = $db->prepare($sql);
 	$result = $stmtselect->execute([$username]);
 	$user = $stmtselect->fetch(PDO::FETCH_ASSOC);
-	// echo '<pre>'; print_r($user); echo '</pre>';
+//	echo '<pre>'; print_r($user); echo '</pre>';
 	$name = $user['firstname'] . ' ' . $user['lastname'];
 	$roll = $user['roll'];
 

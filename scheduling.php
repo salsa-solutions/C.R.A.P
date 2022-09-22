@@ -44,9 +44,9 @@ if ($i == 0) {
     $current_schedule_name = 'null';
 }
 
-echo '<pre>';
-print_r($current_schedule_name);
-echo '</pre>';
+// echo '<pre>';
+// print_r($current_schedule_name);
+// echo '</pre>';
 ?>
 
 
@@ -106,16 +106,30 @@ echo '</pre>';
                         </thead>
                         <tbody>
                             <?php
+                        //     function removeElementWithValue($array, $key, $value){
+                        //         foreach($array as $subKey => $subArray){
+                        //              if($subArray[$key] == $value){
+                        //                   unset($array[$subKey]);
+                        //              }
+                        //         }
+                        //         return $array;
+                        //    }
 
                             include('config.php');
                             $result = $db->prepare("SELECT date, username, name, monday, tuesday, wednesday, thursday, friday, saturday FROM avil_day  ORDER BY name DESC");
                             $result->execute();
+
+                            // https://stackoverflow.com/questions/4466159/delete-element-from-multidimensional-array-based-on-value
+                            // for deleting multidimentinal arrays
                             // echo $result->fetch();
-                            for ($i = 0; $name = $result->fetch(); $i++) {
-                                $name[] = $name[$i];
-                                echo '<pre>';
-                                print_r(array_diff($name, $current_schedule_name));
-                                echo '</pre>';
+                            for ($i = 0; $row = $result->fetch(); $i++) {
+                                foreach ($arr1 as $thisArrIndex=>$subArray)
+                                {
+                                    if ( $subArray['name'] == "delete" ) {
+                                        unset($arr1[$thisArrIndex]);
+                                    }
+                                }
+
                             }
 
 

@@ -3,7 +3,7 @@ session_start();
 require_once('config.php');
 
 if (!isset($_SESSION['userlogin'])) {
-    header("Location: login.php");
+  header("Location: login.php");
 }
 
 if (isset($_GET['logout'])) {
@@ -16,7 +16,7 @@ $role = $_SESSION['userlogin'][1];
 $username = $_SESSION['userlogin'][2];
 $WEB_TITLE = 'Home';
 // to turn off a site uncomment the following line:
-// $_DEV = true;
+//$_DEV = true;
 if (($role == 'admin')) {
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
