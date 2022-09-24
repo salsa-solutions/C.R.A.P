@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 01, 2022 at 04:43 PM
+-- Generation Time: Sep 22, 2022 at 02:14 AM
 -- Server version: 10.3.34-MariaDB-0ubuntu0.20.04.1
 -- PHP Version: 7.4.3
 
@@ -41,6 +41,13 @@ CREATE TABLE `avil_day` (
   `saturday` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `avil_day`
+--
+
+INSERT INTO `avil_day` (`id`, `date`, `name`, `username`, `monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `saturday`) VALUES
+(1, '2022-08-09', 'ben tsardoulias', 'tibthink', '9', '9', '9', '9', '9', '9');
+
 -- --------------------------------------------------------
 
 --
@@ -59,8 +66,6 @@ CREATE TABLE `current_schedule` (
   `friday` varchar(9) NOT NULL,
   `saturday` varchar(9) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-
 
 -- --------------------------------------------------------
 
@@ -92,7 +97,7 @@ CREATE TABLE `sp` (
   `id` int(100) NOT NULL,
   `date` varchar(100) NOT NULL,
   `name` varchar(100) NOT NULL,
-  `message` varchar(100) NOT NULL
+  `message` mediumtext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -103,6 +108,7 @@ CREATE TABLE `sp` (
 
 CREATE TABLE `users` (
   `id` int(255) NOT NULL,
+  `date` varchar(100) NOT NULL,
   `roll` varchar(1000) NOT NULL DEFAULT 'CaShIeR',
   `firstname` varchar(100) NOT NULL,
   `lastname` varchar(100) NOT NULL,
@@ -111,6 +117,13 @@ CREATE TABLE `users` (
   `password` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `date`, `roll`, `firstname`, `lastname`, `email`, `username`, `password`) VALUES
+(1, 'today', 'admin', 'ben', 'tsardoulias', 'bent23jam@gmail.com', 'tibthink', 'cba12ebbf29e9db08e3bc1650c5e7b3e0b683688'),
+(2, '2022-09-21 16:07:32', 'CaShIeR', 'test', 'test', 'test', 'test', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3');
 
 --
 -- Indexes for dumped tables
@@ -154,13 +167,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `avil_day`
 --
 ALTER TABLE `avil_day`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `current_schedule`
 --
 ALTER TABLE `current_schedule`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `pref_day`
@@ -178,7 +191,7 @@ ALTER TABLE `sp`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0 ;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

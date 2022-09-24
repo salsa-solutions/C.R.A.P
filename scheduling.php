@@ -122,11 +122,11 @@ if ($i == 0) {
                             // https://stackoverflow.com/questions/4466159/delete-element-from-multidimensional-array-based-on-value
                             // for deleting multidimentinal arrays
                             // echo $result->fetch();
-                            for ($i = 0; $row = $result->fetch(); $i++) {
-                                foreach ($arr1 as $thisArrIndex=>$subArray)
+                            for ($i = 0; $row = $result->fetch(); $name = $current_schedule_name; $i++) {
+                                foreach ($row as $thisArrIndex=>$subArray)
                                 {
-                                    if ( $subArray['name'] == "delete" ) {
-                                        unset($arr1[$thisArrIndex]);
+                                    if ( $subArray['name'] ==  ) {
+                                        unset($row[$thisArrIndex]);
                                     }
                                 }
 
