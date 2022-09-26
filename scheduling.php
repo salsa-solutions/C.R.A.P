@@ -6,7 +6,6 @@ if (!isset($_SESSION['userlogin'])) {
     header("Location: login.php");
 }
 
-
 $name = $_SESSION['userlogin'][0];
 $role = $_SESSION['userlogin'][1];
 $username = $_SESSION['userlogin'][2];
@@ -28,28 +27,6 @@ else {
 }
 
 ?>
-
-<?php
-
-$result = $db->prepare("SELECT name FROM current_schedule ORDER BY date DESC");
-$result->execute();
-// $result->fetch_all();
-
-// echo $result;
-for ($i = 0; $pref = $result->fetch(); $i++) {
-
-    $current_schedule_name[] = $pref['name'];
-}
-if ($i == 0) {
-    $current_schedule_name = 'null';
-}
-
-// echo '<pre>';
-// print_r($current_schedule_name);
-// echo '</pre>';
-?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -80,8 +57,9 @@ if ($i == 0) {
     <?php require("php/template.php"); echo $header ?>
     <?php if (($_DEV) && (($role == 'CaShIeR') || ($role == 'manager')) == '1') {
         echo $out_of_service;
-    }else{
+    }elseif(($role == 'CaShIeR')){
     ?>
+    
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -106,42 +84,53 @@ if ($i == 0) {
                         </thead>
                         <tbody>
                             <?php
-                        //     function removeElementWithValue($array, $key, $value){
-                        //         foreach($array as $subKey => $subArray){
-                        //              if($subArray[$key] == $value){
-                        //                   unset($array[$subKey]);
-                        //              }
-                        //         }
-                        //         return $array;
-                        //    }
+                                $result = $db->prepare("SELECT status FROM current_schedule");
+                                $result->execute();
+                                for ($i = 0; $pref = $result->fetch(); $i++) {
 
-                            include('config.php');
-                            $result = $db->prepare("SELECT date, username, name, monday, tuesday, wednesday, thursday, friday, saturday FROM avil_day  ORDER BY name DESC");
-                            $result->execute();
-
-                            // https://stackoverflow.com/questions/4466159/delete-element-from-multidimensional-array-based-on-value
-                            // for deleting multidimentinal arrays
-                            // echo $result->fetch();
-                            for ($i = 0; $row = $result->fetch(); $name = $current_schedule_name; $i++) {
-                                foreach ($row as $thisArrIndex=>$subArray)
-                                {
-                                    if ( $subArray['name'] ==  ) {
-                                        unset($row[$thisArrIndex]);
-                                    }
+                                    $current_schedule_name[] = $pref['status'];
+                                }
+                                if ($i == 0) {
+                                    $current_schedule_name[] = 'null';
                                 }
 
-                            }
+                                // https://stackoverflow.com/questions/4466159/delete-element-from-multidimensional-array-based-on-value
+                                // for deleting multidimentinal arrays
+                                // echo $result->fetch();
+                                    foreach ($current_schedule_name as $thisArrIndex=>$subArray)
+                                    {
+                                        if ( $subArray['status'] == 'approved' ) {
+                                            unset($row[$thisArrIndex]);
+                                        }
+                                    }
 
+                                include('config.php');
+                                $result = $db->prepare("SELECT date, username, name, monday, tuesday, wednesday, thursday, friday, saturday FROM avil_day  ORDER BY name DESC");
+                                $result->execute();
 
+                                // https://stackoverflow.com/questions/4466159/delete-element-from-multidimensional-array-based-on-value
+                                // for deleting multidimentinal arrays
+                                // echo $result->fetch();
+                                // for ($i = 0; $row = $result->fetch(); $name = $current_schedule_name; $i++) {
+                                //     foreach ($row as $thisArrIndex=>$subArray)
+                                //     {
+                                //         if ( $subArray[''] ==  ) {
+                                //             unset($row[$thisArrIndex]);
+                                //         }
+                                //     }
 
-                            for ($i = 0; $row = $result->fetch(); $i++) {
-
-                                echo '<pre>';
-                                print_r($row);
-                                echo '</pre>';
-                                // if ($current_schedule_name == $result['name']) {
-                                //     unset($result['name']);
                                 // }
+
+
+
+                                for ($i = 0; $row = $result->fetch(); $i++) {
+
+                                    echo '<pre>';
+                                    print_r($row);
+                                    echo '</pre>';
+                                    // if ($current_schedule_name == $result['name']) {
+                                    //     unset($result['name']);
+                                    // }
 
 
 
@@ -178,6 +167,7 @@ if ($i == 0) {
                                     var valid = this.form.checkValidity();
 
                                     if (valid) {
+                                        var approved = <?php echo $name; ?>
                                         var name = "<?php echo $row['name']; ?>";
                                         var username = "<?php echo $row['username']; ?>";
                                         var monday_sched = $(
@@ -205,6 +195,7 @@ if ($i == 0) {
                                             url: '/php/db_handling/add_current.php',
                                             type: 'POST',
                                             data: {
+                                                approved: approved,
                                                 name: name,
                                                 username: username,
                                                 monday: monday_sched,

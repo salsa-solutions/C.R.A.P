@@ -55,6 +55,18 @@ $out_of_service = <<<OOS
 </div>
 OOS;
 
+$fourohthree = <<<FOT
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>403</h1>
+        </div>
+    </div>
+    
+        <p>Whoa their buckeroo, what do you think you are doing</p>
+</div>
+
+FOT;
 
 
 ?>

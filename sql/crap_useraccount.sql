@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Sep 22, 2022 at 02:14 AM
+-- Generation Time: Sep 24, 2022 at 06:13 AM
 -- Server version: 10.3.34-MariaDB-0ubuntu0.20.04.1
 -- PHP Version: 7.4.3
 
@@ -56,6 +56,8 @@ INSERT INTO `avil_day` (`id`, `date`, `name`, `username`, `monday`, `tuesday`, `
 
 CREATE TABLE `current_schedule` (
   `id` int(100) NOT NULL,
+  `approved` varchar(100) NOT NULL,
+  `status` text NOT NULL,
   `date` varchar(100) NOT NULL,
   `name` varchar(100) NOT NULL,
   `username` varchar(100) NOT NULL,

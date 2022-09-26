@@ -80,37 +80,6 @@ if ($i == 0) {
 include_once('php/template.php');
 
 echo $header;
-include('config.php');
-$result = $db->prepare("SELECT date, username, name, monday, tuesday, wednesday, thursday, friday, saturday FROM avil_day  ORDER BY name DESC");
-$result->execute();
-for ($i = 0; $row = $result->fetch(); $i++) {
-    // echo '<pre>';
-    // print_r($row);
-    // echo '</pre>';
-    // if($current_schedule_name[$i] === $row['name']){
-        
-    // }
-    // else{
-    // echo $current_schedule_name[$i] . '<br>';
-    // echo $row['name'] . '<br>';
-
-    foreach($current_schedule_name as $string)
-    {
-        echo $string == $row['name'];
-        // if(){
-            
-    
-        //     echo 'big fuck';
-            
-
-
-        // }
-        // else{
-        //     echo 'fuck';
-        // }
-    }
-    
-}
     ?>
 
 
