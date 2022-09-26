@@ -1,9 +1,9 @@
 <?php
 session_start();
-require_once('config.php');
+require_once 'config.php';
 
 if (!isset($_SESSION['userlogin'])) {
-    header("Location: login.php");
+    header('Location: login.php');
 }
 
 $name = $_SESSION['userlogin'][0];
@@ -17,13 +17,12 @@ if (($role == 'admin')) {
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
 }
-if ( ($role == 'admin') || ($role == 'manager')) {
-    $admin_page='<li><a href="/admin.php">Admin</a></li>';
-    $scheduling_page='<li><a href="/scheduling.php">Scheduling</a></li>';
-}
-else {
-    $admin_page= NULL;
-    $scheduling_page= NULL;
+if (($role == 'admin') || ($role == 'manager')) {
+    $admin_page = '<li><a href="/admin.php">Admin</a></li>';
+    $scheduling_page = '<li><a href="/scheduling.php">Scheduling</a></li>';
+} else {
+    $admin_page = null;
+    $scheduling_page = null;
 }
 
 ?>
@@ -49,15 +48,17 @@ else {
     <link rel="stylesheet" href="css/backround.css">
     <link rel="stylesheet" href="css/home.css">
     <link rel="stylesheet" href="css/scheduling.css">
-    <title><?php echo $WEB_TITLE ?> | Capriotti's Regional Attendance Program</title>
+    <title><?php echo $WEB_TITLE; ?> | Capriotti's Regional Attendance Program</title>
 
 </head>
 
 <body>
-    <?php require("php/template.php"); echo $header ?>
+    <?php require 'php/template.php'; echo $header; ?>
     <?php if (($_DEV) && (($role == 'CaShIeR') || ($role == 'manager')) == '1') {
-        echo $out_of_service;
-    }elseif(($role == 'CaShIeR')){
+    echo $out_of_service;
+} elseif (($role == 'CaShIeR')) {
+    echo $fourohthree;
+} else {
     ?>
     
     <div class="container">
@@ -84,84 +85,74 @@ else {
                         </thead>
                         <tbody>
                             <?php
-                                $result = $db->prepare("SELECT status FROM current_schedule");
-                                $result->execute();
-                                for ($i = 0; $pref = $result->fetch(); $i++) {
+                                $result = $db->prepare('SELECT status FROM current_schedule');
+    $result->execute();
+    for ($i = 0; $pref = $result->fetch(); ++$i) {
+        $current_schedule_name[] = $pref['status'];
+    }
+    if ($i == 0) {
+        $current_schedule_name[] = 'null';
+    }
 
-                                    $current_schedule_name[] = $pref['status'];
-                                }
-                                if ($i == 0) {
-                                    $current_schedule_name[] = 'null';
-                                }
+    // https://stackoverflow.com/questions/4466159/delete-element-from-multidimensional-array-based-on-value
+    // for deleting multidimentinal arrays
+    // echo $result->fetch();
+    foreach ($current_schedule_name as $thisArrIndex => $subArray) {
+        if ($subArray['status'] == 'approved') {
+            unset($row[$thisArrIndex]);
+        }
+    }
 
-                                // https://stackoverflow.com/questions/4466159/delete-element-from-multidimensional-array-based-on-value
-                                // for deleting multidimentinal arrays
-                                // echo $result->fetch();
-                                    foreach ($current_schedule_name as $thisArrIndex=>$subArray)
-                                    {
-                                        if ( $subArray['status'] == 'approved' ) {
-                                            unset($row[$thisArrIndex]);
-                                        }
-                                    }
+    include 'config.php';
+    $result = $db->prepare('SELECT date, username, name, monday, tuesday, wednesday, thursday, friday, saturday FROM avil_day  ORDER BY name DESC');
+    $result->execute();
 
-                                include('config.php');
-                                $result = $db->prepare("SELECT date, username, name, monday, tuesday, wednesday, thursday, friday, saturday FROM avil_day  ORDER BY name DESC");
-                                $result->execute();
+    // https://stackoverflow.com/questions/4466159/delete-element-from-multidimensional-array-based-on-value
+    // for deleting multidimentinal arrays
+    // echo $result->fetch();
+    // for ($i = 0; $row = $result->fetch(); $name = $current_schedule_name; $i++) {
+    //     foreach ($row as $thisArrIndex=>$subArray)
+    //     {
+    //         if ( $subArray[''] ==  ) {
+    //             unset($row[$thisArrIndex]);
+    //         }
+    //     }
 
-                                // https://stackoverflow.com/questions/4466159/delete-element-from-multidimensional-array-based-on-value
-                                // for deleting multidimentinal arrays
-                                // echo $result->fetch();
-                                // for ($i = 0; $row = $result->fetch(); $name = $current_schedule_name; $i++) {
-                                //     foreach ($row as $thisArrIndex=>$subArray)
-                                //     {
-                                //         if ( $subArray[''] ==  ) {
-                                //             unset($row[$thisArrIndex]);
-                                //         }
-                                //     }
+    // }
 
-                                // }
-
-
-
-                                for ($i = 0; $row = $result->fetch(); $i++) {
-
-                                    echo '<pre>';
-                                    print_r($row);
-                                    echo '</pre>';
-                                    // if ($current_schedule_name == $result['name']) {
-                                    //     unset($result['name']);
-                                    // }
-
-
-
-
-                            ?>
+    for ($i = 0; $row = $result->fetch(); ++$i) {
+        echo '<pre>';
+        print_r($row);
+        echo '</pre>';
+        // if ($current_schedule_name == $result['name']) {
+        //     unset($result['name']);
+        // }?>
                             <form action="">
                                 <td><?php echo $row['name']; ?></td>
-                                <td><input style="width: 90px ;" id="<?php echo $row['username'] . "_monday-sched"; ?>"
+                                <td><input style="width: 90px ;" id="<?php echo $row['username'].'_monday-sched'; ?>"
                                         placeholder="<?php echo $row['monday']; ?>"></td>
-                                <td><input style="width: 90px ;" id="<?php echo $row['username'] . "_tuesday-sched"; ?>"
+                                <td><input style="width: 90px ;" id="<?php echo $row['username'].'_tuesday-sched'; ?>"
                                         placeholder="<?php echo $row['tuesday']; ?>"></td>
                                 <td><input style="width: 90px ;"
-                                        id="<?php echo $row['username'] . "_wednesday-sched"; ?>"
+                                        id="<?php echo $row['username'].'_wednesday-sched'; ?>"
                                         placeholder="<?php echo $row['wednesday']; ?>"></td>
                                 <td><input style="width: 90px ;"
-                                        id="<?php echo $row['username'] . "_thursday-sched"; ?>"
+                                        id="<?php echo $row['username'].'_thursday-sched'; ?>"
                                         placeholder="<?php echo $row['thursday']; ?>"></td>
-                                <td><input style="width: 90px ;" id="<?php echo $row['username'] . "_friday-sched"; ?>"
+                                <td><input style="width: 90px ;" id="<?php echo $row['username'].'_friday-sched'; ?>"
                                         placeholder="<?php echo $row['friday']; ?>"></td>
                                 <td><input style="width: 90px ;"
-                                        id="<?php echo $row['username'] . "_saturday-sched"; ?>"
+                                        id="<?php echo $row['username'].'_saturday-sched'; ?>"
                                         placeholder="<?php echo $row['saturday']; ?>"></td>
                                 <!-- <td><input style="width: 90px ;" id="hours-sched"></td> -->
                                 <!-- <td><input style="width: 90px ;" id="hours" placeholder="<?php echo $row['username']; ?>"></td> -->
                                 <td><button type="button" name="button"
-                                        id="<?php echo $row['username'] . "_sumbit_approved_sched"; ?>"
+                                        id="<?php echo $row['username'].'_sumbit_approved_sched'; ?>"
                                         class="btn">sumbit</button></td>
                             </form>
                             <script>
                             $(function() {
-                                $('#<?php echo $row['username'] . "_sumbit_approved_sched"; ?>').click(function(
+                                $('#<?php echo $row['username'].'_sumbit_approved_sched'; ?>').click(function(
                                     e) {
 
                                     var valid = this.form.checkValidity();
@@ -171,22 +162,22 @@ else {
                                         var name = "<?php echo $row['name']; ?>";
                                         var username = "<?php echo $row['username']; ?>";
                                         var monday_sched = $(
-                                                '#<?php echo $row['username'] . '_monday-sched'; ?>')
+                                                '#<?php echo $row['username'].'_monday-sched'; ?>')
                                             .val();
                                         var tuesday_sched = $(
-                                                '#<?php echo $row['username'] . '_tuesday-sched'; ?>')
+                                                '#<?php echo $row['username'].'_tuesday-sched'; ?>')
                                             .val();
                                         var wednesday_sched = $(
-                                                '#<?php echo $row['username'] . '_wednesday-sched'; ?>')
+                                                '#<?php echo $row['username'].'_wednesday-sched'; ?>')
                                             .val();
                                         var thursday_sched = $(
-                                                '#<?php echo $row['username'] . '_thursday-sched'; ?>')
+                                                '#<?php echo $row['username'].'_thursday-sched'; ?>')
                                             .val();
                                         var friday_sched = $(
-                                                '#<?php echo $row['username'] . '_friday-sched'; ?>')
+                                                '#<?php echo $row['username'].'_friday-sched'; ?>')
                                             .val();
                                         var saturday_sched = $(
-                                                '#<?php echo $row['username'] . '_saturday-sched'; ?>')
+                                                '#<?php echo $row['username'].'_saturday-sched'; ?>')
                                             .val();
                                         // var hours = $('#hours-sched').val();
                                         // console.log(hours);
@@ -229,14 +220,11 @@ else {
                         </tbody>
 
                         <?php
-                            }
+    }
 
-
-
-                            // if ($i == 0) {
-                            //     echo '<td colspan="8">No schedules have been sent</td>';
-                            // }
-                    ?>
+    // if ($i == 0) {
+    //     echo '<td colspan="8">No schedules have been sent</td>';
+    // }?>
                     </table>
                 </div>
             </div>
@@ -252,6 +240,6 @@ else {
     </div>
 
     <?php
-    }
-    require("php/template.php");
+}
+    require 'php/template.php';
     echo $footer; ?>
