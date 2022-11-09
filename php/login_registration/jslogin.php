@@ -1,7 +1,37 @@
 <?php
-//	error_reporting(E_ALL);
-//	ini_set('display_errors', 1);
-//	ini_set('display_startup_errors', 1);
+
+function getUserIpAddr()
+{
+  if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+    //ip from share internet
+    $ip = $_SERVER['HTTP_CLIENT_IP'];
+  } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+    //ip pass from proxy
+    $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+  } else {
+    $ip = $_SERVER['REMOTE_ADDR'];
+  }
+  return $ip;
+}
+
+?>
+
+<!-- <?php
+
+// function login_log($date, $username, $name, $ip) {
+// 	$currentDate = new DateTime();
+// 	$date = $currentDate->format('Y-m-d H:i:s');
+// 	$ip = getUserIpAddr();
+// 	$sql = "INSERT INTO succesful_logins (date, username, name, ip ) VALUES(?,?,? ,?)";
+//     $stmtinsert = $db->prepare($sql);
+//     $result = $stmtinsert->execute([ $date, $username, $name, $ip]); 
+// }
+?> -->
+
+<?php
+	error_reporting(E_ALL);
+	ini_set('display_errors', 1);
+	ini_set('display_startup_errors', 1);
 	require_once('../../config.php');
 	$username = $_POST['username'];	
 //	$username = 'macifoe';
@@ -20,6 +50,7 @@
 
 
 <?php
+
 session_start();
 require_once('../../config.php');
 
@@ -37,8 +68,24 @@ if($result){
 	if($stmtselect->rowCount() > 0){
 		$_SESSION['userlogin'] = [$name, $roll, $username];
 		echo '1';
+		$currentDate = new DateTime();
+		$date = $currentDate->format('Y-m-d H:i:s');
+		$ip = getUserIpAddr();
+		$sql = "INSERT INTO succesful_logins (date, username, name, ip ) VALUES(?,?,? ,?)";
+        $stmtinsert = $db->prepare($sql);
+		$result = $stmtinsert->execute([ $date, $username, $name, $ip]);
+
+        
+
 	}else{
-		echo 'Ha, I really hope you didnt forget your password';		
+		echo 'Ha, I really hope you didnt forget your password';
+		$username = $_POST['username'];		
+		$unsuccesful_login_currentDate = new DateTime();
+		$unsuccesful_login_date = $unsuccesful_login_currentDate->format('Y-m-d H:i:s');
+		$unsuccesful_login_ip = getUserIpAddr();
+		$unsuccesful_login_sql = "INSERT INTO unsuccesful_logins (date, username, name, ip ) VALUES(?,?,? ,?)";
+        $unsuccesful_login_stmtinsert = $db->prepare($unsuccesful_login_sql);
+        $unsuccesful_login_result = $unsuccesful_login_stmtinsert->execute([ $unsuccesful_login_date, $username, $name, $unsuccesful_login_ip]); 	
 	}
 }else{
 	echo 'There were errors while connecting to database.';

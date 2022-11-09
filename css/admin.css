@@ -48,10 +48,9 @@
 }
 
 @media screen and (min-width: 0px) and (max-width: 720px) {
-    .scroll{
+    .scroll {
         overflow-y: auto;
     }
-
     .pref_schedule_container {
         /* padding: 0 2rem; */
         position: relative;
@@ -84,5 +83,4 @@
         background-color: rgb(216, 216, 216);
         right: 40px;
     }
-    
 }

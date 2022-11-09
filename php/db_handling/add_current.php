@@ -25,8 +25,8 @@ if (isset($_POST)) {
     $friday            = $_POST['friday'];
     $saturday          = $_POST['saturday'];
     // $hours             = $_POST['hours'];
-    $sql = "INSERT INTO current_schedule (approved, status, date, name, username, monday, tuesday, wednesday, thursday, friday, saturday) VALUES(  ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    // $stmtinsert = $db->prepare($sql);
+    $sql = "INSERT INTO current_schedule (approved, status, date, name, username, monday, tuesday, wednesday, thursday, friday, saturday) VALUES(  ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?)";
+    $stmtinsert = $db->prepare($sql);
     // print_r($stmtinsert) ;
     $result = $stmtinsert->execute([ $approved, $status, $date, $name, $username, $monday, $tuesday, $wednesday, $thursday, $friday, $saturday]);
     if ($result) {

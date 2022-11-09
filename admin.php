@@ -122,9 +122,9 @@ else {
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-9">
+                <div class="col-md-15">
                     <div class="table-responsive">
-                        <table class="table table-striped">
+                        <table class="table table-striped ">
                             <thead>
                                 <tr>
                                     <th scope="col">Date</th>
@@ -174,12 +174,12 @@ else {
     <div class="pref_schedule_container">
         <div class="container">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-15">
                     <h1>Wanted days</h1>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-9">
+                <div class="col-md-15">
                     <div class="table-responsive">
                         <table class="table table-striped">
                             <thead>
