@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.5deb2
+-- version 5.1.1deb5ubuntu1
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Sep 24, 2022 at 06:13 AM
--- Server version: 10.3.34-MariaDB-0ubuntu0.20.04.1
--- PHP Version: 7.4.3
+-- Generation Time: Nov 11, 2022 at 07:56 PM
+-- Server version: 8.0.31-0ubuntu0.22.04.1
+-- PHP Version: 8.1.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -29,7 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `avil_day` (
-  `id` int(100) NOT NULL,
+  `id` int NOT NULL,
   `date` date NOT NULL,
   `name` varchar(100) NOT NULL,
   `username` varchar(100) NOT NULL,
@@ -39,14 +38,16 @@ CREATE TABLE `avil_day` (
   `thursday` varchar(10) NOT NULL,
   `friday` varchar(10) NOT NULL,
   `saturday` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `avil_day`
 --
 
 INSERT INTO `avil_day` (`id`, `date`, `name`, `username`, `monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `saturday`) VALUES
-(1, '2022-08-09', 'ben tsardoulias', 'tibthink', '9', '9', '9', '9', '9', '9');
+(1, '2022-08-09', 'ben tsardoulias', 'tibthink', '9', '9', '9', '9', '9', '9'),
+(2, '2022-10-26', 'Rebecca nee', 'fucktwat', '9am-4pm', '9am-4pm', '9am-4pm', '9am-4pm', '9am-4pm', '9am-4pm'),
+(3, '2022-10-26', 'bret mclovin', 'uwu', '3pm-8pm', '3pm-8pm', '3pm-8pm', '3pm-8pm', '3pm-8pm', '3pm-8pm');
 
 -- --------------------------------------------------------
 
@@ -55,7 +56,7 @@ INSERT INTO `avil_day` (`id`, `date`, `name`, `username`, `monday`, `tuesday`, `
 --
 
 CREATE TABLE `current_schedule` (
-  `id` int(100) NOT NULL,
+  `id` int NOT NULL,
   `approved` varchar(100) NOT NULL,
   `status` text NOT NULL,
   `date` varchar(100) NOT NULL,
@@ -67,7 +68,7 @@ CREATE TABLE `current_schedule` (
   `thursday` varchar(9) NOT NULL,
   `friday` varchar(9) NOT NULL,
   `saturday` varchar(9) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -76,7 +77,7 @@ CREATE TABLE `current_schedule` (
 --
 
 CREATE TABLE `pref_day` (
-  `id` int(100) NOT NULL,
+  `id` int NOT NULL,
   `date` varchar(100) NOT NULL,
   `name` varchar(100) NOT NULL,
   `username` varchar(100) NOT NULL,
@@ -86,8 +87,8 @@ CREATE TABLE `pref_day` (
   `thursday` varchar(9) NOT NULL,
   `friday` varchar(9) NOT NULL,
   `saturday` varchar(9) NOT NULL,
-  `hours` int(2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `hours` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -96,11 +97,39 @@ CREATE TABLE `pref_day` (
 --
 
 CREATE TABLE `sp` (
-  `id` int(100) NOT NULL,
+  `id` int NOT NULL,
   `date` varchar(100) NOT NULL,
   `name` varchar(100) NOT NULL,
   `message` mediumtext NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `succesful_logins`
+--
+
+CREATE TABLE `succesful_logins` (
+  `id` int NOT NULL,
+  `date` text NOT NULL,
+  `username` mediumtext NOT NULL,
+  `name` mediumtext NOT NULL,
+  `ip` mediumtext NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `unsuccesful_logins`
+--
+
+CREATE TABLE `unsuccesful_logins` (
+  `id` int NOT NULL,
+  `date` text NOT NULL,
+  `username` mediumtext NOT NULL,
+  `name` mediumtext NOT NULL,
+  `ip` mediumtext NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -109,7 +138,7 @@ CREATE TABLE `sp` (
 --
 
 CREATE TABLE `users` (
-  `id` int(255) NOT NULL,
+  `id` int NOT NULL,
   `date` varchar(100) NOT NULL,
   `roll` varchar(1000) NOT NULL DEFAULT 'CaShIeR',
   `firstname` varchar(100) NOT NULL,
@@ -117,15 +146,16 @@ CREATE TABLE `users` (
   `email` varchar(100) NOT NULL,
   `username` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `date`, `roll`, `firstname`, `lastname`, `email`, `username`, `password`) VALUES
-(1, 'today', 'admin', 'ben', 'tsardoulias', 'bent23jam@gmail.com', 'tibthink', 'cba12ebbf29e9db08e3bc1650c5e7b3e0b683688'),
-(2, '2022-09-21 16:07:32', 'CaShIeR', 'test', 'test', 'test', 'test', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3');
+(4, '2022-10-26 21:34:50', 'admin', 'ben', 'tsardoulias', 'bent23jam@gmail.com', 'tibthink', '44f67e88ee68463b304b9f06ef8adeaa77fc982f'),
+(5, '2022-10-26 21:43:57', 'CaShIeR', 'Rebecca', 'nee', 'johnndowadasd', 'fucktwat', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8'),
+(6, '2022-10-26 21:49:25', 'CaShIeR', 'bret', 'mclovin', 'uwu', 'uwu', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8');
 
 --
 -- Indexes for dumped tables
@@ -156,6 +186,18 @@ ALTER TABLE `sp`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `succesful_logins`
+--
+ALTER TABLE `succesful_logins`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `unsuccesful_logins`
+--
+ALTER TABLE `unsuccesful_logins`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -169,31 +211,43 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `avil_day`
 --
 ALTER TABLE `avil_day`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `current_schedule`
 --
 ALTER TABLE `current_schedule`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `pref_day`
 --
 ALTER TABLE `pref_day`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `sp`
 --
 ALTER TABLE `sp`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `succesful_logins`
+--
+ALTER TABLE `succesful_logins`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `unsuccesful_logins`
+--
+ALTER TABLE `unsuccesful_logins`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

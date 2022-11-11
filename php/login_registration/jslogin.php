@@ -16,18 +16,6 @@ function getUserIpAddr()
 
 ?>
 
-<!-- <?php
-
-// function login_log($date, $username, $name, $ip) {
-// 	$currentDate = new DateTime();
-// 	$date = $currentDate->format('Y-m-d H:i:s');
-// 	$ip = getUserIpAddr();
-// 	$sql = "INSERT INTO succesful_logins (date, username, name, ip ) VALUES(?,?,? ,?)";
-//     $stmtinsert = $db->prepare($sql);
-//     $result = $stmtinsert->execute([ $date, $username, $name, $ip]); 
-// }
-?> -->
-
 <?php
 	error_reporting(E_ALL);
 	ini_set('display_errors', 1);
@@ -42,10 +30,13 @@ function getUserIpAddr()
 	$result = $stmtselect->execute([$username]);
 	$user = $stmtselect->fetch(PDO::FETCH_ASSOC);
 //	echo '<pre>'; print_r($user); echo '</pre>';
-	$name = $user['firstname'] . ' ' . $user['lastname'];
-	$roll = $user['roll'];
-
-	// echo $name;
+	if($user){
+		$name = $user['firstname'] . ' ' . $user['lastname'];
+		$roll = $user['roll'];
+	}else{
+		$name = 'Guest';
+		$roll = 'Guest';
+	}
 ?>
 
 
@@ -79,17 +70,24 @@ if($result){
 
 	}else{
 		echo 'Ha, I really hope you didnt forget your password';
-		$username = $_POST['username'];		
-		$unsuccesful_login_currentDate = new DateTime();
-		$unsuccesful_login_date = $unsuccesful_login_currentDate->format('Y-m-d H:i:s');
-		$unsuccesful_login_ip = getUserIpAddr();
-		$unsuccesful_login_sql = "INSERT INTO unsuccesful_logins (date, username, name, ip ) VALUES(?,?,? ,?)";
-        $unsuccesful_login_stmtinsert = $db->prepare($unsuccesful_login_sql);
-        $unsuccesful_login_result = $unsuccesful_login_stmtinsert->execute([ $unsuccesful_login_date, $username, $name, $unsuccesful_login_ip]); 	
+		
+		// log failed login attemps with ip address and date and name and username
+		$currentDate = new DateTime();
+		$date = $currentDate->format('Y-m-d H:i:s');
+		$ip = getUserIpAddr();
+		$sql = "INSERT INTO unsuccesful_logins (date, username, name, ip ) VALUES(?,?,? ,?)";
+		$stmtinsert = $db->prepare($sql);
+		$result = $stmtinsert->execute([ $date, $username, $name, $ip]);
 	}
+		
+		// $username = $_POST['username'];		
+		// $unsuccesful_login_currentDate = new DateTime();
+		// $unsuccesful_login_date = $unsuccesful_login_currentDate->format('Y-m-d H:i:s');
+		// $unsuccesful_login_ip = getUserIpAddr();
+		// $unsuccesful_login_sql = "INSERT INTO unsuccesful_logins (date, username, name, ip ) VALUES(?,?,? ,?)";
+        // $unsuccesful_login_stmtinsert = $db->prepare($unsuccesful_login_sql);
+        // $unsuccesful_login_result = $unsuccesful_login_stmtinsert->execute([ $unsuccesful_login_date, $username, $name, $unsuccesful_login_ip]); 
 }else{
 	echo 'There were errors while connecting to database.';
 }
 ?>
-
-
