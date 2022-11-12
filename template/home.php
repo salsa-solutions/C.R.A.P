@@ -15,8 +15,10 @@ $username = $_SESSION['userlogin'][2];
 $WEB_TITLE = 'Home';
 $_DEV = false;
 if ( ($role == 'admin') || ($role == 'manager')) {
-    $admin_page='<li><a href="/admin.php">Admin</a></li>';
-    $scheduling_page='<li><a href="/scheduling.php">Scheduling</a></li>';
+    $managment = 'Management';
+    $admin_page='<a href="/admin.php">Admin</a>';
+    $scheduling_page='<a href="/scheduling.php">Scheduling</a>';
+    $approval = '<a href="/approval.php">Approval</a>';
 }
 else {
     $admin_page= NULL;
@@ -40,6 +42,7 @@ else {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="css/backround.css">
     <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/nav.css">
     <title><?php echo $WEB_TITLE; ?> | Capriotti's Regional Attendance Program</title>
 
 </head>

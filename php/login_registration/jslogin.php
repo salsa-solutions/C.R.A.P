@@ -70,8 +70,6 @@ if($result){
 
 	}else{
 		echo 'Ha, I really hope you didnt forget your password';
-		
-		// log failed login attemps with ip address and date and name and username
 		$currentDate = new DateTime();
 		$date = $currentDate->format('Y-m-d H:i:s');
 		$ip = getUserIpAddr();
@@ -79,14 +77,6 @@ if($result){
 		$stmtinsert = $db->prepare($sql);
 		$result = $stmtinsert->execute([ $date, $username, $name, $ip]);
 	}
-		
-		// $username = $_POST['username'];		
-		// $unsuccesful_login_currentDate = new DateTime();
-		// $unsuccesful_login_date = $unsuccesful_login_currentDate->format('Y-m-d H:i:s');
-		// $unsuccesful_login_ip = getUserIpAddr();
-		// $unsuccesful_login_sql = "INSERT INTO unsuccesful_logins (date, username, name, ip ) VALUES(?,?,? ,?)";
-        // $unsuccesful_login_stmtinsert = $db->prepare($unsuccesful_login_sql);
-        // $unsuccesful_login_result = $unsuccesful_login_stmtinsert->execute([ $unsuccesful_login_date, $username, $name, $unsuccesful_login_ip]); 
 }else{
 	echo 'There were errors while connecting to database.';
 }

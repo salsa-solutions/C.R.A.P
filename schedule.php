@@ -27,8 +27,10 @@ if (($role == 'admin')) {
     error_reporting(E_ALL);
 }
 if ( ($role == 'admin') || ($role == 'manager')) {
-    $admin_page='<li><a href="/admin.php">Admin</a></li>';
-    $scheduling_page='<li><a href="/scheduling.php">Scheduling</a></li>';
+    $managment = 'Management';
+    $admin_page='<a href="/admin.php">Admin</a>';
+    $scheduling_page='<a href="/scheduling.php">Scheduling</a>';
+	$approval = '<a href="/approval.php">Approval</a>';
 }
 else {
     $admin_page= NULL;
@@ -54,6 +56,7 @@ else {
 	<link rel="stylesheet" href="css/backround.css">
 	<link rel="stylesheet" href="css/home.css">
 	<link rel="stylesheet" href="css/schedule.css">
+	<link rel="stylesheet" href="css/nav.css">
 	<title><?php echo $WEB_TITLE ?> | Capriotti's Regional Attendance Program</title>
 </head>
 

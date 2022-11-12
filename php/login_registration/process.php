@@ -17,10 +17,11 @@
         $email             = $_POST['email'];
         $username          = $_POST['username'];
         $password          = sha1($_POST['password']);
+        $approved          = 'pending';
 
-        $sql = "INSERT INTO users (date, firstname, lastname, email, username, password ) VALUES(?,?,?,?,?,?)";
+        $sql = "INSERT INTO users (date, firstname, lastname, email, username, password, approved ) VALUES(?,?,?,?,?,?,?)";
         $stmtinsert = $db->prepare($sql);
-        $result = $stmtinsert->execute([$date, $firstname, $lastname, $email, $username, $password]);
+        $result = $stmtinsert->execute([$date, $firstname, $lastname, $email, $username, $password, $approved]);
         if ($result) {
             echo 'Successfully saved.';
         } else {

@@ -17,12 +17,16 @@ $username = $_SESSION['userlogin'][2];
 $WEB_TITLE = 'Admin';
 $_DEV = false;
 if ( ($role == 'admin') || ($role == 'manager')) {
-    $admin_page='<li><a href="/admin.php">Admin</a></li>';
-    $scheduling_page='<li><a href="/scheduling.php">Scheduling</a></li>';
+    $managment = 'Management';
+    $admin_page='<a href="/admin.php">Admin</a>';
+    $scheduling_page='<a href="/scheduling.php">Scheduling</a>';
+	$approval = '<a href="/approval.php">Approval</a>';
 }
 else {
+    $managment = NULL;
     $admin_page= NULL;
     $scheduling_page= NULL;
+    $approval = NULL;
 }
 if ( ($role == 'admin')) {
     ini_set('display_errors', 1);

@@ -5,18 +5,19 @@ $header = <<<HEADER
 
 <body>
 
-<div class="nav">
-    <ul>
-        <div class="nav-links">
-            <li><a href="/index.php">Home</a></li>
-            <li><a href="/schedule.php">Schedule</a></li>
-            $admin_page
-            $scheduling_page
-            <li><button type="button" name="button" id="logOut" class="btn btn_logout">Log Out</button></li>
-            
-        </div>      
-        
-    </ul>
+
+
+<!-- The navigation menu -->
+<div class="navbar-d">
+    <a href="/index.php">Home</a>
+    <a href="/schedule.php">Schedule</a>
+    <div class="subnav-d">
+        <button class="subnavbtn-d"> $managment </button>
+        <div class="subnav-content-d">
+            $admin_page $scheduling_page $approval
+        </div>
+    </div>
+    <button type="button" name="button" id="logOut" class="btn btn_logout">Log Out</button>
 </div>
 
 HEADER;
