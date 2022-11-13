@@ -1,6 +1,6 @@
 # Capriati's Reginal Attendance Program
 
-#Pricing
+# Pricing
 One line = $0.10
 Current price = $232.00
 ``` bash
