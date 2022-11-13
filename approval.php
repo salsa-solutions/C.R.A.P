@@ -14,7 +14,7 @@ if (isset($_GET['logout'])) {
 $name = $_SESSION['userlogin'][0];
 $role = $_SESSION['userlogin'][1];
 $username = $_SESSION['userlogin'][2];
-$WEB_TITLE = 'Admin';
+$WEB_TITLE = 'Approval';
 $_DEV = false;
 if ( ($role == 'admin') || ($role == 'manager')) {
     $managment = 'Management';
@@ -82,10 +82,9 @@ if ( ($role == 'admin')) {
                                 <table class="table table-striped table-hover">
                                     <thead>
                                         <tr>
+                                            <th scope="col">Username</th>
                                             <th scope="col">Name</th>
                                             <th scope="col">Date</th>
-                                            <th scope="col">Time</th>
-                                            <th scope="col">Reason</th>
                                             <th scope="col">Status</th>
                                             <th scope="col">Action</th>
                                         </tr>
@@ -94,22 +93,36 @@ if ( ($role == 'admin')) {
                                     <tbody>
                                         <?php
                                         include('config.php');
-                                        $result = $db->prepare("SELECT name, approved FROM users ORDER BY name ASC");
+                                        $result = $db->prepare("SELECT date, username, firstname, lastname, approved FROM users ORDER BY username ASC");
                                         $result->execute();
                                         for ($i = 0; $row = $result->fetch(); $i++) {
+                                            if($row['approved'] == 'pending'){
+                                                    
                                         ?>
+                                        
+                                        
                                         
                                         <form action="">
                                             <tr>
-                                                <td>John Doe</td>
-                                                <td>01/01/2021</td>
-                                                <td>12:00</td>
-                                                <td>Doctor's Appointment</td>
-                                                <td>Pending</td>
-                                                <td><button class="btn btn-success">Approve</button> <button class="btn btn-danger">Deny</button></td>
+                                                <td><?php echo $row['username']?></td>
+                                                <td><?php echo $row['firstname'] . ' ' . $row['lastname'];?></td>
+                                                <td><?php echo $row['date'] ?></td>
+                                                <td><?php echo $row['approved'] ?></td>
+                                                <td><button class="btn btn-success" name="<?php echo $row['username']; ?>" >Approve</button> <button class="btn btn-danger" id="<?php echo $row['username']; ?>" >Deny</button></td>
                                             </tr>
                                         </form>
-                                        <?php    
+                                        <?php
+                                        if(isset($_POST[$row['username']])){
+                                            $sql = "UPDATE users SET approved = 'approved' WHERE username = " . $row['username'];"";
+                                            $result = $db->prepare($sql);
+                                            $result->execute();
+                                        }
+                                        
+                                        ?>
+
+
+                                        <?php   
+                                            } 
                                         }
                                         ?>
                                     </tbody>

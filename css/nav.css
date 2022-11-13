@@ -36,7 +36,7 @@
     
     .navbar-d a:hover,
     .subnav-d:hover .subnavbtn-d {
-        background-color: red;
+        background-color: rgb(189, 0, 0);
     }
     /* Style the subnav-d content - positioned absolute */
     
@@ -44,7 +44,7 @@
         display: none;
         position: absolute;
         left: 0;
-        background-color: red;
+        background-color: rgb(189, 0, 0);
         width: 100%;
         z-index: 1;
     }

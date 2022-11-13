@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 11, 2022 at 07:56 PM
+-- Generation Time: Nov 13, 2022 at 05:52 AM
 -- Server version: 8.0.31-0ubuntu0.22.04.1
--- PHP Version: 8.1.2
+-- PHP Version: 8.1.2-1ubuntu2.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -145,17 +145,18 @@ CREATE TABLE `users` (
   `lastname` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `username` varchar(100) NOT NULL,
-  `password` varchar(100) NOT NULL
+  `password` varchar(100) NOT NULL,
+  `approved` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `date`, `roll`, `firstname`, `lastname`, `email`, `username`, `password`) VALUES
-(4, '2022-10-26 21:34:50', 'admin', 'ben', 'tsardoulias', 'bent23jam@gmail.com', 'tibthink', '44f67e88ee68463b304b9f06ef8adeaa77fc982f'),
-(5, '2022-10-26 21:43:57', 'CaShIeR', 'Rebecca', 'nee', 'johnndowadasd', 'fucktwat', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8'),
-(6, '2022-10-26 21:49:25', 'CaShIeR', 'bret', 'mclovin', 'uwu', 'uwu', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8');
+INSERT INTO `users` (`id`, `date`, `roll`, `firstname`, `lastname`, `email`, `username`, `password`, `approved`) VALUES
+(4, '2022-10-26 21:34:50', 'admin', 'ben', 'tsardoulias', 'bent23jam@gmail.com', 'tibthink', '44f67e88ee68463b304b9f06ef8adeaa77fc982f', 'approved'),
+(5, '2022-10-26 21:43:57', 'CaShIeR', 'Rebecca', 'nee', 'johnndowadasd', 'fucktwat', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 'pending'),
+(6, '2022-10-26 21:49:25', 'CaShIeR', 'bret', 'mclovin', 'uwu', 'uwu', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 'pending');
 
 --
 -- Indexes for dumped tables

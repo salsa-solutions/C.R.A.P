@@ -90,6 +90,7 @@ if ( ($role == 'admin') || ($role == 'manager')) {
                             $result = $db->prepare("SELECT * FROM avil_day ORDER BY name ASC");
                             $result->execute();
                             for ($i = 0; $row = $result->fetch(); $i++) {
+                                
                             ?>
                                 <tbody>
                                 <form action="">
