@@ -102,29 +102,40 @@ if ( ($role == 'admin')) {
                                         
                                         
                                         
-                                        <form action="">
+                                        <form method="get" name="form" action="approved.php>
                                             <tr>
-                                                <td><?php echo $row['username']?></td>
-                                                <td><?php echo $row['firstname'] . ' ' . $row['lastname'];?></td>
-                                                <td><?php echo $row['date'] ?></td>
-                                                <td><?php echo $row['approved'] ?></td>
-                                                <td><button class="btn btn-success" name="<?php echo $row['username']; ?>" >Approve</button> <button class="btn btn-danger" id="<?php echo $row['username']; ?>" >Deny</button></td>
+                                                <td id="username"><?php echo $row['username']?></td>
+                                                <td id="name"><?php echo $row['firstname'] . ' ' . $row['lastname'];?></td>
+                                                <td id="date"><?php echo $row['date'] ?></td>
+                                                <td id="status"><?php echo $row['approved'] ?></td>
+                                                <td><button class="btn btn-success" name="<?php echo $row['username']; ?>_approved" >Approve</button> <button class="btn btn-danger" id="<?php echo $row['username']; ?>" >Deny</button></td>
                                             </tr>
                                         </form>
-                                        <?php
-                                        if(isset($_POST[$row['username']])){
-                                            $sql = "UPDATE users SET approved = 'approved' WHERE username = " . $row['username'];"";
-                                            $result = $db->prepare($sql);
-                                            $result->execute();
-                                        }
+<!-- 
+                                        <script type="text/javascript">
+                                            $(function() {
+                                                $('#<?php echo $row['username']; ?>_approved').click(function(e) {
+                                                    <?php
+                                                    
+                                                    // $sql = "UPDATE users SET approved = 'approved' WHERE username = " . $row['username'];"";
+                                                    // $result = $db->prepare($sql);
+                                                    // $result->execute();
+                                                    
+                                                    
+                                                    ?>
+                                                                
+
+                                                
+                                                }});
+                                        </script> -->
                                         
-                                        ?>
 
 
                                         <?php   
                                             } 
                                         }
                                         ?>
+
                                     </tbody>
                                 </table>
                             </div>
