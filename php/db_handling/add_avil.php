@@ -10,6 +10,7 @@ error_reporting(E_ALL);
     $currentDate = new DateTime();
     
     if(isset($_POST)){
+        $status           = $_POST['status'];
         $date              = $currentDate->format('Y-m-d H:i:s');
         $name              = $_POST['name'];
         $username          = $_POST['username'];

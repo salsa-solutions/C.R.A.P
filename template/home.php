@@ -47,8 +47,18 @@ else {
 
 </head>
 <?php require("php/template.php"); echo $header ?>
+<?php if (($_DEV) && (($role == 'CaShIeR') || ($role == 'manager')) == '1') {
+        echo $out_of_service;
+    }elseif(($status == 'approved')){
+        echo $pending;
+    }else{
+
+    
+    ?>
 
 
-<?php require("php/template.php"); echo $footer ?>
+<?php
+}
+require("php/template.php"); echo $footer ?>
 </html>
 

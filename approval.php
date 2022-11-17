@@ -14,6 +14,7 @@ if (isset($_GET['logout'])) {
 $name = $_SESSION['userlogin'][0];
 $role = $_SESSION['userlogin'][1];
 $username = $_SESSION['userlogin'][2];
+$status = $_SESSION['userlogin'][3];
 $WEB_TITLE = 'Approval';
 $_DEV = false;
 if ( ($role == 'admin') || ($role == 'manager')) {
@@ -60,6 +61,14 @@ if ( ($role == 'admin')) {
 
 </head>
 <?php require("php/template.php"); echo $header ?>
+<?php if (($_DEV) && (($role == 'CaShIeR') || ($role == 'manager')) == '1') {
+        echo $out_of_service;
+    }elseif(($role == 'CaShIeR')){
+        echo $fourohthree;
+    }elseif(($status == 'approved')){
+        echo $pending;
+    }
+    ?>
 
 <body>
     <div class="container">
@@ -69,81 +78,131 @@ if ( ($role == 'admin')) {
             </div>
         </div>
         <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-12">
-                                <h3 class="text-center">Pending User Requests</h3>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <table class="table table-striped table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Username</th>
-                                            <th scope="col">Name</th>
-                                            <th scope="col">Date</th>
-                                            <th scope="col">Status</th>
-                                            <th scope="col">Action</th>
-                                        </tr>
-                                    </thead>
-                                    
-                                    <tbody>
-                                        <?php
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <h3 class="text-center">Pending User Requests</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Username</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <?php
                                         include('config.php');
-                                        $result = $db->prepare("SELECT date, username, firstname, lastname, approved FROM users ORDER BY username ASC");
+                                        $result = $db->prepare("SELECT id, date, username, firstname, lastname, approved FROM users ORDER BY username ASC");
                                         $result->execute();
                                         for ($i = 0; $row = $result->fetch(); $i++) {
                                             if($row['approved'] == 'pending'){
+                                                
                                                     
                                         ?>
-                                        
-                                        
-                                        
-                                        <form method="get" name="form" action="approved.php>
-                                            <tr>
-                                                <td id="username"><?php echo $row['username']?></td>
-                                                <td id="name"><?php echo $row['firstname'] . ' ' . $row['lastname'];?></td>
-                                                <td id="date"><?php echo $row['date'] ?></td>
-                                                <td id="status"><?php echo $row['approved'] ?></td>
-                                                <td><button class="btn btn-success" name="<?php echo $row['username']; ?>_approved" >Approve</button> <button class="btn btn-danger" id="<?php echo $row['username']; ?>" >Deny</button></td>
-                                            </tr>
-                                        </form>
-<!-- 
-                                        <script type="text/javascript">
-                                            $(function() {
-                                                $('#<?php echo $row['username']; ?>_approved').click(function(e) {
-                                                    <?php
-                                                    
-                                                    // $sql = "UPDATE users SET approved = 'approved' WHERE username = " . $row['username'];"";
-                                                    // $result = $db->prepare($sql);
-                                                    // $result->execute();
-                                                    
-                                                    
-                                                    ?>
-                                                                
-
-                                                
-                                                }});
-                                        </script> -->
-                                        
 
 
-                                        <?php   
+
+                                <form action="">
+                                    <tr>
+                                        <td id="username"><?php echo $row['username']?></td>
+                                        <td id="name"><?php echo $row['firstname'] . ' ' . $row['lastname'];?></td>
+                                        <td id="date"><?php echo $row['date'] ?></td>
+                                        <td id="status"><?php echo $row['approved'] ?></td>
+                                        <td><button class="btn btn-success" id="<?php echo $row['username']; ?>_approved">Approve</button> <button class="btn btn-danger" id="<?php echo $row['username']; ?>_deny">Deny</button></td>
+                                    </tr>
+                                </form>
+
+                                <script>
+                                $(function() {
+                                    $('#<?php echo $row['username']; ?>_approved').click(function(e) {
+
+                                        var valid = this.form.checkValidity();
+
+                                        if (valid) {
+                                            var id       = '<?php echo $row['id']; ?>';
+                                            
+                                            $.ajax({
+                                                url: '/php/db_handling/approved.php',
+                                                type: 'POST',
+                                                data: {
+                                                    id: id
+                                                    
+                                                },
+                                                success: function(data) {
+                                                    Swal.fire(
+                                                        'Successful',
+                                                        'Your request has been submited',
+                                                        'success'
+                                                    )
+                                                },
+                                                error: function(data) {
+                                                    Swal.fire(
+                                                        'Errors',
+                                                        'Whoops!',
+                                                        'error'
+                                                    )
+
+                                                }
+                                            });
+                                        }
+                                    });
+                                });
+                                </script>
+                                 <script>
+                                $(function() {
+                                    $('#<?php echo $row['username']; ?>_deny').click(function(e) {
+
+                                        var valid = this.form.checkValidity();
+
+                                        if (valid) {
+                                            var id       = '<?php echo $row['id']; ?>';
+                                            
+                                            $.ajax({
+                                                url: '/php/db_handling/denied.php',
+                                                type: 'POST',
+                                                data: {
+                                                    id: id
+                                                    
+                                                },
+                                                success: function(data) {
+                                                    
+                                                },
+                                                error: function(data) {
+                                                    
+
+                                                }
+                                            });
+                                        }
+                                    });
+                                });
+                                </script>
+
+
+
+                                <?php   
                                             } 
                                         }
                                         ?>
 
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+</div>
     </div>
 
 <?php require("php/template.php"); echo $footer ?>

@@ -44,10 +44,14 @@ else {
 
 ?>
 
-<?php
-include_once('php/template.php');
 
-echo $header;
+<?php if (($_DEV) && (($role == 'CaShIeR') || ($role == 'manager')) == '1') {
+    echo $out_of_service;
+}elseif(($role == 'CaShIeR')){
+    echo $fourohthree;
+}elseif(($status == 'approved')){
+    echo $pending;
+}
 ?>
 
 <!-- content -->

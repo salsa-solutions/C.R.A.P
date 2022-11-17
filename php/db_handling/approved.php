@@ -1,22 +1,28 @@
 <?php
-try {
-    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-    // set the PDO error mode to exception
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-  
-    $sql = "UPDATE MyGuests SET lastname='Doe' WHERE id=2";
-  
-    // Prepare statement
-    $stmt = $conn->prepare($sql);
-  
-    // execute the query
-    $stmt->execute();
-  
-    // echo a message to say the UPDATE succeeded
-    echo $stmt->rowCount() . " records UPDATED successfully";
-  } catch(PDOException $e) {
-    echo $sql . "<br>" . $e->getMessage();
+require_once('../../config.php');
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+?>
+
+
+<?php
+  if(isset($_POST)){
+    $id                = $_POST['id'];
+
+    $sql = "UPDATE users SET approved='approved' WHERE id=$id";
+    $stmtinsert = $db->prepare($sql);
+    $result = $stmtinsert->execute();
+    if ($result) {
+        echo 'Successfully saved.';
+    } else {
+        echo 'There were erros while saving the data.';
+    }
+  }else{
+    echo "No data";
   }
-  
-  $conn = null;
-    ?>
+
+
+
+?>

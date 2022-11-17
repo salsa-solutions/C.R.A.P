@@ -14,7 +14,7 @@ if (isset($_GET['logout'])) {
 $name = $_SESSION['userlogin'][0];
 $role = $_SESSION['userlogin'][1];
 $username = $_SESSION['userlogin'][2];
-$WEB_TITLE = 'Admin';
+$WEB_TITLE = 'TEST ';
 $_DEV = false;
 if ( ($role == 'admin') || ($role == 'manager')) {
     $admin_page='<a href="/admin.php">Admin</a>';
@@ -36,13 +36,16 @@ if ( ($role == 'admin')) {
 }
 
 ?>
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -53,31 +56,3 @@ if ( ($role == 'admin')) {
     <title><?php echo $WEB_TITLE; ?> | Capriotti's Regional Attendance Program</title>
 
 </head>
-<?php
-include_once('php/template.php');
-
-echo $header;
-?>
-
-<!-- content -->
-
-<?php
-echo $footer
-
-?>
-<!-- Load font awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-<!-- The navigation menu -->
-<div class="navbar-d">
-    <a href="/index.php">Home</a>
-    <a href="/schedule.php">Schedule</a>
-    <div class="subnav-d">
-        <button class="subnavbtn-d">Mangement </button>
-        <div class="subnav-content-d">
-            $admin_page $scheduling_page
-        </div>
-    </div>
-</div>
-
-<!-- <i class="fa fa-caret-down"></i> -->

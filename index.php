@@ -14,6 +14,7 @@ if (isset($_GET['logout'])) {
 $name = $_SESSION['userlogin'][0];
 $role = $_SESSION['userlogin'][1];
 $username = $_SESSION['userlogin'][2];
+$status = $_SESSION['userlogin'][3];
 $WEB_TITLE = 'Home';
 // to turn off a site uncomment the following line:
 //$_DEV = true;
@@ -58,10 +59,15 @@ else {
 </head>
 
 
+
 <?php require("php/template.php"); echo $header ?>
-    <?php if (($_DEV) && (($role == 'CaShIeR') || ($role == 'manager')) == '1') {
+<?php if (($_DEV) && (($role == 'CaShIeR') || ($role == 'manager')) == '1') {
         echo $out_of_service;
+    }elseif(($status == 'pending')){
+        echo $pending;
     }else{
+
+    
     ?>
     <div class="container h-50 scroll">
         <div class="d-flex justify-content-left form-container">
@@ -199,6 +205,7 @@ else {
                 var valid = this.form.checkValidity();
 
                 if (valid) {
+                    var approved = 'pending'
                     var name = "<?php echo $name; ?>";
                     var username = "<?php echo $username; ?>";
                     var monday_avil = $('#monday-avil').val();
@@ -211,6 +218,7 @@ else {
                         url: '/php/db_handling/add_avil.php',
                         type: 'POST',
                         data: {
+                            approved: approved,
                             name: name,
                             username: username,
                             monday: monday_avil,

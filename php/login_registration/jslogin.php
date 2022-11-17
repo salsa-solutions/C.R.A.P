@@ -25,7 +25,7 @@ function getUserIpAddr()
 //	$username = 'macifoe';
 
 	// selecting name from database by username
-	$sql = "SELECT firstname, lastname, roll FROM users WHERE username = ? LIMIT 1";
+	$sql = "SELECT firstname, lastname, roll, approved FROM users WHERE username = ? LIMIT 1";
 	$stmtselect  = $db->prepare($sql);
 	$result = $stmtselect->execute([$username]);
 	$user = $stmtselect->fetch(PDO::FETCH_ASSOC);
@@ -33,6 +33,7 @@ function getUserIpAddr()
 	if($user){
 		$name = $user['firstname'] . ' ' . $user['lastname'];
 		$roll = $user['roll'];
+		$status = $user['approved'];
 	}else{
 		$name = 'Guest';
 		$roll = 'Guest';
@@ -57,7 +58,7 @@ $result = $stmtselect->execute([$username, $password]);
 if($result){
 	// $user = $stmtselect->fetch(PDO::FETCH_ASSOC);
 	if($stmtselect->rowCount() > 0){
-		$_SESSION['userlogin'] = [$name, $roll, $username];
+		$_SESSION['userlogin'] = [$name, $roll, $username, $status];
 		echo '1';
 		$currentDate = new DateTime();
 		$date = $currentDate->format('Y-m-d H:i:s');

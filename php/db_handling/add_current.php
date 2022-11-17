@@ -38,3 +38,23 @@ if (isset($_POST)) {
     echo "No data";
 }
 ?>
+
+<?php
+  if(isset($_POST)){
+    $id                = $_POST['id'];
+
+    $sql = "UPDATE avil_day SET approved='approved' WHERE id=$id";
+    $stmtinsert = $db->prepare($sql);
+    $result = $stmtinsert->execute();
+    if ($result) {
+        echo 'Successfully saved.';
+    } else {
+        echo 'There were erros while saving the data.';
+    }
+  }else{
+    echo "No data";
+  }
+
+
+
+?>

@@ -69,5 +69,19 @@ $fourohthree = <<<FOT
 
 FOT;
 
+$pending = <<<PED
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Account Pending</h1>
+        </div>
+    </div>
+    
+        <p>Your account is still pending for approval</p>
+        
+</div>
+
+PED;
+
 
 ?>

@@ -18,6 +18,7 @@ if (isset($_GET['logout'])) {
 $name = $_SESSION['userlogin'][0];
 $role = $_SESSION['userlogin'][1];
 $username = $_SESSION['userlogin'][2];
+$status = $_SESSION['userlogin'][3];
 $WEB_TITLE = 'Schedule';
 // to turn off a site uncomment the following line:
 // $_DEV = true;
@@ -61,13 +62,13 @@ else {
 </head>
 
 <body>
-<?php
-    include_once("php/template.php");
-    echo $header;
-    if (($_DEV) && (($role == 'CaShIeR') || ($role == 'manager')) == '1') {
+<?php require 'php/template.php';
+    echo $header; ?>
+    <?php if (($_DEV) && (($role == 'CaShIeR') || ($role == 'manager')) == '1') {
         echo $out_of_service;
-    }
-    else {
+    } elseif (($status == 'pending')) {
+        echo $pending;
+    } else {
     ?>
 	<div class="container">
 		<div class="row">
@@ -106,7 +107,7 @@ else {
 								<td><?php echo $row['thursday']; ?></td>
 								<td><?php echo $row['friday']; ?></td>
 								<td><?php echo $row['saturday']; ?></td>
-								<td><?php echo $row['hours']; ?></td>
+								
 						</tbody>
 					<?php
 							}
