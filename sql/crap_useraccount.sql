@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 13, 2022 at 05:52 AM
+-- Generation Time: Nov 17, 2022 at 01:16 AM
 -- Server version: 8.0.31-0ubuntu0.22.04.1
 -- PHP Version: 8.1.2-1ubuntu2.8
 
@@ -37,17 +37,9 @@ CREATE TABLE `avil_day` (
   `wednesday` varchar(10) NOT NULL,
   `thursday` varchar(10) NOT NULL,
   `friday` varchar(10) NOT NULL,
-  `saturday` varchar(10) NOT NULL
+  `saturday` varchar(10) NOT NULL,
+  `approved` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `avil_day`
---
-
-INSERT INTO `avil_day` (`id`, `date`, `name`, `username`, `monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `saturday`) VALUES
-(1, '2022-08-09', 'ben tsardoulias', 'tibthink', '9', '9', '9', '9', '9', '9'),
-(2, '2022-10-26', 'Rebecca nee', 'fucktwat', '9am-4pm', '9am-4pm', '9am-4pm', '9am-4pm', '9am-4pm', '9am-4pm'),
-(3, '2022-10-26', 'bret mclovin', 'uwu', '3pm-8pm', '3pm-8pm', '3pm-8pm', '3pm-8pm', '3pm-8pm', '3pm-8pm');
 
 -- --------------------------------------------------------
 
@@ -155,8 +147,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `date`, `roll`, `firstname`, `lastname`, `email`, `username`, `password`, `approved`) VALUES
 (4, '2022-10-26 21:34:50', 'admin', 'ben', 'tsardoulias', 'bent23jam@gmail.com', 'tibthink', '44f67e88ee68463b304b9f06ef8adeaa77fc982f', 'approved'),
-(5, '2022-10-26 21:43:57', 'CaShIeR', 'Rebecca', 'nee', 'johnndowadasd', 'fucktwat', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 'pending'),
-(6, '2022-10-26 21:49:25', 'CaShIeR', 'bret', 'mclovin', 'uwu', 'uwu', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 'pending');
+(7, '2022-11-16 23:22:35', 'CaShIeR', 'Rebecca', 'Nee', 'neeinc', 'rnee', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 'approved');
 
 --
 -- Indexes for dumped tables
@@ -212,7 +203,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `avil_day`
 --
 ALTER TABLE `avil_day`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `current_schedule`
@@ -248,7 +239,7 @@ ALTER TABLE `unsuccesful_logins`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

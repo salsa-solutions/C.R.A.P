@@ -63,11 +63,11 @@ if ( ($role == 'admin')) {
 <?php require("php/template.php"); echo $header ?>
 <?php if (($_DEV) && (($role == 'CaShIeR') || ($role == 'manager')) == '1') {
         echo $out_of_service;
-    }elseif(($role == 'CaShIeR')){
+    } elseif (($role == 'CaShIeR')) {
         echo $fourohthree;
-    }elseif(($status == 'approved')){
+    } elseif (($status == 'pending')) {
         echo $pending;
-    }
+    } else {
     ?>
 
 <body>
@@ -189,7 +189,11 @@ if ( ($role == 'admin')) {
 
 
 
-                                <?php   
+                                <?php
+                                            }   
+                                            if ($i == 0) {
+                                                echo '<td colspan="8">No new users registered</td>';
+                                            }    
                                             } 
                                         }
                                         ?>
@@ -204,6 +208,6 @@ if ( ($role == 'admin')) {
 </div>
 </div>
     </div>
-
+        
 <?php require("php/template.php"); echo $footer ?>
 </html>

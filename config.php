@@ -8,7 +8,7 @@
   
   // whole site debug mode
   // all pages will not work if user isnt admin 
-  // $_DEV = TRUE;
+//  $_DEV = TRUE;
 
 
 ?>

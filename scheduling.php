@@ -179,11 +179,13 @@ if (($role == 'admin') || ($role == 'manager')) {
 
                         <?php
                                 }
-                                if ($i == 0) {
-                                    echo '<td colspan="8">No scheduls posted yet</td>';
-                            }
+                                
+
                             
                             }
+                            if ($i == 0) {
+								echo '<td colspan="8">Schedule has not been posted yet</td>';
+							}
                         }
                         ?>
 
