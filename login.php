@@ -1,5 +1,5 @@
 <?php
-
+require_once 'config.php';
 session_start();
 
 if (isset($_SESSION['userlogin'])) {
@@ -26,7 +26,7 @@ $WEB_TITLE = 'Login';
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="css/backround.css">
     <link rel="stylesheet" href="css/login-signup.css">
-    <title><?php echo $WEB_TITLE ?> | Capriotti's Regional Attendance Program</title>
+    <title><?php echo $WEB_TITLE ?> | <?php echo $WEBSITE_NAME; ?></title>
 </head>
 
 <body>
@@ -36,7 +36,7 @@ $WEB_TITLE = 'Login';
 
     <div class="header">
         <h1>
-            Capriotti's Regional Attendance Program
+            <?php echo $WEBSITE_NAME; ?>
         </h1>
     </div>
     <div class="container h-100">
@@ -44,14 +44,14 @@ $WEB_TITLE = 'Login';
             <div class="user_card">
                 <div class="d-flex justify-content-center p-5">
                     <div class="brand_logo_container">
-                        <img src="/img/logo.png" class="brand_logo" alt="Logo">
+                        <img src="/img/logo.jpg" class="brand_logo" alt="Logo">
                     </div>
                 </div>
                 <div class="d-flex justify-content-center form-container">
                     <form action="">
                         <div class="input-group mb-3">
                             <div class="input-group-append">
-                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
                             </div>
                             <input type="text" placeholder="Username" name="username" id="username" class="form-control input_user" required>
                         </div>

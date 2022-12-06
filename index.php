@@ -16,6 +16,7 @@ $role = $_SESSION['userlogin'][1];
 $username = $_SESSION['userlogin'][2];
 $status = $_SESSION['userlogin'][3];
 $WEB_TITLE = 'Home';
+
 // to turn off a site uncomment the following line:
 //$_DEV = true;
 if (($role == 'admin')) {
@@ -54,7 +55,7 @@ else {
     <link rel="stylesheet" href="css/backround.css">
     <link rel="stylesheet" href="css/home.css">
     <link rel="stylesheet" href="css/nav.css">
-    <title><?php echo $WEB_TITLE; ?> | Capriotti's Regional Attendance Program</title>
+    <title><?php echo $WEB_TITLE ?> | <?php echo $WEBSITE_NAME; ?></title>
 
 </head>
 

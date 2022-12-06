@@ -7,6 +7,7 @@ error_reporting(E_ALL);
 require_once('config.php');
 
 $WEB_TITLE = 'User Registration';
+
 ?>
 
 
@@ -27,7 +28,7 @@ $WEB_TITLE = 'User Registration';
     <link rel="stylesheet" href="css/login-signup.css">
 
 
-    <title><?php echo $WEB_TITLE ?> | Capriotti's Regional Attendance Program</title>
+    <title><?php echo $WEB_TITLE ?> | <?php echo $WEBSITE_NAME; ?></title>
 </head>
 
 <body>
@@ -37,7 +38,7 @@ $WEB_TITLE = 'User Registration';
             width: 350px;
             margin-top: auto;
             margin-bottom: auto;
-            background: #dd0000;
+            background: #19138d;
             position: relative;
             display: flex;
             justify-content: center;
@@ -67,7 +68,7 @@ $WEB_TITLE = 'User Registration';
             <div class="user_card">
                 <div class="d-flex justify-content-center p-5">
                     <div class="brand_logo_container">
-                        <img src="/img/logo.png" class="brand_logo" alt="Logo">
+                    <img src="/img/logo.jpg" class="brand_logo" alt="Logo">
                     </div>
                 </div>
                 <div class="d-flex justify-content-center form-container">

@@ -48,7 +48,7 @@ if (($role == 'admin') || ($role == 'manager')) {
     <link rel="stylesheet" href="css/home.css">
     <link rel="stylesheet" href="css/scheduling.css">
     <link rel="stylesheet" href="css/nav.css">
-    <title><?php echo $WEB_TITLE; ?> | Capriotti's Regional Attendance Program</title>
+    <title><?php echo $WEB_TITLE ?> | <?php echo $WEBSITE_NAME; ?></title>
 
 </head>
 
@@ -184,7 +184,7 @@ if (($role == 'admin') || ($role == 'manager')) {
                             
                             }
                             if ($i == 0) {
-								echo '<td colspan="8">Schedule has not been posted yet</td>';
+								echo '<td colspan="8">No schedules have been posted yet.</td>';
 							}
                         }
                         ?>

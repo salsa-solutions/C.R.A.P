@@ -15,6 +15,7 @@ $name = $_SESSION['userlogin'][0];
 $role = $_SESSION['userlogin'][1];
 $username = $_SESSION['userlogin'][2];
 $WEB_TITLE = 'Admin';
+
 // $_DEV = false;
 if (($role == 'admin')) {
     ini_set('display_errors', 1);
@@ -53,7 +54,7 @@ if (($role == 'admin') || ($role == 'manager')) {
     <link rel="stylesheet" href="css/admin.css">
     <link rel="stylesheet" href="css/scrollbar.css">
     <link rel="stylesheet" href="css/nav.css">
-    <title><?php echo $WEB_TITLE ?> | Capriotti's Regional Attendance Program</title>
+    <title><?php echo $WEB_TITLE ?> | <?php echo $WEBSITE_NAME; ?></title>
 
 </head>
 
