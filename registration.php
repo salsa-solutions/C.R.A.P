@@ -58,7 +58,7 @@ $WEB_TITLE = 'User Registration';
 
     <div class="header">
         <h1>
-            Capriotti's Regional Attendance Program
+        <?php echo $WEBSITE_NAME; ?>
         </h1>
     </div>
 
