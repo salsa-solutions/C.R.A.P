@@ -14,6 +14,7 @@ if (isset($_GET['logout'])) {
 $name = $_SESSION['userlogin'][0];
 $role = $_SESSION['userlogin'][1];
 $username = $_SESSION['userlogin'][2];
+$status = $_SESSION['userlogin'][3];
 $WEB_TITLE = 'Admin';
 
 // $_DEV = false;
