@@ -1,4 +1,4 @@
-# Capriati's Reginal Attendance Program
+# Greek Star Attendance Program
 
 # Pricing
 One line = $0.10

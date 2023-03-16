@@ -10,24 +10,28 @@
     $currentDate = new DateTime();
     // echo '<pre>'; print_r($_POST); echo '</pre>';
     require_once('../../config.php');
-    if(isset($_POST)){
-        $date              = $currentDate->format('Y-m-d H:i:s');
-        $firstname         = $_POST['firstname'];
-        $lastname          = $_POST['lastname'];
-        $email             = $_POST['email'];
-        $username          = $_POST['username'];
-        $password          = sha1($_POST['password']);
-        $approved          = 'pending';
-
-        $sql = "INSERT INTO users (date, firstname, lastname, email, username, password, approved ) VALUES(?,?,?,?,?,?,?)";
-        $stmtinsert = $db->prepare($sql);
-        $result = $stmtinsert->execute([$date, $firstname, $lastname, $email, $username, $password, $approved]);
-        if ($result) {
-            echo 'Successfully saved.';
-        } else {
-            echo 'There were erros while saving the data.';
-        }
+    if($_DEV){
+        echo 'Logging in and sign up are disabled due to maintenance';
     }else{
-        echo "No data";
-    }
+        if(isset($_POST)){
+            $date              = $currentDate->format('Y-m-d H:i:s');
+            $firstname         = $_POST['firstname'];
+            $lastname          = $_POST['lastname'];
+            $email             = $_POST['email'];
+            $username          = $_POST['username'];
+            $password          = sha1($_POST['password']);
+            $approved          = 'pending';
+
+            $sql = "INSERT INTO users (date, firstname, lastname, email, username, password, approved ) VALUES(?,?,?,?,?,?,?)";
+            $stmtinsert = $db->prepare($sql);
+            $result = $stmtinsert->execute([$date, $firstname, $lastname, $email, $username, $password, $approved]);
+            if ($result) {
+                echo 'Successfully saved.';
+            } else {
+                echo 'There were erros while saving the data.';
+            }
+        }else{
+            echo "No data";
+        }
+}
 ?>

@@ -54,31 +54,35 @@ $stmtselect  = $db->prepare($sql);
 
 $result = $stmtselect->execute([$username, $password]);
 // echo $result;
+if($_DEV){
+	echo 'Logging in and sign up are disabled due to maintenance';
+}
+else{
+	if($result){
+		// $user = $stmtselect->fetch(PDO::FETCH_ASSOC);
+		if($stmtselect->rowCount() > 0){
+			$_SESSION['userlogin'] = [$name, $roll, $username, $status];
+			echo '1';
+			$currentDate = new DateTime();
+			$date = $currentDate->format('Y-m-d H:i:s');
+			$ip = getUserIpAddr();
+			$sql = "INSERT INTO succesful_logins (date, username, name, ip ) VALUES(?,?,? ,?)";
+			$stmtinsert = $db->prepare($sql);
+			$result = $stmtinsert->execute([ $date, $username, $name, $ip]);
 
-if($result){
-	// $user = $stmtselect->fetch(PDO::FETCH_ASSOC);
-	if($stmtselect->rowCount() > 0){
-		$_SESSION['userlogin'] = [$name, $roll, $username, $status];
-		echo '1';
-		$currentDate = new DateTime();
-		$date = $currentDate->format('Y-m-d H:i:s');
-		$ip = getUserIpAddr();
-		$sql = "INSERT INTO succesful_logins (date, username, name, ip ) VALUES(?,?,? ,?)";
-        $stmtinsert = $db->prepare($sql);
-		$result = $stmtinsert->execute([ $date, $username, $name, $ip]);
+			
 
-        
-
+		}else{
+			echo 'Ha, I really hope you didnt forget your password';
+			$currentDate = new DateTime();
+			$date = $currentDate->format('Y-m-d H:i:s');
+			$ip = getUserIpAddr();
+			$sql = "INSERT INTO unsuccesful_logins (date, username, name, ip ) VALUES(?,?,? ,?)";
+			$stmtinsert = $db->prepare($sql);
+			$result = $stmtinsert->execute([ $date, $username, $name, $ip]);
+		}
 	}else{
-		echo 'Ha, I really hope you didnt forget your password';
-		$currentDate = new DateTime();
-		$date = $currentDate->format('Y-m-d H:i:s');
-		$ip = getUserIpAddr();
-		$sql = "INSERT INTO unsuccesful_logins (date, username, name, ip ) VALUES(?,?,? ,?)";
-		$stmtinsert = $db->prepare($sql);
-		$result = $stmtinsert->execute([ $date, $username, $name, $ip]);
+		echo 'There were errors while connecting to database.';
 	}
-}else{
-	echo 'There were errors while connecting to database.';
 }
 ?>
