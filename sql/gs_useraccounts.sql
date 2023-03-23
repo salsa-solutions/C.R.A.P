@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1deb5ubuntu1
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Nov 17, 2022 at 01:16 AM
--- Server version: 8.0.31-0ubuntu0.22.04.1
--- PHP Version: 8.1.2-1ubuntu2.8
+-- Host: localhost
+-- Generation Time: Mar 23, 2023 at 12:13 AM
+-- Server version: 10.5.18-MariaDB-0+deb11u1
+-- PHP Version: 7.4.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `crap_useraccount`
+-- Database: `gs_useraccounts`
 --
 
 -- --------------------------------------------------------
@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `avil_day` (
-  `id` int NOT NULL,
+  `id` int(11) NOT NULL,
   `date` date NOT NULL,
   `name` varchar(100) NOT NULL,
   `username` varchar(100) NOT NULL,
@@ -39,7 +39,7 @@ CREATE TABLE `avil_day` (
   `friday` varchar(10) NOT NULL,
   `saturday` varchar(10) NOT NULL,
   `approved` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -48,7 +48,7 @@ CREATE TABLE `avil_day` (
 --
 
 CREATE TABLE `current_schedule` (
-  `id` int NOT NULL,
+  `id` int(11) NOT NULL,
   `approved` varchar(100) NOT NULL,
   `status` text NOT NULL,
   `date` varchar(100) NOT NULL,
@@ -60,7 +60,7 @@ CREATE TABLE `current_schedule` (
   `thursday` varchar(9) NOT NULL,
   `friday` varchar(9) NOT NULL,
   `saturday` varchar(9) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -69,7 +69,7 @@ CREATE TABLE `current_schedule` (
 --
 
 CREATE TABLE `pref_day` (
-  `id` int NOT NULL,
+  `id` int(11) NOT NULL,
   `date` varchar(100) NOT NULL,
   `name` varchar(100) NOT NULL,
   `username` varchar(100) NOT NULL,
@@ -79,8 +79,8 @@ CREATE TABLE `pref_day` (
   `thursday` varchar(9) NOT NULL,
   `friday` varchar(9) NOT NULL,
   `saturday` varchar(9) NOT NULL,
-  `hours` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `hours` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -89,11 +89,11 @@ CREATE TABLE `pref_day` (
 --
 
 CREATE TABLE `sp` (
-  `id` int NOT NULL,
+  `id` int(11) NOT NULL,
   `date` varchar(100) NOT NULL,
   `name` varchar(100) NOT NULL,
   `message` mediumtext NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -102,12 +102,12 @@ CREATE TABLE `sp` (
 --
 
 CREATE TABLE `succesful_logins` (
-  `id` int NOT NULL,
+  `id` int(11) NOT NULL,
   `date` text NOT NULL,
   `username` mediumtext NOT NULL,
   `name` mediumtext NOT NULL,
   `ip` mediumtext NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -116,12 +116,12 @@ CREATE TABLE `succesful_logins` (
 --
 
 CREATE TABLE `unsuccesful_logins` (
-  `id` int NOT NULL,
+  `id` int(11) NOT NULL,
   `date` text NOT NULL,
   `username` mediumtext NOT NULL,
   `name` mediumtext NOT NULL,
   `ip` mediumtext NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -130,24 +130,23 @@ CREATE TABLE `unsuccesful_logins` (
 --
 
 CREATE TABLE `users` (
-  `id` int NOT NULL,
+  `id` int(11) NOT NULL,
   `date` varchar(100) NOT NULL,
-  `roll` varchar(1000) NOT NULL DEFAULT 'CaShIeR',
+  `roll` varchar(1000) NOT NULL DEFAULT 'Server',
   `firstname` varchar(100) NOT NULL,
   `lastname` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `username` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
   `approved` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `date`, `roll`, `firstname`, `lastname`, `email`, `username`, `password`, `approved`) VALUES
-(4, '2022-10-26 21:34:50', 'admin', 'ben', 'tsardoulias', 'bent23jam@gmail.com', 'tibthink', '44f67e88ee68463b304b9f06ef8adeaa77fc982f', 'approved'),
-(7, '2022-11-16 23:22:35', 'CaShIeR', 'Rebecca', 'Nee', 'neeinc', 'rnee', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 'approved');
+(1, '2023-03-22 23:42:43', 'admin', 'ben', 'tsardoulias', 'bent23jam@gmail.com', 'tibthink', '67f27f4a07cfac964d2db9fef1f8f94c2b4d5a04', 'approved');
 
 --
 -- Indexes for dumped tables
@@ -203,43 +202,53 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `avil_day`
 --
 ALTER TABLE `avil_day`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `current_schedule`
 --
 ALTER TABLE `current_schedule`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `pref_day`
 --
 ALTER TABLE `pref_day`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `sp`
 --
 ALTER TABLE `sp`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `succesful_logins`
 --
 ALTER TABLE `succesful_logins`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `unsuccesful_logins`
 --
 ALTER TABLE `unsuccesful_logins`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+DELIMITER $$
+--
+-- Events
+--
+CREATE DEFINER=`tibthink`@`localhost` EVENT `flush avil_day` ON SCHEDULE EVERY 1 WEEK STARTS '2023-03-26 00:07:53' ON COMPLETION NOT PRESERVE ENABLE COMMENT 'flushes avil_day from the table every week' DO DELETE FROM avil_day$$
+
+CREATE DEFINER=`tibthink`@`localhost` EVENT `flush pref_day` ON SCHEDULE EVERY 1 WEEK STARTS '2023-03-23 00:12:01' ON COMPLETION NOT PRESERVE ENABLE COMMENT 'flushes avil_day from the table every week' DO DELETE FROM pref_day$$
+
+DELIMITER ;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

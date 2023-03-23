@@ -28,7 +28,7 @@
             if ($result) {
                 echo 'Successfully saved.';
             } else {
-                echo 'There were erros while saving the data.';
+                echo 'There were errors while saving the data.';
             }
         }else{
             echo "No data";
