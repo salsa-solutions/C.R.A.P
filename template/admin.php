@@ -45,7 +45,7 @@ else {
 ?>
 
 
-<?php if (($_DEV) && (($role == 'Server') || ($role == 'Manager')) == '1') {
+<?php if (($_DEV) && (($role == 'Server') || ($role == 'Manager') || ($role == 'Cook')) == '1') {
     echo $out_of_service;
 }elseif(($role == 'Server')){
     echo $fourohthree;
