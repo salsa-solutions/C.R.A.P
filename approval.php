@@ -18,20 +18,20 @@ $status = $_SESSION['userlogin'][3];
 $WEB_TITLE = 'Approval';
 
 $_DEV = false;
-if (($role == 'admin') || ($role == 'manager')) {
+if (($role == 'Admin') || ($role == 'Manager')) {
     $managment = 'Management';
-    $admin_page = '<a href="/admin.php">Admin</a>';
+    $Admin_page = '<a href="/admin.php">Admin</a>';
     $scheduling_page = '<a href="/scheduling.php">Scheduling</a>';
     $approval = '<a href="/approval.php">Approval</a>';
 } else {
-    $admin_page = NULL;
+    $Admin_page = NULL;
     $scheduling_page = NULL;
 }
-if (($role == 'admin')) {
+if (($role == 'Admin')) {
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
-} elseif ($role == 'manager') {
+} elseif ($role == 'Manager') {
 } else {
     header("Location: index.php");
 }
@@ -58,9 +58,9 @@ if (($role == 'admin')) {
     </head>
     <?php require("php/template.php");
 echo $header ?>
-<?php if (($_DEV) && (($role == 'CaShIeR') || ($role == 'manager')) == '1') {
+<?php if (($_DEV) && (($role == 'Server') || ($role == 'Manager')) == '1') {
     echo $out_of_service;
-} elseif (($role == 'CaShIeR')) {
+} elseif (($role == 'Server')) {
     echo $fourohthree;
 } elseif (($status == 'pending')) {
     echo $pending;
@@ -111,47 +111,47 @@ echo $header ?>
                                                         <td id="name"><?php echo $row['firstname'] . ' ' . $row['lastname']; ?></td>
                                                         <td id="date"><?php echo $row['date'] ?></td>
                                                         <td id="status"><?php echo $row['approved'] ?></td>
-                                                        <td id="role">
-                                                            <label for="menu"></label>
-                                                            <select id="menu" name="menu">
-                                                                <option value="server">Server</option>
-                                                                <option value="cook">Cook</option>
-                                                                <option value="manager">Manager</option>
-                                                                <option value="admin">Admin</option>
+                                                        <td id="role_selection">
+                                                            <label for="role"></label>
+                                                            <select id="role" name="role">
+                                                                <option value="Server">Server</option>
+                                                                <option value="Cook">Cook</option>
+                                                                <option value="Manager">Manager</option>
+                                                                <option value="Admin">Admin</option>
                                                             </select>
                                                         </td>
                                                         <td>
-                                                            <button class="btn btn-success" id="<?php echo $row['username']; ?>_approved">Approve</button>
-                                                            <button class="btn btn-danger" id="<?php echo $row['username']; ?>_deny">Deny</button>
+                                                            <button class="btn btn-success" id="<?php echo $row['id']; ?>_approved">Approve</button>
+                                                            <button class="btn btn-danger" id="<?php echo $row['id']; ?>_deny">Deny</button>
                                                         </td>
                                                     </tr>
                                                 </form>
                                                 <script>
                                                     $(function () {
-                                                        $('# <?php echo $row['username']; ?>_approved').click(function (e) {
+                                                        $('#<?php echo $row['id']; ?>_approved').click(function (e) {
                                                             var valid = this.form.checkValidity();
                                                             if (valid) {
                                                                 var id = '<?php echo $row['id']; ?>';
+                                                                var role = $('#role').val();
+                                                                console.info(role);
                                                                 $.ajax({
                                                                     url: '/php/db_handling/approved.php',
                                                                     type: 'POST',
                                                                     data: {
-                                                                        id: id
+                                                                        id: id,
+                                                                        role: role
                                                                     },
-                                                                    success: function (data) {
-                                                                        Swal.fire('Successful', 'Your request has been submited', 'success')
-                                                                    },
-                                                                    error: function (data) {
-                                                                        Swal.fire('Errors', 'Whoops!', 'error')
-                                                                    }
+                                                                    success: function (data) {},
+                                                                    error: function (data) {}
                                                                 });
                                                             }
                                                         });
                                                     });
                                                 </script>
+
                                                 <script>
                                                     $(function () {
-                                                        $('# <?php echo $row['username']; ?>_deny').click(function (e) {
+                                                        $('#<?php echo $row['id']; ?>_deny').click(function (e) {
                                                             var valid = this.form.checkValidity();
                                                             if (valid) {
                                                                 var id = '<?php echo $row['id']; ?>';
@@ -170,13 +170,15 @@ echo $header ?>
                                                 </script>
                                             <?php
                                                 }
+                                                
                                                 // echo $i;
                                                 
                                             }
-                                            if ($i == 0) {
-                                                echo '<td colspan="8">No new users registered</td>';
-                                            }
                                             
+                                            
+                                        }
+                                        if ($i == 0) {
+                                            echo '<td colspan="8">No new users registered</td>';
                                         }
 
                                         ?>

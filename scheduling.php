@@ -13,18 +13,18 @@ $status = $_SESSION['userlogin'][3];
 $WEB_TITLE = 'Scheduling';
 // to turn off a site uncomment the following line:
 // $_DEV = true;
-if (($role == 'admin')) {
+if (($role == 'Admin')) {
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
 }
-if (($role == 'admin') || ($role == 'manager')) {
+if (($role == 'Admin') || ($role == 'Manager')) {
     $managment = 'Management';
-    $admin_page = '<a href="/admin.php">Admin</a>';
+    $Admin_page = '<a href="/admin.php">Admin</a>';
     $scheduling_page = '<a href="/scheduling.php">Scheduling</a>';
     $approval = '<a href="/approval.php">Approval</a>';
 } else {
-    $admin_page = null;
+    $Admin_page = null;
     $scheduling_page = null;
 }
 
@@ -55,9 +55,9 @@ if (($role == 'admin') || ($role == 'manager')) {
 <body>
     <?php require 'php/template.php';
     echo $header; ?>
-    <?php if (($_DEV) && (($role == 'CaShIeR') || ($role == 'manager')) == '1') {
+    <?php if (($_DEV) && (($role == 'Server') || ($role == 'Manager')) == '1') {
         echo $out_of_service;
-    } elseif (($role == 'CaShIeR')) {
+    } elseif (($role == 'Server')) {
         echo $fourohthree;
     } elseif (($status == 'pending')) {
         echo $pending;
