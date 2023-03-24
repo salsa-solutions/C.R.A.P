@@ -162,9 +162,9 @@ else {
                             </div>
                             <input type="text" placeholder="9am-4pm" name="saturday" id="saturday-pref" class="form-control form-control-sm input_user " >
                         </div>
-                        <div class="input-group mb-1">
+                        <!-- <div class="input-group mb-1">
                             <input type="number" placeholder="Hours" name="hours" id="hours" class="form-control form-control-sm input_user" min=1 max=40 >
-                        </div>
+                        </div> -->
                         <div class="d-flex justify-content-center mt-3 sumbit-container">
                             <button type="button" name="button" id="sumbit-pref" class="btn submit_btn">sumbit</button>
                         </div>
