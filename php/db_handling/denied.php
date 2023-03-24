@@ -11,7 +11,7 @@ error_reporting(E_ALL);
   if(isset($_POST)){
     $id                = $_POST['id'];
 
-    $sql = "DELETE FROM users WHERE id=$id";
+    $sql = "DELETE FROM users WHERE id='$id'";
     $stmtinsert = $db->prepare($sql);
     $result = $stmtinsert->execute();
     if ($result) {

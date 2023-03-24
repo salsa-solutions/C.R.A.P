@@ -14,14 +14,14 @@ $role = $_SESSION['userlogin'][1];
 $username = $_SESSION['userlogin'][2];
 $WEB_TITLE = 'Home';
 $_DEV = false;
-if ( ($role == 'admin') || ($role == 'manager')) {
+if ( ($role == 'Admin') || ($role == 'Manager')) {
     $managment = 'Management';
-    $admin_page='<a href="/admin.php">Admin</a>';
+    $Admin_page='<a href="/admin.php">Admin</a>';
     $scheduling_page='<a href="/scheduling.php">Scheduling</a>';
     $approval = '<a href="/approval.php">Approval</a>';
 }
 else {
-    $admin_page= NULL;
+    $Admin_page= NULL;
     $scheduling_page= NULL;
 }
 // echo '<pre>'; print_r($_SESSION['userlogin']); echo '</pre>';
@@ -47,7 +47,7 @@ else {
 
 </head>
 <?php require("php/template.php"); echo $header ?>
-<?php if (($_DEV) && (($role == 'CaShIeR') || ($role == 'manager')) == '1') {
+<?php if (($_DEV) && (($role == 'Server') || ($role == 'Manager')) == '1') {
         echo $out_of_service;
     }elseif(($status == 'approved')){
         echo $pending;

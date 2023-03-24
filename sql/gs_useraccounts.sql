@@ -1,6 +1,6 @@
 -- phpMyAdmin SQL Dump
 -- version 5.2.1
--- https://www.phpmyadmin.net/
+-- https://www.phpmyAdmin.net/
 --
 -- Host: localhost
 -- Generation Time: Mar 23, 2023 at 12:13 AM
@@ -146,7 +146,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `date`, `roll`, `firstname`, `lastname`, `email`, `username`, `password`, `approved`) VALUES
-(1, '2023-03-22 23:42:43', 'admin', 'ben', 'tsardoulias', 'bent23jam@gmail.com', 'tibthink', '67f27f4a07cfac964d2db9fef1f8f94c2b4d5a04', 'approved');
+(1, '2023-03-22 23:42:43', 'Admin', 'ben', 'tsardoulias', 'bent23jam@gmail.com', 'tibthink', '67f27f4a07cfac964d2db9fef1f8f94c2b4d5a04', 'approved');
 
 --
 -- Indexes for dumped tables

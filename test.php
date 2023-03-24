@@ -16,20 +16,20 @@ $role = $_SESSION['userlogin'][1];
 $username = $_SESSION['userlogin'][2];
 $WEB_TITLE = 'TEST ';
 $_DEV = false;
-if ( ($role == 'admin') || ($role == 'manager')) {
-    $admin_page='<a href="/admin.php">Admin</a>';
+if ( ($role == 'Admin') || ($role == 'Manager')) {
+    $Admin_page='<a href="/admin.php">Admin</a>';
     $scheduling_page='<a href="/scheduling.php">Scheduling</a>';
 }
 else {
-    $admin_page= NULL;
+    $Admin_page= NULL;
     $scheduling_page= NULL;
 }
-if ( ($role == 'admin')) {
+if ( ($role == 'Admin')) {
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
 
-}elseif ($role == 'manager'){
+}elseif ($role == 'Manager'){
 
 }else {
     header("Location: index.php");

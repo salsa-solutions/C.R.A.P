@@ -79,7 +79,7 @@ textarea {
 }
 
 @media screen and (min-width: 0px) and (max-width: 720px) {
-    .scroll {
+    .scrole {
         overflow-y: auto;
     }
     .page-wrap {

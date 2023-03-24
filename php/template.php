@@ -14,7 +14,7 @@ $header = <<<HEADER
     <div class="subnav-d">
         <button class="subnavbtn-d"> $managment </button>
         <div class="subnav-content-d">
-            $admin_page $scheduling_page $approval
+            $Admin_page $scheduling_page $approval
         </div>
     </div>
     <button type="button" name="button" id="logOut" class="btn btn_logout">Log Out</button>

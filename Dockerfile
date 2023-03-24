@@ -1,5 +1,5 @@
 FROM php:8.1.12RC1-apache-buster
-FROM phpmyadmin:apache
+FROM phpmyAdmin:apache
 FROM msql
 FROM httpd
 
