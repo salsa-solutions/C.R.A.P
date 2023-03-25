@@ -7,12 +7,12 @@ Current price = $229.90
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
-PHP                             21            259             42           1759
+PHP                             22            271             42           1809
 CSS                              8             54             28            401
 SQL                              3             49             96            124
 HTML                             1              4              0             15
 -------------------------------------------------------------------------------
-SUM:                            33            366            166           2299
+SUM:                            34            378            166           2349
 -------------------------------------------------------------------------------
 ```
 
@@ -27,3 +27,10 @@ is how much it will cost, i can give a estimate of how much it will cost (avg is
 If you decide to host the software on your own hardware, then you will no longer have to pay 5 dollar up keep.
 
 but in order to have the software running with everything you need you would have to install all the required software and set it up properly, i can do it for $100.00 per server
+
+
+# TODO
+
+1. Retain schedule: after every week the current sched will be flushed and copied into a archive and to be able to look at it in the site
+2. allow managers to edit already confirmed schedules after sent to the main
+3. allow empolyes to change there schedules after sending it (includes calling off(need to make sure its 48 hours before shift))
