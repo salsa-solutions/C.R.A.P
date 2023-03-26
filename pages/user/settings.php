@@ -3,6 +3,7 @@ session_start();
 require_once('/var/www/html/config.php');
 require_once('/var/www/html/pages/page-index.php');
 require_once('/var/www/html/php/functions/role_select.php');
+require_once('/var/www/html/php/functions/user_select.php');
 
 if (!isset($_SESSION['userlogin'])) {
   header("Location: /pages/login/login.php");
@@ -73,7 +74,7 @@ echo $header ?>
 
   <body>
     <div class="settings">
-      <h2>Settings</h2>
+      <h2>User Settings</h2>
 
       <h3>Change Password</h3>
       <form>
@@ -94,6 +95,7 @@ echo $header ?>
     if ($role == 'Admin' || $role == 'Manager') {
 
     ?>
+      <br>
       <div class="settings">
         <h2>Manage Users</h2>
         <h3>Update User Information</h3>
@@ -101,28 +103,8 @@ echo $header ?>
           <label for="user">Select User:</label>
           <td id="user_selection">
             <label for="user"></label>
-            <select id="user" name="user">
-              <?php
-              include('/var/www/html/config.php');
-              $result = $db->prepare("SELECT id, firstname, lastname, username, role FROM users ORDER BY lastname ASC");
-              $result->execute();
-              for ($i = 0; $row = $result->fetch(); $i++) {
-                if ($row['role'] != 'Admin') {
-              ?>
-                  <option value="<?php echo $row['id']; ?>"> <?php echo $row['firstname'] . ' ' .  $row['lastname'] . ' - ' . $row['role']; ?> </option>
-                <?php
-
-                } elseif ($row['role'] == 'Admin' && $role == 'Admin') {
-                ?>
-                  <option value="<?php echo $row['id']; ?>"> <?php echo $row['firstname'] . ' ' .  $row['lastname'] . ' - ' . $row['role']; ?> </option>
-                <?php
-                } else {
-                ?>
-                  <option value="<?php echo $row['id']; ?>" disabled> <?php echo $row['firstname'] . ' ' .  $row['lastname'] . ' - ' . $row['role']; ?> </option>
-              <?php
-                }
-              }
-              ?>
+            <select name="user_id">
+              <?php echo getUsers($db, $role); ?>
             </select>
           </td>
           <label for="username">Username:</label>
@@ -187,6 +169,14 @@ echo $header ?>
           <br>
           <label for="role">Role Description:</label>
           <input type="text" id="role_description" name="role_description">
+          <br>
+          <label for="role">Role Permissions:</label>
+          <select id="role_permisions" name="status">
+            <option value="user">User</option>
+            <option value="manager">Manager</option>
+            <option value="admin">Admin</option>
+          </select>
+
           <br>
           <button class="button" type="submit" id="add_role">Add Role</button>
 
