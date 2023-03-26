@@ -42,6 +42,7 @@ html {
 
 .form_container {
     margin-top: 100px;
+    color: white;
 }
 
 .login_btn {
@@ -74,6 +75,7 @@ html {
 
 .custom-checkbox .custom-control-input:checked~.custom-control-label::before {
     background-color: #19138d !important;
+    color: white;
 }
 
 .sorry {
