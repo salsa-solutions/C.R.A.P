@@ -1,5 +1,7 @@
 
 <?php
+set_include_path(get_include_path() . PATH_SEPARATOR . '/pages/page-index.php');
+// include_path('/pages/page-index.php');
 
 $header = <<<HEADER
 
@@ -9,8 +11,7 @@ $header = <<<HEADER
 
 <!-- The navigation menu -->
 <div class="navbar-d">
-    <a href="/index.php">Home</a>
-    <a href="/schedule.php">Schedule</a>
+    $home_page $schedule_page $settings_page
     <div class="subnav-d">
         <button class="subnavbtn-d"> $managment </button>
         <div class="subnav-content-d">
@@ -26,16 +27,16 @@ $footer = <<<FOOTER
 <script>
         $(function() {
             $('#logOut').click(function() {
-                window.location.href = "logout.php?logout=true";
+                window.location.href = "$logout_page";
             })
         });
     </script>
-    <div class="footer">
-        <footer>
-            <p>You are logged in as: $name </p>
-            <p>Role: $role </p>
-        </footer>
-    </div>
+    <div class="f-container">
+    <footer>
+        <p>You are logged in as: $name </p>
+        <p>Role: $role </p>
+    </footer>
+</div>
 </div>
 
 </body>
@@ -82,6 +83,5 @@ $pending = <<<PED
 </div>
 
 PED;
-
 
 ?>

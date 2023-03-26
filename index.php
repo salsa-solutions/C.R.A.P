@@ -1,16 +1,14 @@
 <?php
 session_start();
-require_once('config.php');
+require_once('/var/www/html/config.php');
+require_once('/var/www/html/pages/page-index.php');
+
 
 if (!isset($_SESSION['userlogin'])) {
   header("Location: login.php");
 }
 
-if (isset($_GET['logout'])) {
-    session_destroy();
-    unset($_SESSION);
-    header("Location: login.php");
-}
+
 $name = $_SESSION['userlogin'][0];
 $role = $_SESSION['userlogin'][1];
 $username = $_SESSION['userlogin'][2];
@@ -25,10 +23,11 @@ if (($role == 'Admin')) {
     error_reporting(E_ALL);
 }
 if ( ($role == 'Admin') || ($role == 'Manager')) {
-    $managment = 'Management';
-    $Admin_page='<a href="/admin.php">Admin</a>';
-    $scheduling_page='<a href="/scheduling.php">Scheduling</a>';
-	$approval = '<a href="/approval.php">Approval</a>';
+    
+    $managment = $managment_page;
+    $Admin_page= $admin_page;
+    $scheduling_page= $scheduling_page;
+	$approval = $approval_page;
 }
 else {
     $managment = NULL;
@@ -61,7 +60,7 @@ else {
 
 
 
-<?php require("php/template.php"); echo $header ?>
+<?php require("/var/www/html/php/template.php"); echo $header ?>
 <?php if (($_DEV) && (($role == 'Server') || ($role == 'Manager') || ($role == 'Cook')) == '1') {
         echo $out_of_service;
     }elseif(($status == 'pending')){

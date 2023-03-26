@@ -1,28 +1,40 @@
 <?php
 session_start();
-require_once('config.php');
+require_once('/var/www/html/config.php');
 
 if (!isset($_SESSION['userlogin'])) {
+  header("Location: login.php");
+}
+
+if (isset($_GET['logout'])) {
+    session_destroy();
+    unset($_SESSION);
     header("Location: login.php");
 }
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 $name = $_SESSION['userlogin'][0];
 $role = $_SESSION['userlogin'][1];
 $username = $_SESSION['userlogin'][2];
-$WEB_TITLE = 'Home';
-$_DEV = false;
+$status = $_SESSION['userlogin'][3];
+$WEB_TITLE = 'PLACE TITLE HERE';
+
+// to turn off a site uncomment the following line:
+//$_DEV = true;
+if (($role == 'Admin')) {
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+}
 if ( ($role == 'Admin') || ($role == 'Manager')) {
     $managment = 'Management';
     $Admin_page='<a href="/admin.php">Admin</a>';
     $scheduling_page='<a href="/scheduling.php">Scheduling</a>';
-    $approval = '<a href="/approval.php">Approval</a>';
+	$approval = '<a href="/approval.php">Approval</a>';
 }
 else {
+    $managment = NULL;
     $Admin_page= NULL;
     $scheduling_page= NULL;
+    $approval = NULL;
 }
 // echo '<pre>'; print_r($_SESSION['userlogin']); echo '</pre>';
 ?>
@@ -46,19 +58,23 @@ else {
     <title><?php echo $WEB_TITLE; ?> | Capriotti's Regional Attendance Program</title>
 
 </head>
-<?php require("php/template.php"); echo $header ?>
+<?php require("/var/www/html/php/template.php"); echo $header ?>
 <?php if (($_DEV) && (($role == 'Server') || ($role == 'Manager') || ($role == 'Cook')) == '1') {
         echo $out_of_service;
-    }elseif(($status == 'approved')){
+    }elseif(($status == 'pending')){
         echo $pending;
     }else{
 
     
-    ?>
-
+?>
+<!-- body
+goes
+here -->
 
 <?php
 }
+
+ 
+
 require("php/template.php"); echo $footer ?>
 </html>
-

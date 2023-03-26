@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once('config.php');
+require_once('/var/www/html/config.php');
 
 if (!isset($_SESSION['userlogin'])) {
     header("Location: login.php");
