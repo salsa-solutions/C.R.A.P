@@ -24,8 +24,8 @@ $WEB_TITLE = 'User Registration';
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="css/backround.css">
-    <link rel="stylesheet" href="css/login-signup.css">
+    <link rel="stylesheet" href="/css/backround.css">
+    <link rel="stylesheet" href="/css/login-signup.css">
 
 
     <title><?php echo $WEB_TITLE ?> | <?php echo $WEBSITE_NAME; ?></title>

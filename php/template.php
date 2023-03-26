@@ -1,7 +1,7 @@
 
 <?php
-set_include_path(get_include_path() . PATH_SEPARATOR . '/pages/page-index.php');
-// include_path('/pages/page-index.php');
+// set_include_path(get_include_path() . PATH_SEPARATOR . '/pages/page-index.php');
+// // include_path('/pages/page-index.php');
 
 $header = <<<HEADER
 

@@ -1,5 +1,6 @@
 <?php
-require_once 'config.php';
+require_once '/var/www/html/config.php';
+require_once '/var/www/html/pages/page-index.php';
 session_start();
 
 if (isset($_SESSION['userlogin'])) {
@@ -7,6 +8,9 @@ if (isset($_SESSION['userlogin'])) {
 }
 $WEB_TITLE = 'Login';
 
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
 
 ?>
 
@@ -24,8 +28,8 @@ $WEB_TITLE = 'Login';
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="css/backround.css">
-    <link rel="stylesheet" href="css/login-signup.css">
+    <link rel="stylesheet" href="/css/backround.css">
+    <link rel="stylesheet" href="/css/login-signup.css">
     <title><?php echo $WEB_TITLE ?> | <?php echo $WEBSITE_NAME; ?></title>
 </head>
 
@@ -109,7 +113,7 @@ $WEB_TITLE = 'Login';
                         success: function(data) {
                             // alert(data);
                             if ($.trim(data) === "1") {
-                                setTimeout(' window.location.href =  "index.php"', 1000);
+                                setTimeout(' window.location.href =  "<?php $index_page;?>"', 1000);
                             } else {
                                 Swal.fire(
                                     'Errors',
