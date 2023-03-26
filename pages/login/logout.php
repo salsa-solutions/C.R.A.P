@@ -4,7 +4,7 @@ require_once('/var/www/html/config.php');
 require_once('/var/www/html/pages/page-index.php');
 
 if (!isset($_SESSION['userlogin'])) {
-    header("Location: login.php");
+    header("Location: /pages/login/login.php");
 }
 
 if (isset($_GET['logout'])) {

@@ -3,13 +3,13 @@ session_start();
 require_once('/var/www/html/config.php');
 
 if (!isset($_SESSION['userlogin'])) {
-    header("Location: login.php");
+    header("Location: /pages/login/login.php");
 }
 
 if (isset($_GET['logout'])) {
     session_destroy();
     unset($_SESSION);
-    header("Location: login.php");
+    header("Location: /pages/login/login.php");
 }
 $name = $_SESSION['userlogin'][0];
 $role = $_SESSION['userlogin'][1];
