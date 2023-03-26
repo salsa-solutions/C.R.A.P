@@ -1,5 +1,6 @@
 <?php
-require_once 'config.php';
+require_once '/var/www/html/config.php';
+require_once '/var/www/html/pages/page-index.php';
 session_start();
 
 if (isset($_SESSION['userlogin'])) {
@@ -7,6 +8,9 @@ if (isset($_SESSION['userlogin'])) {
 }
 $WEB_TITLE = 'Login';
 
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
 
 ?>
 
@@ -18,14 +22,14 @@ $WEB_TITLE = 'Login';
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="css/backround.css">
-    <link rel="stylesheet" href="css/login-signup.css">
+    <link rel="stylesheet" href="/css/backround.css">
+    <link rel="stylesheet" href="/css/login-signup.css">
     <title><?php echo $WEB_TITLE ?> | <?php echo $WEBSITE_NAME; ?></title>
 </head>
 
@@ -109,7 +113,7 @@ $WEB_TITLE = 'Login';
                         success: function(data) {
                             // alert(data);
                             if ($.trim(data) === "1") {
-                                setTimeout(' window.location.href =  "index.php"', 1000);
+                                setTimeout(' window.location.href =  "<?php $index_page;?>"', 1000);
                             } else {
                                 Swal.fire(
                                     'Errors',

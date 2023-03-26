@@ -25,17 +25,16 @@ if (($role == 'Admin')) {
   ini_set('display_startup_errors', 1);
   error_reporting(E_ALL);
 }
-if ( ($role == 'Admin') || ($role == 'Manager')) {
-    
+if (($role == 'Admin') || ($role == 'Manager')) {
+
   $managment = $managment_page;
-  $Admin_page= $admin_page;
-  $scheduling_page= $scheduling_page;
-$approval = $approval_page;
-}
-else {
+  $Admin_page = $admin_page;
+  $scheduling_page = $scheduling_page;
+  $approval = $approval_page;
+} else {
   $managment = NULL;
-  $Admin_page= NULL;
-  $scheduling_page= NULL;
+  $Admin_page = NULL;
+  $scheduling_page = NULL;
   $approval = NULL;
 }
 // echo '<pre>'; print_r($_SESSION['userlogin']); echo '</pre>';
@@ -47,7 +46,7 @@ else {
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
   </script>
@@ -72,83 +71,69 @@ echo $header ?>
 ?>
 
   <body>
+    <div class="settings">
+      <h2>Settings</h2>
 
+      <h3>Change Password</h3>
+      <form>
+        <label for="current-password">Current Password:</label>
+        <input type="password" id="current-password" name="current-password">
+        <br>
+        <label for="new-password">New Password:</label>
+        <input type="password" id="new-password" name="new-password">
+        <br>
+        <label for="confirm-password">Confirm Password:</label>
+        <input type="password" id="confirm-password" name="confirm-password">
+        <br>
+        <button type="submit">Change Password</button>
+      </form>
+      <br>
+      <h2>Manage Users</h2>
+      <h3>Update User Information</h3>
+      <form>
+        <label for="user">Select User:</label>
+        <td id="user_selection">
+          <label for="user"></label>
+          <select id="user" name="user">
+            <?php
+            include('/var/www/html/config.php');
+            $result = $db->prepare("SELECT id, firstname, lastname, username, role FROM users ORDER BY lastname ASC");
+            $result->execute();
+            for ($i = 0; $row = $result->fetch(); $i++) {
+              if($row['role'] != 'Admin') {
+              echo '<option value="' . $row['id'] . '">' . $row['firstname'] . ' ' .  $row['lastname'] . '</option>';
+              }
+            }
+            ?>
+          </select>
+        </td>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username">
+        <br>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email">
+        <br>
+        <label for="role">Role:</label>
+        <td id="role_selection">
+          <label for="role"></label>
+          <select id="role" name="role">
+            <option value="Server">Server</option>
+            <option value="Cook">Cook</option>
+            <option value="Manager">Manager</option>
+            <option value="Admin">Admin</option>
+          </select>
+        </td>
+        <br>
+        <label for="status">Status:</label>
+        <select id="status" name="status">
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+        </select>
+        <br>
+        <button type="submit">Update User Information</button>
+      </form>
 
-<!-- <div class="settings">
-  <h1>Settings</h1>
-  <form id="change-password-form">
-    <h2>Change Password</h2>
-    <label for="current-password">Current Password:</label>
-    <input type="password" id="current-password" name="current-password">
-    <label for="new-password">New Password:</label>
-    <input type="password" id="new-password" name="new-password">
-    <label for="confirm-password">Confirm New Password:</label>
-    <input type="password" id="confirm-password" name="confirm-password">
-    <button type="submit">Change Password</button>
-  </form>
-  <hr>
-  <form id="manage-users-form">
-    <h2>Manage Users</h2>
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username">
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name">
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email">
-    <label for="role">Role:</label>
-    <select id="role" name="role">
-      <option value="user">User</option>
-      <option value="admin">Admin</option>
-    </select>
-    <label for="status">Status:</label>
-    <select id="status" name="status">
-      <option value="active">Active</option>
-      <option value="inactive">Inactive</option>
-    </select>
-    <button type="submit">Save Changes</button>
-  </form>
-</div> -->
-
-<div class="settings">
-  <h2>Settings</h2>
-  
-  <h3>Change Password</h3>
-  <form>
-    <label for="current-password">Current Password:</label>
-    <input type="password" id="current-password" name="current-password">
-    <br>
-    <label for="new-password">New Password:</label>
-    <input type="password" id="new-password" name="new-password">
-    <br>
-    <label for="confirm-password">Confirm Password:</label>
-    <input type="password" id="confirm-password" name="confirm-password">
-    <br>
-    <button type="submit">Change Password</button>
-  </form>
-  
-  <h3>Update User Information</h3>
-  <form>
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username">
-    <br>
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email">
-    <br>
-    <label for="role">Role:</label>
-    <select id="role" name="role">
-      <option value="user">User</option>
-      <option value="admin">Admin</option>
-    </select>
-    <br>
-    <label for="status">Status:</label>
-    <select id="status" name="status">
-      <option value="active">Active</option>
-      <option value="inactive">Inactive</option>
-    </select>
-    <br>
-    <button type="submit">Update User Information</button>
-  </form>
-</div>
+    </div>
 
 
   </body>
