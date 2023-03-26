@@ -40,7 +40,7 @@ done
 git add .
 
 # commit changes
-git commit -m "$commit_msg"
+git commit -m "$commit_msg - $branch - $date"
 
 # switch to specified branch (if applicable)
 if [ "$branch" != "master" ]
