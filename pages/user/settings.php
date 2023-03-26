@@ -2,6 +2,7 @@
 session_start();
 require_once('/var/www/html/config.php');
 require_once('/var/www/html/pages/page-index.php');
+require_once('/var/www/html/php/functions/role_select.php');
 
 if (!isset($_SESSION['userlogin'])) {
   header("Location: /pages/login/login.php");
@@ -88,52 +89,112 @@ echo $header ?>
         <button type="submit">Change Password</button>
       </form>
       <br>
-      <h2>Manage Users</h2>
-      <h3>Update User Information</h3>
-      <form>
-        <label for="user">Select User:</label>
-        <td id="user_selection">
-          <label for="user"></label>
-          <select id="user" name="user">
-            <?php
-            include('/var/www/html/config.php');
-            $result = $db->prepare("SELECT id, firstname, lastname, username, role FROM users ORDER BY lastname ASC");
-            $result->execute();
-            for ($i = 0; $row = $result->fetch(); $i++) {
-              if($row['role'] != 'Admin') {
-              echo '<option value="' . $row['id'] . '">' . $row['firstname'] . ' ' .  $row['lastname'] . '</option>';
-              }
-            }
-            ?>
-          </select>
-        </td>
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username">
-        <br>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email">
-        <br>
-        <label for="role">Role:</label>
-        <td id="role_selection">
-          <label for="role"></label>
-          <select id="role" name="role">
-            <option value="Server">Server</option>
-            <option value="Cook">Cook</option>
-            <option value="Manager">Manager</option>
-            <option value="Admin">Admin</option>
-          </select>
-        </td>
-        <br>
-        <label for="status">Status:</label>
-        <select id="status" name="status">
-          <option value="active">Active</option>
-          <option value="inactive">Inactive</option>
-        </select>
-        <br>
-        <button type="submit">Update User Information</button>
-      </form>
-
     </div>
+    <?php
+    if ($role == 'Admin' || $role == 'Manager') {
+
+    ?>
+      <div class="settings">
+        <h2>Manage Users</h2>
+        <h3>Update User Information</h3>
+        <form>
+          <label for="user">Select User:</label>
+          <td id="user_selection">
+            <label for="user"></label>
+            <select id="user" name="user">
+              <?php
+              include('/var/www/html/config.php');
+              $result = $db->prepare("SELECT id, firstname, lastname, username, role FROM users ORDER BY lastname ASC");
+              $result->execute();
+              for ($i = 0; $row = $result->fetch(); $i++) {
+                if ($row['role'] != 'Admin') {
+              ?>
+                  <option value="<?php echo $row['id']; ?>"> <?php echo $row['firstname'] . ' ' .  $row['lastname'] . ' - ' . $row['role']; ?> </option>
+                <?php
+
+                } elseif ($row['role'] == 'Admin' && $role == 'Admin') {
+                ?>
+                  <option value="<?php echo $row['id']; ?>"> <?php echo $row['firstname'] . ' ' .  $row['lastname'] . ' - ' . $row['role']; ?> </option>
+                <?php
+                } else {
+                ?>
+                  <option value="<?php echo $row['id']; ?>" disabled> <?php echo $row['firstname'] . ' ' .  $row['lastname'] . ' - ' . $row['role']; ?> </option>
+              <?php
+                }
+              }
+              ?>
+            </select>
+          </td>
+          <label for="username">Username:</label>
+          <input type="text" id="username" name="username">
+          <br>
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email">
+          <br>
+
+          <label for="role">Role:</label>
+          <td id="role_selection">
+            <label for="role"></label>
+            <select id="role" name="role">
+              <?php echo getRoles($db, $role); ?>
+            </select>
+          </td>
+          <br>
+          <label for="status">Status:</label>
+          <select id="status" name="status">
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+          <br>
+          <button class="button" type="submit" id="<?php echo $row['id']; ?>_update_user">Save Changes</button>
+        </form>
+
+        <h3>Add New User</h3>
+        <form>
+          <label for="firstname">First Name:</label>
+          <input type="text" id="firstname" name="firstname">
+          <br>
+          <label for="lastname">Last Name:</label>
+          <input type="text" id="lastname" name="lastname">
+          <br>
+          <label for="username">Username:</label>
+          <input type="text" id="username" name="username">
+          <br>
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email">
+          <br>
+          <label for="role">Role:</label>
+          <td id="role_selection">
+            <label for="role"></label>
+            <select id="role" name="role">
+              <?php echo getRoles($db, $role); ?>
+            </select>
+          </td>
+          <br>
+          <label for="status">Status:</label>
+          <select id="status" name="status">
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+          <br>
+          <button class="button" type="submit" id="add_user">Add User</button>
+        </form>
+        <!-- create adding role menu -->
+        <h3>Add New Role</h3>
+        <form>
+          <label for="role">Role:</label>
+          <input type="text" id="role" name="role">
+          <br>
+          <label for="role">Role Description:</label>
+          <input type="text" id="role_description" name="role_description">
+          <br>
+          <button class="button" type="submit" id="add_role">Add Role</button>
+
+      </div>
+      </div>
+    <?php
+    }
+    ?>
 
 
   </body>
