@@ -73,6 +73,7 @@ echo $header ?>
 ?>
 
   <body>
+    <br>
     <div class="settings">
       <h2>User Settings</h2>
 
@@ -179,6 +180,31 @@ echo $header ?>
 
           <br>
           <button class="button" type="submit" id="add_role">Add Role</button>
+        </form>
+        <br>
+        <br>
+          <h4>Role cheat sheet</h4>
+          <div class="role_cheat_sheet">
+            <div class="role_cheat_sheet_item">
+              <h5>Admin</h5>
+              <p>Full access to everything</p>
+            </div>
+            <div class="role_cheat_sheet_item">
+              <h5>Manager</h5>
+              <p>Full access to all features but effected by developer mode </p>
+            </div>
+            <div class="role_cheat_sheet_item">
+              <h5>Server</h5>
+              <p>Full access to user features (i.e )</p>
+            </div>
+            <div class="role_cheat_sheet_item">
+              <h5>Cook</h5>
+              <p>Full access to all features</p>
+            </div>
+            <div class="role_cheat_sheet_item">
+              <h5>User</h5>
+              <p>Full access to all features</p>
+            </div>
 
       </div>
       </div>
