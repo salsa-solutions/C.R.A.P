@@ -1,0 +1,60 @@
+.settings {
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+    background-color: #f5f5f5;
+    font-family: Arial, sans-serif;
+}
+
+.settings h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.settings h3 {
+    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.settings label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.settings input[type="text"],
+.settings input[type="email"],
+.settings input[type="password"],
+.settings select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.settings button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.settings button[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+.settings select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}

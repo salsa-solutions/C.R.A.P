@@ -15,7 +15,7 @@
 
 .avil_schedule_container {
     /* padding: 0 2rem; */
-    position: absolute;
+    /* position: absolute; */
     margin: 2rem;
     overflow-y: scroll;
     height: 300px;
