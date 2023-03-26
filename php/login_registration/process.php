@@ -9,7 +9,7 @@
 <?php
     $currentDate = new DateTime();
     // echo '<pre>'; print_r($_POST); echo '</pre>';
-    require_once('../../config.php');
+    require_once('/var/www/html/config.php');
     if($_DEV){
         echo 'Logging in and sign up are disabled due to maintenance';
     }else{

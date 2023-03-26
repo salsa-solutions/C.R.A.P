@@ -20,7 +20,7 @@ function getUserIpAddr()
 	error_reporting(E_ALL);
 	ini_set('display_errors', 1);
 	ini_set('display_startup_errors', 1);
-	require_once('../../config.php');
+	require_once('/var/www/html/config.php');
 	$username = $_POST['username'];	
 //	$username = 'macifoe';
 
@@ -44,7 +44,7 @@ function getUserIpAddr()
 <?php
 
 session_start();
-require_once('../../config.php');
+require_once('/var/www/html/config.php');
 
 $username = $_POST['username'];
 $password = sha1($_POST['password']);
