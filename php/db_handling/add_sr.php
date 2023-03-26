@@ -1,5 +1,5 @@
 <?php
-require_once('../../config.php');
+require_once('/var/www/html/config.php');
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -15,7 +15,7 @@ error_reporting(E_ALL);
         $name              = $_POST['name'];
         $message           = $_POST['message'];
 
-        $sql = "INSERT INTO sp (date, name, message ) VALUES(?,?,?)";
+        $sql = "INSERT INTO sr (date, name, message ) VALUES(?,?,?)";
         $stmtinsert = $db->prepare($sql);
         $result = $stmtinsert->execute([$date, $name, $message]);
         if ($result) {
