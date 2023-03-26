@@ -11,8 +11,8 @@ $schedule_page = '<a href="/pages/general/schedule.php">Schedule</a>';
 $settings_page = '<a href="/pages/user/settings.php">Settings</a>';
 
 //  login pages
-$login_page = '<a href="/pages/login/login.php">Login</a>';
-$register_page = '<a href="/pages/login/registration.php">Register</a>';
-$logout_page = '<a href="/pages/login/logout.php?logout=true">Logout</a>';
+$login_page = '/pages/login/login.php';
+$register_page = '/pages/login/registration.php';
+$logout_page = '/pages/login/logout.php?logout=true';
 
 ?>
