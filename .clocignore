@@ -1,7 +1,12 @@
 test.php
 test.html
+test.css
+test.js
+test.sql
 thefixer.sh
 git.sh
 docker.sh
 cloc.sh
 README.md
+phpMyAdmin
+Dockerfile

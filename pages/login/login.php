@@ -3,7 +3,7 @@ require_once 'config.php';
 session_start();
 
 if (isset($_SESSION['userlogin'])) {
-    header("Location: index.php");
+    header("Location: /index.php");
 }
 $WEB_TITLE = 'Login';
 
@@ -134,7 +134,7 @@ $WEB_TITLE = 'Login';
     <script>
         $(function() {
             $('#register').click(function() {
-                window.location.href = "registration.php";
+                window.location.href = "/pages/login/registration.php";
             })
         });
     </script>
