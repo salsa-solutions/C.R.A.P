@@ -2,7 +2,7 @@
 
 # Default values
 commit_message="Automated commit"
-branch="master"
+branch="main"
 new_branch=false
 add_all=false
 
@@ -12,7 +12,7 @@ help_menu() {
   echo ""
   echo "OPTIONS:"
   echo "  -a, --all              add all changes"
-  echo "  -b, --branch <name>    specify branch (default: master)"
+  echo "  -b, --branch <name>    specify branch (default: main)"
   echo "  -n, --new <name>       create new branch and switch to it"
   echo "  -m, --message <msg>    custom commit message (default: Automated commit)"
   echo "  -h, --help             display this help menu"
@@ -88,5 +88,5 @@ git push origin $branch
 # Revert back to default branch
 if [ "$new_branch" = true ]
 then
-  git checkout master
+  git checkout main
 fi
