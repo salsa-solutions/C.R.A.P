@@ -15,4 +15,8 @@ $login_page = '/pages/login/login.php';
 $register_page = '/pages/login/registration.php';
 $logout_page = '/pages/login/logout.php?logout=true';
 
+// test pages
+$test_page = '/Testing/';
+$test_page_php = '/test/test.php';
+$test_page_html = '/test/test.html';
 ?>

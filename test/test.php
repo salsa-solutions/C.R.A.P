@@ -1,46 +1,52 @@
 <?php
+
 session_start();
 require_once('/var/www/html/config.php');
+require_once('/var/www/html/pages/page-index.php');
+// to turn off a page uncomment the following line:
+// $_DEV = true;
 
 if (!isset($_SESSION['userlogin'])) {
-    header("Location: /pages/login/login.php");
+    header('Location: login.php');
 }
 
-if (isset($_GET['logout'])) {
-    session_destroy();
-    unset($_SESSION);
-    header("Location: /pages/login/login.php");
-}
 $name = $_SESSION['userlogin'][0];
 $role = $_SESSION['userlogin'][1];
 $username = $_SESSION['userlogin'][2];
 $status = $_SESSION['userlogin'][3];
-$WEB_TITLE = 'PLACE TITLE HERE';
+$WEB_TITLE = 'Manager Home';
 
-// to turn off a site uncomment the following line:
-//$_DEV = true;
+
+if ( ($role == 'Admin') || ($role == 'Manager')) {
+    
+    $managment = $managment_page;
+    $Admin_page= $admin_page;
+    $scheduling_page= $scheduling_page;
+	$approval = $approval_page;
+}
+else {
+    $managment = NULL;
+    $Admin_page= NULL;
+    $scheduling_page= NULL;
+    $approval = NULL;
+}
 if (($role == 'Admin')) {
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
-}
-if (($role == 'Admin') || ($role == 'Manager')) {
-    $managment = 'Management';
-    $Admin_page = '<a href="/admin.php">Admin</a>';
-    $scheduling_page = '<a href="/scheduling.php">Scheduling</a>';
-    $approval = '<a href="/approval.php">Approval</a>';
+} elseif ($role == 'Manager') {
 } else {
-    $managment = NULL;
-    $Admin_page = NULL;
-    $scheduling_page = NULL;
-    $approval = NULL;
+    header("Location: index.php");
 }
-// echo '<pre>'; print_r($_SESSION['userlogin']); echo '</pre>';
+
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -51,123 +57,138 @@ if (($role == 'Admin') || ($role == 'Manager')) {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="css/backround.css">
-    <link rel="stylesheet" href="css/home.css">
-    <link rel="stylesheet" href="css/nav.css">
+    <link rel="stylesheet" href="/css/home.css">
+    <!-- <link rel="stylesheet" href="/css/admin.css"> -->
+    <link rel="stylesheet" href="/css/scrollbar.css">
+    <link rel="stylesheet" href="/css/nav.css">
     <link rel="stylesheet" href="css/test.css">
-    <link rel="stylesheet" href="css/settings.css">
-    <title><?php echo $WEB_TITLE; ?> | Capriotti's Regional Attendance Program</title>
+    <title><?php echo $WEB_TITLE ?> | <?php echo $WEBSITE_NAME; ?></title>
 
 </head>
-<?php require("/var/www/html/php/template.php");
-echo $header ?>
-<?php if (($_DEV) && (($role == 'Server') || ($role == 'Manager') || ($role == 'Cook')) == '1') {
-    echo $out_of_service;
-} elseif (($status == 'pending')) {
-    echo $pending;
-} else {
 
+<body>
+    <?php require("/var/www/html/php/template.php");
+    echo $header ?>
+    <?php if (($_DEV) && (($role == 'Server') || ($role == 'Manager') || ($role == 'Cook')) == '1') {
+        echo $out_of_service;
+    } elseif (($role == 'Server')) {
+        echo $fourohthree;
+    } elseif (($status == 'pending')) {
+        echo $pending;
+    } else {
+    ?>
 
-?>
-
-    <body>
-
-
-        <!-- <div class="settings">
-  <h1>Settings</h1>
-  <form id="change-password-form">
-    <h2>Change Password</h2>
-    <label for="current-password">Current Password:</label>
-    <input type="password" id="current-password" name="current-password">
-    <label for="new-password">New Password:</label>
-    <input type="password" id="new-password" name="new-password">
-    <label for="confirm-password">Confirm New Password:</label>
-    <input type="password" id="confirm-password" name="confirm-password">
-    <button type="submit">Change Password</button>
-  </form>
-  <hr>
-  <form id="manage-users-form">
-    <h2>Manage Users</h2>
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username">
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name">
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email">
-    <label for="role">Role:</label>
-    <select id="role" name="role">
-      <option value="user">User</option>
-      <option value="admin">Admin</option>
-    </select>
-    <label for="status">Status:</label>
-    <select id="status" name="status">
-      <option value="active">Active</option>
-      <option value="inactive">Inactive</option>
-    </select>
-    <button type="submit">Save Changes</button>
-  </form>
-</div> -->
-<!-- <div class="container"> -->
-        <div class="settings">
-            <h2>Settings</h2>
-
-            <h3>Change Password</h3>
-            <form>
-                <label for="current-password">Current Password:</label>
-                <input type="password" id="current-password" name="current-password">
-                <br>
-                <label for="new-password">New Password:</label>
-                <input type="password" id="new-password" name="new-password">
-                <br>
-                <label for="confirm-password">Confirm Password:</label>
-                <input type="password" id="confirm-password" name="confirm-password">
-                <br>
-                <button type="submit">Change Password</button>
-            </form>
-
-            <h3>Update User Information</h3>
-            <form>
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username">
-                <br>
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email">
-                <br>
-                <label for="role">Role:</label>
-                <select id="role" name="role">
-                    <option value="user">User</option>
-                    <option value="admin">Admin</option>
-                </select>
-                <br>
-                <label for="status">Status:</label>
-                <select id="status" name="status">
-                    <option value="active">Active</option>
-                    <option value="inactive">Inactive</option>
-                </select>
-                <br>
-                <button type="submit">Update User Information</button>
-            </form>
-        </div>
-
-
-    </body>
-
-
-    <div class="f-container">
-        <!-- your page content goes here -->
-        <footer>
-            <p>You are logged in as: $name </p>
-            <p>Role: $role </p>
-        </footer>
-    </div>
-
-
-    <!-- <?php
+<body>
+<style>
+        /* Set default font and color */
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
         }
+        /* Create container for messages and availability */
+        .container {
+            display: flex;
+            align-items: flex-start;
+        }
+        /* Style for messages section */
+        .messages {
+            width: 30%;
+            margin-right: 20px;
+        }
+        .messages h2 {
+            margin-top: 0;
+        }
+        .messages ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .messages li {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #f2f2f2;
+        }
+        /* Style for availability section */
+        .availability {
+            flex: 1;
+        }
+        .availability h2 {
+            margin-top: 0;
+        }
+        .availability table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .availability th, .availability td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .availability th {
+            background-color: #f2f2f2;
+        }
+    </style>
+    <div class="container">
+        <div class="messages">
+            <h2>Messages</h2>
+            <ul>
+                <li>Message 1</li>
+                <li>Message 2</li>
+                <li>Message 3</li>
+            </ul>
+        </div>
+        <div class="availability">
+            <h2>Availability</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Day</th>
+                        <th>Wanted</th>
+                        <th>Availability</th>
+                    </tr>
+                </thead>
+                <thead>
+                    <tr>
+                        <th>Day</th>
+                        <th>Wanted</th>
+                        <th>Availability</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Monday</td>
+                        <td>8am - 5pm</td>
+                        <td>Available</td>
+                    </tr>
+                    <tr>
+                        <td>Tuesday</td>
+                        <td>8am - 5pm</td>
+                        <td>Available</td>
+                    </tr>
+                    <tr>
+                        <td>Wednesday</td>
+                        <td>8am - 5pm</td>
+                        <td>Not Available</td>
+                    </tr>
+                    <tr>
+                        <td>Thursday</td>
+                        <td>8am - 5pm</td>
+                        <td>Available</td>
+                    </tr>
+                    <tr>
+                        <td>Friday</td>
+                        <td>8am - 5pm</td>
+                        <td>Available</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
 
-
-
-        require("php/template.php");
-        echo $footer ?> -->
-
-</html>
+    <?php
+    }
+    require("/var/www/html/php/template.php");
+    echo $footer;
+    ?>

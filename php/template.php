@@ -13,9 +13,9 @@ $header = <<<HEADER
 <div class="navbar-d">
     $home_page $schedule_page $settings_page
     <div class="subnav-d">
-        <button class="subnavbtn-d"> $managment </button>
+        <button class="subnavbtn-d"> $managment_page </button>
         <div class="subnav-content-d">
-            $Admin_page $scheduling_page $approval
+            $admin_page $scheduling_page $approval_page
         </div>
     </div>
     <button type="button" name="button" id="logOut" class="btn btn_logout">Log Out</button>

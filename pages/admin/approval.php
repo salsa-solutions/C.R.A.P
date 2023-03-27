@@ -141,7 +141,7 @@ echo $header ?>
                                                                 var role = $('#role').val();
                                                                 console.info(role);
                                                                 $.ajax({
-                                                                    url: '/php/db_handling/approved.php',
+                                                                    url: '/php/db/handling/approved.php',
                                                                     type: 'POST',
                                                                     data: {
                                                                         id: id,
@@ -162,7 +162,7 @@ echo $header ?>
                                                             if (valid) {
                                                                 var id = '<?php echo $row['id']; ?>';
                                                                 $.ajax({
-                                                                    url: '/php/db_handling/denied.php',
+                                                                    url: '/php/db/handling/denied.php',
                                                                     type: 'POST',
                                                                     data: {
                                                                         id: id
