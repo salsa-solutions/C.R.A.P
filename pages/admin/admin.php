@@ -102,7 +102,7 @@ if (($role == 'Admin')) {
                                     // error_reporting(E_ALL);
 
                                     include('/var/www/html/config.php');
-                                    $result = $db->prepare("SELECT date, name, message FROM sp ORDER BY date DESC");
+                                    $result = $db->prepare("SELECT date, name, message FROM sr ORDER BY date DESC");
                                     $result->execute();
                                     for ($i = 0; $row = $result->fetch(); $i++) {
                                     ?>

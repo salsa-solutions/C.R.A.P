@@ -3,10 +3,13 @@ test.html
 test.css
 test.js
 test.sql
+test.py
 thefixer.sh
 git.sh
 docker.sh
 cloc.sh
 README.md
+DEPENDS.md
+LICENSE.md
 phpMyAdmin
 Dockerfile
