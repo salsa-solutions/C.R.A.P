@@ -70,8 +70,6 @@ else{
 			$stmtinsert = $db->prepare($sql);
 			$result = $stmtinsert->execute([ $date, $username, $name, $ip]);
 
-			
-
 		}else{
 			echo 'Ha, I really hope you didnt forget your password';
 			$currentDate = new DateTime();
