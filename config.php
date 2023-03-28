@@ -1,11 +1,12 @@
 <?php
   // whole site debug mode
   // all pages will not work if user isnt Admin 
-  $_DEV = false;
+  $_DEV = true;
+  $_DEV_DB = false;
   $WEBSITE_NAME = 'Greek Star Attendance Program';
   $db_user = "tibthink";
   $db_pass = "Halsnewram";
-  if($_DEV){
+  if($_DEV_DB){
     $db_name = "gs_useraccounts_beta";
   }else{
     $db_name = "gs_useraccounts";

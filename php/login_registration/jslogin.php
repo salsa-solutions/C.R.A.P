@@ -54,7 +54,7 @@ $stmtselect  = $db->prepare($sql);
 
 $result = $stmtselect->execute([$username, $password]);
 // echo $result;
-if($_DEV){
+if($_DEV_DB){
 	echo 'Logging in and sign up are disabled due to maintenance';
 }
 else{
