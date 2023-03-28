@@ -1,34 +1,30 @@
 <?php
 session_start();
 require_once('/var/www/html/config.php');
+require_once('/var/www/html/pages/page-index.php');
 
 if (!isset($_SESSION['userlogin'])) {
-  header("Location: /pages/login/login.php");
+    header('Location: login.php');
 }
 
-if (isset($_GET['logout'])) {
-    session_destroy();
-    unset($_SESSION);
-    header("Location: /pages/login/login.php");
-}
 $name = $_SESSION['userlogin'][0];
 $role = $_SESSION['userlogin'][1];
 $username = $_SESSION['userlogin'][2];
 $status = $_SESSION['userlogin'][3];
-$WEB_TITLE = 'PLACE TITLE HERE';
-
+$WEB_TITLE = 'PUT TITLE HERE';
 // to turn off a site uncomment the following line:
-//$_DEV = true;
+// $_DEV = true;
 if (($role == 'Admin')) {
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
 }
 if ( ($role == 'Admin') || ($role == 'Manager')) {
-    $managment = 'Management';
-    $Admin_page='<a href="/admin.php">Admin</a>';
-    $scheduling_page='<a href="/scheduling.php">Scheduling</a>';
-	$approval = '<a href="/approval.php">Approval</a>';
+    
+    $managment = $managment_page;
+    $Admin_page= $admin_page;
+    $scheduling_page= $scheduling_page;
+	$approval = $approval_page;
 }
 else {
     $managment = NULL;
@@ -36,12 +32,23 @@ else {
     $scheduling_page= NULL;
     $approval = NULL;
 }
-// echo '<pre>'; print_r($_SESSION['userlogin']); echo '</pre>';
+if (($role == 'Admin')) {
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+} elseif ($role == 'Manager') {
+} else {
+    header("Location: index.php");
+}
+
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -52,29 +59,29 @@ else {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="css/backround.css">
-    <link rel="stylesheet" href="css/home.css">
-    <link rel="stylesheet" href="css/nav.css">
-    <title><?php echo $WEB_TITLE; ?> | Capriotti's Regional Attendance Program</title>
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="/css/scrollbar.css">
+    <link rel="stylesheet" href="/css/nav.css">
+    <title><?php echo $WEB_TITLE ?> | <?php echo $WEBSITE_NAME; ?></title>
 
 </head>
-<?php require("/var/www/html/php/template.php"); echo $header ?>
-<?php if (($_DEV) && (($role == 'Server') || ($role == 'Manager') || ($role == 'Cook')) == '1') {
+
+<body>
+    <?php require("/var/www/html/php/template.php");
+    echo $header ?>
+    <?php if (($_DEV) && (($role == 'Server') || ($role == 'Manager') || ($role == 'Cook')) == '1') {
         echo $out_of_service;
-    }elseif(($status == 'pending')){
+    } elseif (($role == 'Server')) {
+        echo $fourohthree;
+    } elseif (($status == 'pending')) {
         echo $pending;
-    }else{
+    } else {
+    ?>
 
-    
-?>
-<!-- body
-goes
-here -->
-
-<?php
-}
-
- 
-
-require("php/template.php"); echo $footer ?>
-</html>
+     <!-- put content here    -->
+    <?php
+    }
+    require("/var/www/html/php/template.php");
+    echo $footer;
+    ?>

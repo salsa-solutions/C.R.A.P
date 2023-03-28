@@ -153,7 +153,7 @@ if (($role == 'Admin')) {
                                                         // console.log(hours);
                                                         e.preventDefault();
                                                         $.ajax({
-                                                            url: '/php/db_handling/add_current.php',
+                                                            url: '/php/db/handling/add_current.php',
                                                             type: 'POST',
                                                             data: {
                                                                 id: id,

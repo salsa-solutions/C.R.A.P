@@ -1,0 +1,64 @@
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+
+/* Create container for messages and availability */
+
+.container {
+    display: flex;
+    align-items: flex-start;
+}
+
+
+/* Style for messages section */
+
+.messages {
+    width: 30%;
+    margin-right: 20px;
+}
+
+.messages h2 {
+    margin-top: 0;
+}
+
+.messages ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.messages li {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #f2f2f2;
+}
+
+
+/* Style for availability section */
+
+.availability {
+    flex: 1;
+}
+
+.availability h2 {
+    margin-top: 0;
+}
+
+.availability table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.availability th,
+.availability td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.availability th {
+    background-color: #f2f2f2;
+}

@@ -2,6 +2,7 @@
 session_start();
 require_once('/var/www/html/config.php');
 require_once('/var/www/html/pages/page-index.php');
+require_once('/var/www/html/php/functions/select.php');
 
 if (!isset($_SESSION['userlogin'])) {
   header("Location: /pages/login/login.php");
@@ -16,27 +17,46 @@ $name = $_SESSION['userlogin'][0];
 $role = $_SESSION['userlogin'][1];
 $username = $_SESSION['userlogin'][2];
 $status = $_SESSION['userlogin'][3];
-$WEB_TITLE = 'Home';
+$WEB_TITLE = 'Settings';
 
 // to turn off a site uncomment the following line:
 //$_DEV = true;
-if (($role == 'Admin')) {
-  ini_set('display_errors', 1);
-  ini_set('display_startup_errors', 1);
-  error_reporting(E_ALL);
-}
-if (($role == 'Admin') || ($role == 'Manager')) {
+function get_pages_for_role($role)
+{
+  global $managment_page, $admin_page, $scheduling_page, $approval_page;
+  $pages = array(
+    'managment' => NULL,
+    'admin_page' => NULL,
+    'scheduling_page' => NULL,
+    'approval_page' => NULL
+  );
 
-  $managment = $managment_page;
-  $Admin_page = $admin_page;
-  $scheduling_page = $scheduling_page;
-  $approval = $approval_page;
-} else {
-  $managment = NULL;
-  $Admin_page = NULL;
-  $scheduling_page = NULL;
-  $approval = NULL;
+  if ($role == 'Admin') {
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+
+    $pages['managment'] = $managment_page;
+    $pages['admin_page'] = $admin_page;
+    $pages['scheduling_page'] = $scheduling_page;
+    $pages['approval_page'] = $approval_page;
+  } else if ($role == 'Manager') {
+    $pages['managment'] = $managment_page;
+    $pages['scheduling_page'] = $scheduling_page;
+    $pages['approval_page'] = $approval_page;
+  } elseif ($role == 'Server' || $role == 'Cook') {
+    $pages = array(
+      'managment' => NULL,
+      'admin_page' => NULL,
+      'scheduling_page' => NULL,
+      'approval_page' => NULL
+    );
+  }
+
+  return $pages;
 }
+get_pages_for_role($role);
+
 // echo '<pre>'; print_r($_SESSION['userlogin']); echo '</pre>';
 ?>
 <!DOCTYPE html>
@@ -71,8 +91,9 @@ echo $header ?>
 ?>
 
   <body>
+    <br>
     <div class="settings">
-      <h2>Settings</h2>
+      <h2>User Settings</h2>
 
       <h3>Change Password</h3>
       <form>
@@ -88,52 +109,155 @@ echo $header ?>
         <button type="submit">Change Password</button>
       </form>
       <br>
-      <h2>Manage Users</h2>
-      <h3>Update User Information</h3>
-      <form>
-        <label for="user">Select User:</label>
-        <td id="user_selection">
-          <label for="user"></label>
-          <select id="user" name="user">
-            <?php
-            include('/var/www/html/config.php');
-            $result = $db->prepare("SELECT id, firstname, lastname, username, role FROM users ORDER BY lastname ASC");
-            $result->execute();
-            for ($i = 0; $row = $result->fetch(); $i++) {
-              if($row['role'] != 'Admin') {
-              echo '<option value="' . $row['id'] . '">' . $row['firstname'] . ' ' .  $row['lastname'] . '</option>';
-              }
-            }
-            ?>
-          </select>
-        </td>
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username">
-        <br>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email">
-        <br>
-        <label for="role">Role:</label>
-        <td id="role_selection">
-          <label for="role"></label>
-          <select id="role" name="role">
-            <option value="Server">Server</option>
-            <option value="Cook">Cook</option>
-            <option value="Manager">Manager</option>
-            <option value="Admin">Admin</option>
-          </select>
-        </td>
-        <br>
-        <label for="status">Status:</label>
-        <select id="status" name="status">
-          <option value="active">Active</option>
-          <option value="inactive">Inactive</option>
-        </select>
-        <br>
-        <button type="submit">Update User Information</button>
-      </form>
-
     </div>
+    <?php
+    if ($role == 'Admin' || $role == 'Manager') {
+
+    ?>
+      <br>
+      <div class="settings">
+        <h2>Manage Users</h2>
+        <h3>Update User Information</h3>
+        <?php $account = getUsers($db, $role); ?>
+        <form>
+          <label for="user">Select User:</label>
+          <td id="user_selection">
+            <label for="user"></label>
+            <select name="user_id">
+              <?php
+              echo $account;
+              // foreach ($account as $user){
+              //   // echo $user['id'];
+                
+              // }
+                
+              
+              
+              ?>
+            </select>
+          </td>
+          <label for="username">Username:</label>
+          <input type="text" id="username" name="username">
+          <br>
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email">
+          <br>
+          <label for="role">Role:</label>
+          <td id="role_selection">
+            <label for="role"></label>
+            <select id="role" name="role">
+              <?php echo getRoles($db, $role); ?>
+            </select>
+          </td>
+          <br>
+          <label for="status">Status:</label>
+          <select id="status" name="status">
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+          <br>
+          <button class="button" type="submit" id="<?php echo $account?>_update_user">Save Changes</button>
+        </form>
+
+        <?php echo '<pre>'; print_r($account); echo '</pre>'; ?>
+        <script>
+          $(document).ready(function() {
+            // Listen for changes in the select dropdown
+            $('#user-select').change(function() {
+              // Get the selected user ID
+              var userId = $(this).val();
+
+              // Make an AJAX request to a PHP script that will return the user information
+              $.ajax({
+                url: 'get_user_info.php',
+                type: 'POST',
+                data: {
+                  user_id: userId
+                },
+                success: function(response) {
+                  // Display the user information in the container element
+                  $('#user-info').html(response);
+                }
+              });
+            });
+          });
+        </script>
+
+
+
+        <h3>Add New User</h3>
+        <form>
+          <label for="firstname">First Name:</label>
+          <input type="text" id="firstname" name="firstname">
+          <br>
+          <label for="lastname">Last Name:</label>
+          <input type="text" id="lastname" name="lastname">
+          <br>
+          <label for="username">Username:</label>
+          <input type="text" id="username" name="username">
+          <br>
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email">
+          <br>
+          <label for="role">Role:</label>
+          <td id="role_selection">
+            <label for="role"></label>
+            <select id="role" name="role">
+              <?php echo getRoles($db, $role); ?>
+            </select>
+          </td>
+          <br>
+          <label for="status">Status:</label>
+          <select id="status" name="status">
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+          <br>
+          <button class="button" type="submit" id="add_user">Add User</button>
+        </form>
+
+
+
+        <h3>Add New Role</h3>
+        <form>
+          <label for="role">Role:</label>
+          <input type="text" id="role" name="role">
+          <br>
+          <label for="role">Role Description:</label>
+          <input type="text" id="role_description" name="role_description">
+          <br>
+          <label for="role">Role Permissions:</label>
+          <select id="role_permisions" name="status">
+            <option value="user">User</option>
+            <option value="manager">Manager</option>
+            <option value="admin">Admin</option>
+          </select>
+
+          <br>
+          <button class="button" type="submit" id="add_role">Add Role</button>
+        </form>
+        <br>
+        <br>
+        <h4>Role cheat sheet</h4>
+        <div class="role_cheat_sheet">
+          <div class="role_cheat_sheet_item">
+            <h5>Admin</h5>
+            <p>Full access to everything</p>
+          </div>
+          <div class="role_cheat_sheet_item">
+            <h5>Manager</h5>
+            <p>Full access to all features but effected by developer mode </p>
+          </div>
+          <div class="role_cheat_sheet_item">
+            <h5>User</h5>
+            <p>Full access to user features (i.e home page, schedule and settings )</p>
+          </div>
+
+        </div>
+      </div>
+    <?php
+    }
+    ?>
 
 
   </body>

@@ -1,7 +1,10 @@
 <?php
+
 session_start();
 require_once('/var/www/html/config.php');
 require_once('/var/www/html/pages/page-index.php');
+// to turn off a page uncomment the following line:
+// $_DEV = true;
 
 if (!isset($_SESSION['userlogin'])) {
     header('Location: login.php');
@@ -11,14 +14,9 @@ $name = $_SESSION['userlogin'][0];
 $role = $_SESSION['userlogin'][1];
 $username = $_SESSION['userlogin'][2];
 $status = $_SESSION['userlogin'][3];
-$WEB_TITLE = 'Scheduling';
-// to turn off a site uncomment the following line:
-// $_DEV = true;
-if (($role == 'Admin')) {
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
-}
+$WEB_TITLE = 'Manager Home';
+
+
 if ( ($role == 'Admin') || ($role == 'Manager')) {
     
     $managment = $managment_page;
@@ -104,7 +102,7 @@ if (($role == 'Admin')) {
                                     // error_reporting(E_ALL);
 
                                     include('/var/www/html/config.php');
-                                    $result = $db->prepare("SELECT date, name, message FROM sp ORDER BY date DESC");
+                                    $result = $db->prepare("SELECT date, name, message FROM sr ORDER BY date DESC");
                                     $result->execute();
                                     for ($i = 0; $row = $result->fetch(); $i++) {
                                     ?>

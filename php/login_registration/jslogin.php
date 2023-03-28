@@ -54,7 +54,7 @@ $stmtselect  = $db->prepare($sql);
 
 $result = $stmtselect->execute([$username, $password]);
 // echo $result;
-if($_DEV){
+if($_DEV_DB){
 	echo 'Logging in and sign up are disabled due to maintenance';
 }
 else{
@@ -69,8 +69,6 @@ else{
 			$sql = "INSERT INTO succesful_logins (date, username, name, ip ) VALUES(?,?,? ,?)";
 			$stmtinsert = $db->prepare($sql);
 			$result = $stmtinsert->execute([ $date, $username, $name, $ip]);
-
-			
 
 		}else{
 			echo 'Ha, I really hope you didnt forget your password';
