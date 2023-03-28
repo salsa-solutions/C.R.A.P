@@ -1,7 +1,4 @@
 <?php
-
-use function PHPSTORM_META\type;
-
 session_start();
 require_once('/var/www/html/config.php');
 require_once('/var/www/html/pages/page-index.php');
@@ -47,7 +44,7 @@ function get_pages_for_role($role)
     $pages['managment'] = $managment_page;
     $pages['scheduling_page'] = $scheduling_page;
     $pages['approval_page'] = $approval_page;
-  } elseif ($role == 'Server') {
+  } elseif ($role == 'Server' || $role == 'Cook') {
     $pages = array(
       'managment' => NULL,
       'admin_page' => NULL,
@@ -128,7 +125,7 @@ echo $header ?>
             <label for="user"></label>
             <select name="user_id">
               <?php
-              echo $account[1]['name'];
+              echo $account;
               // foreach ($account as $user){
               //   // echo $user['id'];
                 
@@ -252,16 +249,8 @@ echo $header ?>
             <p>Full access to all features but effected by developer mode </p>
           </div>
           <div class="role_cheat_sheet_item">
-            <h5>Server</h5>
-            <p>Full access to user features (i.e )</p>
-          </div>
-          <div class="role_cheat_sheet_item">
-            <h5>Cook</h5>
-            <p>Full access to all features</p>
-          </div>
-          <div class="role_cheat_sheet_item">
             <h5>User</h5>
-            <p>Full access to all features</p>
+            <p>Full access to user features (i.e home page, schedule and settings )</p>
           </div>
 
         </div>
