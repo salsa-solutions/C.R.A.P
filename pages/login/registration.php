@@ -32,8 +32,8 @@ $WEB_TITLE = 'User Registration';
 </head>
 
 <body>
-    <style>
-        .user_card {
+    <!-- <style>
+        /* .user_card {
             height: 480px;
             width: 350px;
             margin-top: auto;
@@ -48,9 +48,19 @@ $WEB_TITLE = 'User Registration';
             -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
             -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
             border-radius: 5px;
-        }
-    </style>
+        } */
+    </style> -->
 
+    <script>
+        $(document).ready(function() {
+            var numInputs = $('.input-group').length;
+            var userCardHeight = 40 + (numInputs * 50);
+            var brandLogoTop = -75 - (numInputs * 25);
+
+            $('.user_card').height(userCardHeight);
+            $('.brand_logo_container').css('top', brandLogoTop);
+        });
+    </script>
 
     <div class="bg"></div>
     <div class="bg bg2"></div>
@@ -58,7 +68,7 @@ $WEB_TITLE = 'User Registration';
 
     <div class="header">
         <h1>
-        <?php echo $WEBSITE_NAME; ?>
+            <?php echo $WEBSITE_NAME; ?>
         </h1>
     </div>
 
@@ -84,6 +94,12 @@ $WEB_TITLE = 'User Registration';
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                             </div>
                             <input type="text" placeholder="Doe" name="lastname" id="lastname" class="form-control input_user" required>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                            </div>
+                            <input type="text" placeholder="1234567890" name="phone" id="phone" class="form-control input_user" required>
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-append">
@@ -116,6 +132,7 @@ $WEB_TITLE = 'User Registration';
             </div>
         </div>
     </div>
+
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
