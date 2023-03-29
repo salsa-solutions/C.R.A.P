@@ -5,9 +5,6 @@
 
 $header = <<<HEADER
 
-<body>
-
-
 
 <!-- The navigation menu -->
 <div class="navbar-d">

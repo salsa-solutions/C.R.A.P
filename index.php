@@ -227,7 +227,7 @@ setAccessPages($role);
                     var friday_avil = $('#friday-avil').val();
                     var saturday_avil = $('#saturday-avil').val();
                     $.ajax({
-                        url: '/php/db/handling/add_avil.php',
+                        url: '/php/db_handling/handling/add_avil.php',
                         type: 'POST',
                         data: {
                             name: name,
@@ -277,7 +277,7 @@ setAccessPages($role);
                     var hours = $('#hours').val();
                     // console.log(hours);
                     $.ajax({
-                        url: '/php/db/handling/add_pref.php',
+                        url: '/php/db_handling/handling/add_pref.php',
                         type: 'POST',
                         data: {
                             name: name,
@@ -319,7 +319,7 @@ setAccessPages($role);
                     var name = "<?php echo $name; ?>";
                     var message = $('#message').val();
                     $.ajax({
-                        url: '/php/db/handling/add_sr.php',
+                        url: '/php/db_handling/handling/add_sr.php',
                         type: 'POST',
                         data: {
                             name: name,
