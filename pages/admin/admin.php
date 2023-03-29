@@ -22,8 +22,8 @@ $WEB_TITLE = 'Manager Home';
 
 setAccessPages($role);
 
-$userId = getUserId($db, $username);
-echo getUserPermissions($db, $userId);
+echo $userId = getUserId($db, $username);
+print_r(getUserPermissions($db, $userId)) ;
 
 // if(($role != 'Manager' || $role != 'Admin')){
 //     header("Location: /index.php");
@@ -56,6 +56,7 @@ echo getUserPermissions($db, $userId);
 </head>
 
 <body>
+    <!-- <?php echo $userId = getUserId($db, $username); ?> -->
     <?php require("/var/www/html/php/template.php");
     echo $header ?>
     <?php if (($_DEV) && (($role == 'Server') || ($role == 'Manager') || ($role == 'Cook')) == '1') {
@@ -67,168 +68,68 @@ echo getUserPermissions($db, $userId);
     } else {
     ?>
 
-        <div class="message_container">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h1>Messages</h1>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="table-responsive">
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Date</th>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Message</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    // ini_set('display_errors', 1);
-                                    // ini_set('display_startup_errors', 1);
-                                    // error_reporting(E_ALL);
+<div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <h2>Message Board</h2>
+        <?php
+          // Create a new PDO object
+          $pdo = $db;
 
-                                    include('/var/www/html/config.php');
-                                    $result = $db->prepare("SELECT date, name, message FROM sr ORDER BY date DESC");
-                                    $result->execute();
-                                    for ($i = 0; $row = $result->fetch(); $i++) {
-                                    ?>
+          // Prepare a SQL statement to retrieve messages from the message board
+          $stmt = $pdo->prepare("SELECT name, date, message FROM sr ORDER BY date DESC");
 
-                                        <td><?php echo $row['date']; ?></td>
-                                        <td><?php echo $row['name']; ?></td>
-                                        <td><?php echo $row['message']; ?></td>
-                                </tbody>
-                            <?php
-                                    }
-                                    if ($i == 0) {
-                                        echo '<td colspan="8">No new messages</td>';
-                                    }
-                            ?>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          // Execute the prepared statement
+          $stmt->execute();
+
+          // Display the messages in a table
+          echo "<table class='table'>";
+          echo "<thead><tr><th>Name</th><th>Date</th><th>Message</th></tr></thead>";
+          echo "<tbody>";
+          while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            echo "<tr><td>" . $row['name'] . "</td><td>" . $row['date'] . "</td><td>" . $row['message'] . "</td></tr>";
+          }
+          echo "</tbody></table>";
+        ?>
+      </div>
+      <div class="col-md-4">
+        <h2>Availability</h2>
+        <div class="availability-box">
+          <?php
+            // Retrieve availability information from the database
+            $stmt = $pdo->prepare("SELECT * FROM avil_day");
+
+            // Execute the prepared statement
+            $stmt->execute();
+
+            // Display the availability information
+            echo "<ul>";
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+              echo "<li>" . $row['monday'] . ": " . $row['tuesday'] . "</li>";
+            }
+            echo "</ul>";
+          ?>
         </div>
-        <div class="sched-container">
-        <div class="avil_schedule_container">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h1>Availability</h1>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-15">
-                        <div class="table-responsive">
-                            <table class="table table-striped ">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Date</th>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Monday</th>
-                                        <th scope="col">Tuesday</th>
-                                        <th scope="col">Wednesday</th>
-                                        <th scope="col">Thursday</th>
-                                        <th scope="col">Friday</th>
-                                        <th scope="col">Saturday</th>
+        <h2>Wanted Days</h2>
+        <div class="wanted-days-box">
+          <?php
+            // Retrieve wanted days information from the database
+            $stmt = $pdo->prepare("SELECT * FROM wanted_days");
 
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    // ini_set('display_errors', 1);
-                                    // ini_set('display_startup_errors', 1);
-                                    // error_reporting(E_ALL);
+            // Execute the prepared statement
+            $stmt->execute();
 
-                                    include('/var/www/html/config.php');
-                                    $result = $db->prepare("SELECT date, name, monday, tuesday, wednesday, thursday, friday, saturday FROM avil_day ORDER BY date DESC");
-                                    $result->execute();
-                                    for ($i = 0; $row = $result->fetch(); $i++) {
-                                    ?>
-
-                                        <td><?php echo $row['date']; ?></td>
-                                        <td><?php echo $row['name']; ?></td>
-                                        <td><?php echo $row['monday']; ?></td>
-                                        <td><?php echo $row['tuesday']; ?></td>
-                                        <td><?php echo $row['wednesday']; ?></td>
-                                        <td><?php echo $row['thursday']; ?></td>
-                                        <td><?php echo $row['friday']; ?></td>
-                                        <td><?php echo $row['saturday']; ?></td>
-                                </tbody>
-                            <?php
-                                    }
-                                    if ($i == 0) {
-                                        echo '<td colspan="8">No schedules</td>';
-                                    }
-                            ?>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            // Display the wanted days information
+            echo "<ul>";
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+              echo "<li>" . $row['day'] . "</li>";
+            }
+            echo "</ul>";
+          ?>
         </div>
-        <div class="pref_schedule_container">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-15">
-                        <h1>Wanted days</h1>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-15">
-                        <div class="table-responsive">
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Date</th>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Monday</th>
-                                        <th scope="col">Tuesday</th>
-                                        <th scope="col">Wednesday</th>
-                                        <th scope="col">Thursday</th>
-                                        <th scope="col">Friday</th>
-                                        <th scope="col">Saturday</th>
-
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    // ini_set('display_errors', 1);
-                                    // ini_set('display_startup_errors', 1);
-                                    // error_reporting(E_ALL);
-
-                                    include('/var/www/html/config.php');
-                                    $result = $db->prepare("SELECT date, name, monday, tuesday, wednesday, thursday, friday, saturday FROM pref_day ORDER BY date DESC");
-                                    $result->execute();
-                                    for ($i = 0; $row = $result->fetch(); $i++) {
-                                    ?>
-
-                                        <td><?php echo $row['date']; ?></td>
-                                        <td><?php echo $row['name']; ?></td>
-                                        <td><?php echo $row['monday']; ?></td>
-                                        <td><?php echo $row['tuesday']; ?></td>
-                                        <td><?php echo $row['wednesday']; ?></td>
-                                        <td><?php echo $row['thursday']; ?></td>
-                                        <td><?php echo $row['friday']; ?></td>
-                                        <td><?php echo $row['saturday']; ?></td>
-                                </tbody>
-                            <?php
-                                    }
-                                    if ($i == 0) {
-                                        echo '<td colspan="8">No schedules</td>';
-                                    }
-                            ?>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </div>
+      </div>
+    </div>
+  </div>
         
         <!-- menu that approves users -->
 
