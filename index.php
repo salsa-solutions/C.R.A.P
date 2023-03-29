@@ -2,6 +2,7 @@
 session_start();
 require_once('/var/www/html/config.php');
 require_once('/var/www/html/pages/page-index.php');
+require_once('/var/www/html/php/functions/navPage.php');
 
 
 if (!isset($_SESSION['userlogin'])) {
@@ -17,24 +18,36 @@ $WEB_TITLE = 'Home';
 
 // to turn off a site uncomment the following line:
 //$_DEV = true;
-if (($role == 'Admin')) {
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
-}
-if ( ($role == 'Admin') || ($role == 'Manager')) {
+
+
+
+setAccessPages($role);
+
+// if (($role == 'Admin')) {
+//     ini_set('display_errors', 1);
+//     ini_set('display_startup_errors', 1);
+//     error_reporting(E_ALL);
+// }
+// elseif (($role == 'Admin') || ($role == 'Manager')) {
     
-    $managment = $managment_page;
-    $Admin_page= $admin_page;
-    $scheduling_page= $scheduling_page;
-	$approval = $approval_page;
-}
-else {
-    $managment = NULL;
-    $Admin_page= NULL;
-    $scheduling_page= NULL;
-    $approval = NULL;
-}
+//     $managment_page = $managment_page;
+//     $admin_page = $admin_page;
+//     $scheduling_page = $scheduling_page;
+// 	$approval_page = $approval_page;
+// }
+// elseif (( $role == 'Dev')) {
+//     $test_page = $test_page;
+//     $test_page_php = $test_page_php;
+//     $test_page_html = $test_page_html;
+// }else {
+//     $managment_page = NULL;
+//     $admin_page = NULL;
+//     $scheduling_page = NULL;
+//     $approval_page = NULL;
+//     $test_page = NULL;
+//     $test_page_php = NULL;
+//     $test_page_html = NULL;
+// }
 // echo '<pre>'; print_r($_SESSION['userlogin']); echo '</pre>';
 ?>
 <!DOCTYPE html>
