@@ -17,6 +17,6 @@ $logout_page = '/pages/login/logout.php?logout=true';
 
 // test pages
 $test_page = '/Testing/';
-$test_page_php = '/test/test.php';
-$test_page_html = '/test/test.html';
+$test_page_php = '<a href="/test/test.php">php</a>';
+$test_page_html = '<a href="/test/test.html">html</a>';
 ?>

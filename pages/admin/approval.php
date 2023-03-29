@@ -4,6 +4,7 @@ session_start();
 
 require_once('/var/www/html/config.php');
 require_once('/var/www/html/pages/page-index.php');
+require_once('/var/www/html/php/functions/navPage.php');
 
 if (!isset($_SESSION['userlogin'])) {
     header("Location: /pages/login/login.php");
@@ -21,27 +22,10 @@ $status = $_SESSION['userlogin'][3];
 $WEB_TITLE = 'Approval';
 
 $_DEV = false;
-if ( ($role == 'Admin') || ($role == 'Manager')) {
-    
-    $managment = $managment_page;
-    $Admin_page= $admin_page;
-    $scheduling_page= $scheduling_page;
-	$approval = $approval_page;
-}
-else {
-    $managment = NULL;
-    $Admin_page= NULL;
-    $scheduling_page= NULL;
-    $approval = NULL;
-}
-if (($role == 'Admin')) {
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
-} elseif ($role == 'Manager') {
-} else {
-    header("Location: index.php");
-}
+setAccessPages($role);
+// if ($role == 'Admin') {
+//     header("Location: /index.php");
+// }
 
 ?>
 <!DOCTYPE html>

@@ -1,7 +1,7 @@
 <?php
   // whole site debug mode
   // all pages will not work if user isnt Admin 
-  $_DEV = true;
+  $_DEV = false;
   $_DEV_DB = false;
   $WEBSITE_NAME = 'Greek Star Attendance Program';
   $db_user = "tibthink";
