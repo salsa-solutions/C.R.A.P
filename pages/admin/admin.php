@@ -4,6 +4,8 @@ session_start();
 require_once('/var/www/html/config.php');
 require_once('/var/www/html/pages/page-index.php');
 require_once('/var/www/html/php/functions/navPage.php');
+require_once('/var/www/html/php/functions/userPermissions.php');
+require_once('/var/www/html/php/functions/userId.php');
 // to turn off a page uncomment the following line:
 // $_DEV = true;
 
@@ -19,9 +21,13 @@ $WEB_TITLE = 'Manager Home';
 
 
 setAccessPages($role);
-if(($role == 'Manager' || $role == 'Admin')){
-    header("Location: index.php");
-}
+
+$userId = getUserId($db, $username);
+echo getUserPermissions($db, $userId);
+
+// if(($role != 'Manager' || $role != 'Admin')){
+//     header("Location: /index.php");
+// }
 
 ?>
 
