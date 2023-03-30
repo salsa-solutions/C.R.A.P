@@ -2,9 +2,10 @@
 session_start();
 require_once('/var/www/html/config.php');
 require_once('/var/www/html/pages/page-index.php');
+require_once('/var/www/html/php/functions/navPage.php');
 
 if (!isset($_SESSION['userlogin'])) {
-    header("Location: /pages/login/login.php");
+    header('Location: ' . $login_page_url . '');
 }
 // ini_set('display_errors', 1);
 // ini_set('display_startup_errors', 1);
@@ -24,21 +25,7 @@ $WEB_TITLE = 'Schedule';
 
 // to turn off a site uncomment the following line:
 // $_DEV = true;
-if (($role == 'Admin')) {
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
-}
-if ( ($role == 'Admin') || ($role == 'Manager')) {
-    $managment = 'Management';
-    $Admin_page='<a href="/admin.php">Admin</a>';
-    $scheduling_page='<a href="/scheduling.php">Scheduling</a>';
-	$approval = '<a href="/approval.php">Approval</a>';
-}
-else {
-    $Admin_page= NULL;
-    $scheduling_page= NULL;
-}
+setAccessPages($role);
 ?>
 
 

@@ -6,7 +6,7 @@ require_once('/var/www/html/php/functions/navPage.php');
 
 
 if (!isset($_SESSION['userlogin'])) {
-  header("Location: /pages/login/login.php");
+    header('Location: ' . $login_page_url . '');
 }
 
 

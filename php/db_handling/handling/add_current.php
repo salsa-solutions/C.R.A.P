@@ -43,7 +43,7 @@ if (isset($_POST)) {
   if(isset($_POST)){
     $id                = $_POST['id'];
 
-    $sql = "UPDATE avil_day SET approved='approved' WHERE id=$id";
+    $sql = "UPDATE availability SET approved='approved' WHERE id=$id";
     $stmtinsert = $db->prepare($sql);
     $result = $stmtinsert->execute();
     if ($result) {

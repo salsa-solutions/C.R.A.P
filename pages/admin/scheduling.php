@@ -2,6 +2,7 @@
 session_start();
 require_once('/var/www/html/config.php');
 require_once('/var/www/html/pages/page-index.php');
+require_once('/var/www/html/php/functions/navPage.php');
 
 if (!isset($_SESSION['userlogin'])) {
     header('Location: login.php');
@@ -19,18 +20,7 @@ if (($role == 'Admin')) {
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
 }
-if (($role == 'Admin') || ($role == 'Manager')) {
-
-    $managment = $managment_page;
-    $Admin_page = $admin_page;
-    $scheduling_page = $scheduling_page;
-    $approval = $approval_page;
-} else {
-    $managment = NULL;
-    $Admin_page = NULL;
-    $scheduling_page = NULL;
-    $approval = NULL;
-}
+setAccessPages($role);
 if (($role == 'Admin')) {
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
@@ -100,7 +90,7 @@ if (($role == 'Admin')) {
 
                             <?php
                             include('/var/www/html/config.php');
-                            $result = $db->prepare("SELECT * FROM avil_day ORDER BY name ASC");
+                            $result = $db->prepare("SELECT * FROM availability ORDER BY name ASC");
                             $result->execute();
                             for ($i = 0; $row = $result->fetch(); $i++) {
                                 if ($row['approved'] == 'pending') {

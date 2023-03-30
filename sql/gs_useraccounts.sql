@@ -24,10 +24,10 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `avil_day`
+-- Table structure for table `availability`
 --
 
-CREATE TABLE `avil_day` (
+CREATE TABLE `availability` (
   `id` int(11) NOT NULL,
   `approved` varchar(100) NOT NULL DEFAULT 'pending',
   `date` date NOT NULL,
@@ -42,10 +42,10 @@ CREATE TABLE `avil_day` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `avil_day`
+-- Dumping data for table `availability`
 --
 
-INSERT INTO `avil_day` (`id`, `approved`, `date`, `name`, `username`, `monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `saturday`) VALUES
+INSERT INTO `availability` (`id`, `approved`, `date`, `name`, `username`, `monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `saturday`) VALUES
 (1, 'approved', '2023-03-24', 'David Alzuraigat', 'Davidz216', '9', '9', '9', '9', '9', '9');
 
 -- --------------------------------------------------------
@@ -80,10 +80,10 @@ INSERT INTO `current_schedule` (`id`, `approved`, `status`, `date`, `name`, `use
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pref_day`
+-- Table structure for table `wanted_days`
 --
 
-CREATE TABLE `pref_day` (
+CREATE TABLE `wanted_days` (
   `id` int(11) NOT NULL,
   `date` varchar(100) NOT NULL,
   `name` varchar(100) NOT NULL,
@@ -246,9 +246,9 @@ INSERT INTO `users` (`id`, `date`, `role`, `permission`, `firstname`, `lastname`
 --
 
 --
--- Indexes for table `avil_day`
+-- Indexes for table `availability`
 --
-ALTER TABLE `avil_day`
+ALTER TABLE `availability`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -258,9 +258,9 @@ ALTER TABLE `current_schedule`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `pref_day`
+-- Indexes for table `wanted_days`
 --
-ALTER TABLE `pref_day`
+ALTER TABLE `wanted_days`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -292,9 +292,9 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT for table `avil_day`
+-- AUTO_INCREMENT for table `availability`
 --
-ALTER TABLE `avil_day`
+ALTER TABLE `availability`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
@@ -304,9 +304,9 @@ ALTER TABLE `current_schedule`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `pref_day`
+-- AUTO_INCREMENT for table `wanted_days`
 --
-ALTER TABLE `pref_day`
+ALTER TABLE `wanted_days`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -337,9 +337,9 @@ DELIMITER $$
 --
 -- Events
 --
-CREATE DEFINER=`tibthink`@`localhost` EVENT `flush avil_day` ON SCHEDULE EVERY 1 WEEK STARTS '2023-03-26 00:00:00' ON COMPLETION NOT PRESERVE ENABLE COMMENT 'flushes avil_day from the table every week' DO DELETE FROM avil_day$$
+CREATE DEFINER=`tibthink`@`localhost` EVENT `flush availability` ON SCHEDULE EVERY 1 WEEK STARTS '2023-03-26 00:00:00' ON COMPLETION NOT PRESERVE ENABLE COMMENT 'flushes availability from the table every week' DO DELETE FROM availability$$
 
-CREATE DEFINER=`tibthink`@`localhost` EVENT `flush pref_day` ON SCHEDULE EVERY 1 WEEK STARTS '2023-03-26 00:00:00' ON COMPLETION NOT PRESERVE ENABLE COMMENT 'flushes avil_day from the table every week' DO DELETE FROM pref_day$$
+CREATE DEFINER=`tibthink`@`localhost` EVENT `flush wanted_days` ON SCHEDULE EVERY 1 WEEK STARTS '2023-03-26 00:00:00' ON COMPLETION NOT PRESERVE ENABLE COMMENT 'flushes availability from the table every week' DO DELETE FROM wanted_days$$
 
 DELIMITER ;
 COMMIT;
