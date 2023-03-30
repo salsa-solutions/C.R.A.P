@@ -10,7 +10,7 @@ require_once('/var/www/html/php/functions/userId.php');
 // $_DEV = true;
 
 if (!isset($_SESSION['userlogin'])) {
-    header('Location: login.php');
+    header('Location: ' . $login_page_url . '');
 }
 
 $name = $_SESSION['userlogin'][0];
@@ -56,6 +56,37 @@ print_r(getUserPermissions($db, $userId)) ;
 </head>
 
 <body>
+
+<style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .availability-box {
+            float: left;
+            width: 48%;
+            margin-right: 2%;
+        }
+
+        .wanted-days-box {
+            float: right;
+            width: 48%;
+        }
+    </style>
+
+
     <!-- <?php echo $userId = getUserId($db, $username); ?> -->
     <?php require("/var/www/html/php/template.php");
     echo $header ?>
@@ -68,70 +99,93 @@ print_r(getUserPermissions($db, $userId)) ;
     } else {
     ?>
 
-<div class="container">
-    <div class="row">
-      <div class="col-md-8">
-        <h2>Message Board</h2>
+<h1>Manager Portal</h1>
+
+<h2>Messages</h2>
+<?php
+// Connect to the database
+$pdo = $db;
+
+// Retrieve messages from the database
+$stmt = $pdo->query("SELECT * FROM messages ORDER BY date DESC");
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    echo "<p><strong>{$row['name']}</strong> ({$row['date']}): {$row['message']}</p>";
+}
+if ($stmt->rowCount() == 0) {
+    echo "<p>No messages</p>";
+}
+?>
+<br>
+<br>
+<br>
+<div class="availability-box">
+    <h2>Availability</h2>
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>Name</th>
+            <th>Monday</th>
+            <th>Tuesday</th>
+            <th>Wednesday</th>
+            <th>Thursday</th>
+            <th>Friday</th>
+            <th>Saturday</th>
+        </tr>
         <?php
-          // Create a new PDO object
-          $pdo = $db;
-
-          // Prepare a SQL statement to retrieve messages from the message board
-          $stmt = $pdo->prepare("SELECT name, date, message FROM sr ORDER BY date DESC");
-
-          // Execute the prepared statement
-          $stmt->execute();
-
-          // Display the messages in a table
-          echo "<table class='table'>";
-          echo "<thead><tr><th>Name</th><th>Date</th><th>Message</th></tr></thead>";
-          echo "<tbody>";
-          while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            echo "<tr><td>" . $row['name'] . "</td><td>" . $row['date'] . "</td><td>" . $row['message'] . "</td></tr>";
-          }
-          echo "</tbody></table>";
+        // Retrieve availability from the database
+        $stmt = $pdo->query("SELECT * FROM availability ORDER BY date DESC");
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            echo "<tr>";
+            echo "<td>{$row['date']}</td>";
+            echo "<td>{$row['name']}</td>";
+            echo "<td>{$row['monday']}</td>";
+            echo "<td>{$row['tuesday']}</td>";
+            echo "<td>{$row['wednesday']}</td>";
+            echo "<td>{$row['thursday']}</td>";
+            echo "<td>{$row['friday']}</td>";
+            echo "<td>{$row['saturday']}</td>";
+            echo "</tr>";
+        }
+        if ($stmt->rowCount() == 0) {
+            echo "<tr><td colspan=\"8\">No availability found</td></tr>";
+        }
         ?>
-      </div>
-      <div class="col-md-4">
-        <h2>Availability</h2>
-        <div class="availability-box">
-          <?php
-            // Retrieve availability information from the database
-            $stmt = $pdo->prepare("SELECT * FROM avil_day");
+    </table>
+</div>
 
-            // Execute the prepared statement
-            $stmt->execute();
-
-            // Display the availability information
-            echo "<ul>";
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-              echo "<li>" . $row['monday'] . ": " . $row['tuesday'] . "</li>";
-            }
-            echo "</ul>";
-          ?>
-        </div>
-        <h2>Wanted Days</h2>
-        <div class="wanted-days-box">
-          <?php
-            // Retrieve wanted days information from the database
-            $stmt = $pdo->prepare("SELECT * FROM wanted_days");
-
-            // Execute the prepared statement
-            $stmt->execute();
-
-            // Display the wanted days information
-            echo "<ul>";
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-              echo "<li>" . $row['day'] . "</li>";
-            }
-            echo "</ul>";
-          ?>
-        </div>
-      </div>
-    </div>
-  </div>
-        
-        <!-- menu that approves users -->
+<div class="wanted-days-box">
+    <h2>Wanted Days</h2>
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>Name</th>
+            <th>Monday</th>
+            <th>Tuesday</th>
+            <th>Wednesday</th>
+            <th>Thursday</th>
+            <th>Friday</th>
+            <th>Saturday</th>
+        </tr>
+        <?php
+        // Retrieve availability from the database
+        $stmt = $pdo->query("SELECT * FROM wanted_days ORDER BY date DESC");
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            echo "<tr>";
+            echo "<td>{$row['date']}</td>";
+            echo "<td>{$row['name']}</td>";
+            echo "<td>{$row['monday']}</td>";
+            echo "<td>{$row['tuesday']}</td>";
+            echo "<td>{$row['wednesday']}</td>";
+            echo "<td>{$row['thursday']}</td>";
+            echo "<td>{$row['friday']}</td>";
+            echo "<td>{$row['saturday']}</td>";
+            echo "</tr>";
+        }
+        if ($stmt->rowCount() == 0) {
+            echo "<tr><td colspan=\"8\">No prefered days found</td></tr>";
+        }
+        ?>
+    </table>
 
     <?php
     }

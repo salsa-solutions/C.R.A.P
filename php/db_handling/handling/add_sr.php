@@ -15,7 +15,7 @@ error_reporting(E_ALL);
         $name              = $_POST['name'];
         $message           = $_POST['message'];
 
-        $sql = "INSERT INTO sr (date, name, message ) VALUES(?,?,?)";
+        $sql = "INSERT INTO messages (date, name, message ) VALUES(?,?,?)";
         $stmtinsert = $db->prepare($sql);
         $result = $stmtinsert->execute([$date, $name, $message]);
         if ($result) {

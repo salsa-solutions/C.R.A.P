@@ -21,7 +21,7 @@ error_reporting(E_ALL);
         $friday            = $_POST['friday'];
         $saturday          = $_POST['saturday'];
         // $hours             = $_POST['hours']; add them back to $sql var if wanted
-        $sql = "INSERT INTO pref_day (date, name, username, monday, tuesday, wednesday, thursday, friday, saturday ) VALUES(?,?,?,?,?,?,?,?,?)";
+        $sql = "INSERT INTO wanted_days (date, name, username, monday, tuesday, wednesday, thursday, friday, saturday ) VALUES(?,?,?,?,?,?,?,?,?)";
         $stmtinsert = $db->prepare($sql);
         $result = $stmtinsert->execute([$date, $name, $username, $monday, $tuesday, $wednesday, $thursday, $friday, $saturday]);
         if ($result) {

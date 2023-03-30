@@ -19,4 +19,25 @@ $logout_page = '/pages/login/logout.php?logout=true';
 $test_page = '/Testing/';
 $test_page_php = '<a href="/test/test.php">php</a>';
 $test_page_html = '<a href="/test/test.html">html</a>';
+
+// page urls
+
+
+$admin_page_url= '/pages/admin/admin.php';
+$scheduling_page_url= '/pages/admin/scheduling.php';
+$approval_page_url = '/pages/admin/approval.php';
+
+// regular user 
+$home_page_url = '/index.php';
+$schedule_page_url = '/pages/general/schedule.php';
+$settings_page_url = '/pages/user/settings.php';
+
+//  login pages
+$login_page_url = '/pages/login/login.php';
+$register_page_url = '/pages/login/registration.php';
+$logout_page_url = '/pages/login/logout.php?logout=true';
+
+// test pages
+$test_page_php_url = '/test/test.php';
+$test_page_htm_urll = '/test/test.html';
 ?>
