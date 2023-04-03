@@ -35,11 +35,11 @@ $footer = <<<FOOTER
         });
     </script>
     <div class="f-container">
-    <footer>
-        <p>You are logged in as: $name </p>
-        <p>Role: $role </p>
-    </footer>
-</div>
+        <footer>
+            <p>You are logged in as: $name </p>
+            <p>Role: $role </p>
+        </footer>
+    </div>
 </div>
 
 </body>

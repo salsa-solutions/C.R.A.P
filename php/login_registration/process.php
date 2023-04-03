@@ -18,13 +18,14 @@
             $firstname         = $_POST['firstname'];
             $lastname          = $_POST['lastname'];
             $email             = $_POST['email'];
+            $phone             = $_POST['phone'];
             $username          = $_POST['username'];
             $password          = sha1($_POST['password']);
             $approved          = 'pending';
 
-            $sql = "INSERT INTO users (date, firstname, lastname, email, username, password, approved ) VALUES(?,?,?,?,?,?,?)";
+            $sql = "INSERT INTO users (date, firstname, lastname, email, phone, username, password, approved ) VALUES(?,?,?,?,?,?,?,?)";
             $stmtinsert = $db->prepare($sql);
-            $result = $stmtinsert->execute([$date, $firstname, $lastname, $email, $username, $password, $approved]);
+            $result = $stmtinsert->execute([$date, $firstname, $lastname, $email, $phone, $username, $password, $approved]);
             if ($result) {
                 echo 'Successfully saved.';
             } else {

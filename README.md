@@ -8,20 +8,20 @@ C.R.A.P is a highly efficient and localized scheduling program designed to cater
 
 ## Features
 
-- login and registion
+- Login and Registration
   - Anyone can register: Anyone who visits your website can create an account by providing their details such as name, email phone, and password.
   - Each user needs to be approved first by an admin or manager: Once a user registers, their account will not be immediately active. It will need to be approved by an admin or manager before they can log in.
   - Information is saved in a database: The user details such as name, email phone, and password will be saved in a database.
         - Passwords are hashed: To ensure the security of the users' passwords, they will be hashed, which means that the password will be encrypted and stored in the database.
     - if not logged in the user will be redirected to the login page
-- scheduling
+- Scheduling
   - The home page is where you enter your schedule: Users will be able to enter their availability and wanted days on the home page.
     - One for availability and one for wanted days: There will be separate sections for availability and wanted days, so users can enter their schedules accordingly.
     - Special requests and messages: Users will also be able to enter any special requests or messages in a separate section on the home page.
   - The schedule is sent to the admin page and scheduling page: Once the user submits their schedule, it will be sent to the admin page for reference and the scheduling page for approval.
   - After the user's schedule is approved, it will be posted on the schedule page: Once the user's schedule is approved by the admin or manager, it will be posted on the schedule page, which can be viewed by any user of the system.
   - Managers and admins can edit the schedule after approval: If there are any changes to the schedule, managers and admins will be able to edit it accordingly.
-- user managment:
+- User management:
   - In the settings page, you can edit your account and any others: Users will be able to edit their account information as well as other user's information from the settings page.
     - Edit any user's information other than password: Users will be able to edit any user's information, except for their password.
     - Add a new user without having them register: Managers and admins will be able to create new users without having them go through the registration process.

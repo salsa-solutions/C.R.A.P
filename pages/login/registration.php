@@ -32,9 +32,9 @@ $WEB_TITLE = 'User Registration';
 </head>
 
 <body>
-    <!-- <style>
-        /* .user_card {
-            height: 480px;
+    <style>
+        .user_card {
+            height: 530px;
             width: 350px;
             margin-top: auto;
             margin-bottom: auto;
@@ -48,10 +48,10 @@ $WEB_TITLE = 'User Registration';
             -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
             -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
             border-radius: 5px;
-        } */
-    </style> -->
+        }
+    </style>
 
-    <script>
+    <!-- <script>
         $(document).ready(function() {
             var numInputs = $('.input-group').length;
             var userCardHeight = 40 + (numInputs * 50);
@@ -60,7 +60,7 @@ $WEB_TITLE = 'User Registration';
             $('.user_card').height(userCardHeight);
             $('.brand_logo_container').css('top', brandLogoTop);
         });
-    </script>
+    </script> -->
 
     <div class="bg"></div>
     <div class="bg bg2"></div>
@@ -148,6 +148,7 @@ $WEB_TITLE = 'User Registration';
                     var firstname = $('#firstname').val();
                     var lastname = $('#lastname').val();
                     var email = $('#email').val();
+                    var phone = $('#phone').val();
                     var username = $('#username').val();
                     var password = $('#password').val();
 
@@ -161,6 +162,7 @@ $WEB_TITLE = 'User Registration';
                             firstname: firstname,
                             lastname: lastname,
                             email: email,
+                            phone: phone,
                             username: username,
                             password: password
                         },

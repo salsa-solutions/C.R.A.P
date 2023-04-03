@@ -35,7 +35,8 @@ html {
     position: relative;
     min-height: 20vh;
     padding-bottom: 50px;
-    min-height: calc(100vh - 145px);
+    padding-top: 100%;
+    min-height: 145px;
     /* adjust this value to match the height of your footer */
 }
 
