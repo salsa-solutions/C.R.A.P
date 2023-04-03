@@ -13,3 +13,4 @@ DEPENDS.md
 LICENSE.md
 phpMyAdmin
 Dockerfile
+docker-compose.yml
