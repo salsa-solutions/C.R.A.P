@@ -18,7 +18,7 @@ $header = <<<HEADER
     <div class="subnav-d">
     <button class="subnavbtn-d"> $test_page </button>
     <div class="subnav-content-d">
-        $test_page_php $test_page_html
+        $test_page_php $test_page_html $info_page
     </div>
         </div>
     <button type="button" name="button" id="logOut" class="btn btn_logout">Log Out</button>

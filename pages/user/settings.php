@@ -81,7 +81,7 @@ echo $header ?>
       <br>
     </div>
     <?php
-    if ($role == 'Admin' || $role == 'Manager') {
+    if ($role == 'Admin' || $role == 'Manager' || $role == 'Dev') {
 
     ?>
       <br>
