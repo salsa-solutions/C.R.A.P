@@ -1,7 +1,7 @@
 <?php
 // nav bar
 $managment_page = 'Management';
-$admin_page= '<a href="/pages/admin/admin.php">Manager</a>';
+$admin_page= '<a href="' . $admin_page_url .'">Manager</a>';
 $scheduling_page= '<a href="/pages/admin/scheduling.php">Scheduling</a>';
 $approval_page = '<a href="/pages/admin/approval.php">Approval</a>';
 
