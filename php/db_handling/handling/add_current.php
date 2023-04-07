@@ -55,6 +55,4 @@ if (isset($_POST)) {
   echo "No data";
 }
 
-
-
 ?>

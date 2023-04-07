@@ -2,9 +2,9 @@
 
 ## What is this program
 
-<!-- C.R.A.P is a localized schedling program that is not only simple but lightweight, secure and affordable -->
 
-C.R.A.P is a highly efficient and localized scheduling program designed to cater to the needs of businesses and organizations of all sizes. Our program is not only user-friendly, but also incredibly lightweight, secure, and affordable. At [ADD COMPANY NAME LATER], we understand the importance of a reliable scheduling system, and our program is designed to deliver on that promise while also providing an exceptional user experience. Our cutting-edge technology ensures that your data is always secure, while our streamlined design guarantees a hassle-free experience for both you and your team. With C.R.A.P, scheduling has never been easier or more accessible.
+
+C.R.A.P is a highly efficient and localized scheduling program designed to cater to the needs of businesses and organizations of all sizes. Our program is not only user-friendly, but also incredibly lightweight, secure, and affordable. At Salsa, we understand the importance of a reliable scheduling system, and our program is designed to deliver on that promise while also providing an exceptional user experience. Our cutting-edge technology ensures that your data is always secure, while our streamlined design guarantees a hassle-free experience for both you and your team. With C.R.A.P, scheduling has never been easier or more accessible.
 
 ## Features
 
