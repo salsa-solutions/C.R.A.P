@@ -9,7 +9,7 @@ error_reporting(E_ALL);
 
 <?php
   if(isset($_POST)){
-    $id                = $_POST['id'];
+    $id                = $_POST['uid'];
     
     $sql = "UPDATE users SET approved='approved' WHERE id='$id'";
     $stmtinsert = $db->prepare($sql);
@@ -26,7 +26,7 @@ error_reporting(E_ALL);
 
 <?php
   if(isset($_POST)){
-    $id                = $_POST['id'];
+    $id                = $_POST['uid'];
     $role              = $_POST['role'];
     
     $sql = "UPDATE users SET role='$role' WHERE id='$id'";

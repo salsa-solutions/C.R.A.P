@@ -4,7 +4,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 function getUserPermissions($db, $userId) {
     // Prepare and execute a SELECT query to get the user's role
-    $stmt = $db->prepare('SELECT role FROM users WHERE id = :userId');
+    $stmt = $db->prepare('SELECT role FROM users WHERE uid = :userId');
     $stmt->bindParam(':userId', $userId);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);

@@ -1,4 +1,8 @@
 <?php
+// show error reporting
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
 
 function getUserIpAddr()
 {
@@ -14,73 +18,69 @@ function getUserIpAddr()
   return $ip;
 }
 
-?>
-
-<?php
-	error_reporting(E_ALL);
-	ini_set('display_errors', 1);
-	ini_set('display_startup_errors', 1);
-	require_once('/var/www/html/config.php');
-	$username = $_POST['username'];	
-//	$username = 'macifoe';
-
-	// selecting name from database by username
-	$sql = "SELECT firstname, lastname, role, approved FROM users WHERE username = ? LIMIT 1";
-	$stmtselect  = $db->prepare($sql);
-	$result = $stmtselect->execute([$username]);
-	$user = $stmtselect->fetch(PDO::FETCH_ASSOC);
-//	echo '<pre>'; print_r($user); echo '</pre>';
-	if($user){
-		$name = $user['firstname'] . ' ' . $user['lastname'];
-		$role = $user['role'];
-		$status = $user['approved'];
-	}else{
-		$name = 'Guest';
-		$role = 'Guest';
-	}
-?>
-
-
-<?php
-
 session_start();
 require_once('/var/www/html/config.php');
 
 $username = $_POST['username'];
-$password = sha1($_POST['password']);
-// echo $password;
-$sql = "SELECT * FROM users WHERE username = ? AND password = ? LIMIT 1";
+$password = $_POST['password'];
+
+$sql = "SELECT * FROM users WHERE username = ? LIMIT 1";
 $stmtselect  = $db->prepare($sql);
 
-$result = $stmtselect->execute([$username, $password]);
-// echo $result;
-if($_DEV_DB){
-	echo 'Logging in and sign up are disabled due to maintenance';
-}
-else{
-	if($result){
-		// $user = $stmtselect->fetch(PDO::FETCH_ASSOC);
-		if($stmtselect->rowCount() > 0){
-			$_SESSION['userlogin'] = [$name, $role, $username, $status];
-			echo '1';
-			$currentDate = new DateTime();
-			$date = $currentDate->format('Y-m-d H:i:s');
-			$ip = getUserIpAddr();
-			$sql = "INSERT INTO succesful_logins (date, username, name, ip ) VALUES(?,?,? ,?)";
-			$stmtinsert = $db->prepare($sql);
-			$result = $stmtinsert->execute([ $date, $username, $name, $ip]);
+$result = $stmtselect->execute([$username]);
 
-		}else{
-			echo 'Ha, I really hope you didnt forget your password';
-			$currentDate = new DateTime();
-			$date = $currentDate->format('Y-m-d H:i:s');
-			$ip = getUserIpAddr();
-			$sql = "INSERT INTO unsuccesful_logins (date, username, name, ip ) VALUES(?,?,? ,?)";
-			$stmtinsert = $db->prepare($sql);
-			$result = $stmtinsert->execute([ $date, $username, $name, $ip]);
-		}
-	}else{
-		echo 'There were errors while connecting to database.';
-	}
+if ($stmtselect->errorCode() != "00000") {
+    $errorInfo = $stmtselect->errorInfo();
+    echo "Error executing statement: {$errorInfo[2]}";
+    exit;
 }
-?>
+
+if ($result) {
+    $user = $stmtselect->fetch(PDO::FETCH_ASSOC);
+
+    if ($user && password_verify($password, $user['password'])) {
+        $_SESSION['userlogin'] = [$user['firstname'] . ' ' . $user['lastname'], $user['role'], $username];
+		echo "1";
+        $currentDate = new DateTime();
+        $date = $currentDate->format('Y-m-d H:i:s');
+        $ip = getUserIpAddr();
+        $sql = "INSERT INTO succesful_logins (date, username, name, ip) VALUES (?, ?, ?, ?)";
+        $stmtinsert = $db->prepare($sql);
+        $result = $stmtinsert->execute([$date, $username, $user['firstname'] . ' ' . $user['lastname'], $ip]);
+
+        if (!$result) {
+            $errorInfo = $stmtinsert->errorInfo();
+            echo "Error inserting successful login: {$errorInfo[2]}";
+            exit;
+        }
+    } else {
+        $currentDate = new DateTime();
+        $date = $currentDate->format('Y-m-d H:i:s');
+        $ip = getUserIpAddr();
+        $sql = "INSERT INTO unsuccesful_logins (date, username, name, ip) VALUES (?, ?, ?, ?)";
+        $stmtinsert = $db->prepare($sql);
+        $result = $stmtinsert->execute([$date, $username, $user['firstname'] . ' ' . $user['lastname'], $ip]);
+
+        if (!$result) {
+            $errorInfo = $stmtinsert->errorInfo();
+            echo "Error inserting unsuccessful login: {$errorInfo[2]}";
+            exit;
+        }
+    }
+} else {
+	// handle error for the case where no user is found with the given username
+	$currentDate = new DateTime();
+	$date = $currentDate->format('Y-m-d H:i:s');
+	$ip = getUserIpAddr();
+	$sql = "INSERT INTO unsuccesful_logins (date, username, name, ip) VALUES (?, ?, ?, ?)";
+	$stmtinsert = $db->prepare($sql);
+	$result = $stmtinsert->execute([$date, $username, '', $ip]);
+	
+	if (!$result) {
+	$errorInfo = $stmtinsert->errorInfo();
+	echo "Error inserting unsuccessful login: {$errorInfo[2]}";
+	exit;
+	}
+	echo "Invalid login credentials. Please try again.";
+	exit;
+	}

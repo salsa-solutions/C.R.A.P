@@ -20,12 +20,15 @@
             $email             = $_POST['email'];
             $phone             = $_POST['phone'];
             $username          = $_POST['username'];
-            $password          = sha1($_POST['password']);
-            $approved          = 'pending';
+            $password          = password_hash($_POST['password'], PASSWORD_DEFAULT);
+            $role              = 'pending';
+            $active            = 'false';
 
-            $sql = "INSERT INTO users (date, firstname, lastname, email, phone, username, password, approved ) VALUES(?,?,?,?,?,?,?,?)";
+            $sql = "INSERT INTO users (date, role, firstname, lastname, email, phone, username, password, active) VALUES(?,?,?,?,?,?,?,?,?)";
+
+
             $stmtinsert = $db->prepare($sql);
-            $result = $stmtinsert->execute([$date, $firstname, $lastname, $email, $phone, $username, $password, $approved]);
+            $result = $stmtinsert->execute([$date, $role, $firstname, $lastname, $email, $phone, $username, $password, $active]);
             if ($result) {
                 echo 'Successfully saved.';
             } else {

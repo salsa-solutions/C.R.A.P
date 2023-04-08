@@ -11,7 +11,7 @@ if (!isset($_SESSION['userlogin'])) {
 $name = $_SESSION['userlogin'][0];
 $role = $_SESSION['userlogin'][1];
 $username = $_SESSION['userlogin'][2];
-$status = $_SESSION['userlogin'][3];
+ 
 $WEB_TITLE = 'Scheduling';
 // to turn off a site uncomment the following line:
 // $_DEV = true;
@@ -25,9 +25,9 @@ if (($role == 'Admin')) {
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
-} elseif ($role == 'Manager') {
+} elseif ($role == 'Manager' || ) {
 } else {
-    header("Location: index.php");
+    header("Location: ". $home_page_url ."");
 }
 
 ?>
@@ -59,7 +59,7 @@ if (($role == 'Admin')) {
         echo $out_of_service;
     } elseif (($role == 'Server')) {
         echo $fourohthree;
-    } elseif (($status == 'pending')) {
+    } elseif (($role == 'pending')) {
         echo $pending;
     } else {
     ?>
@@ -101,43 +101,43 @@ if (($role == 'Admin')) {
                                     <tbody>
                                         <form action="">
                                             <td><?php echo $row['name']; ?></td>
-                                            <td><input style="width: 90px ;" id="<?php echo $row['id'] ?>_monday-sched" placeholder="<?php echo $row['monday']; ?>"></td>
-                                            <td><input style="width: 90px ;" id="<?php echo $row['id'] ?>_tuesday-sched" placeholder="<?php echo $row['tuesday']; ?>"></td>
-                                            <td><input style="width: 90px ;" id="<?php echo $row['id'] ?>_wednesday-sched" placeholder="<?php echo $row['wednesday']; ?>"></td>
-                                            <td><input style="width: 90px ;" id="<?php echo $row['id'] ?>_thursday-sched" placeholder="<?php echo $row['thursday']; ?>"></td>
-                                            <td><input style="width: 90px ;" id="<?php echo $row['id'] ?>_friday-sched" placeholder="<?php echo $row['friday']; ?>"></td>
-                                            <td><input style="width: 90px ;" id="<?php echo $row['id'] ?>_saturday-sched" placeholder="<?php echo $row['saturday']; ?>"></td>
+                                            <td><input style="width: 90px ;" id="<?php echo $row['uid'] ?>_monday-sched" placeholder="<?php echo $row['monday']; ?>"></td>
+                                            <td><input style="width: 90px ;" id="<?php echo $row['uid'] ?>_tuesday-sched" placeholder="<?php echo $row['tuesday']; ?>"></td>
+                                            <td><input style="width: 90px ;" id="<?php echo $row['uid'] ?>_wednesday-sched" placeholder="<?php echo $row['wednesday']; ?>"></td>
+                                            <td><input style="width: 90px ;" id="<?php echo $row['uid'] ?>_thursday-sched" placeholder="<?php echo $row['thursday']; ?>"></td>
+                                            <td><input style="width: 90px ;" id="<?php echo $row['uid'] ?>_friday-sched" placeholder="<?php echo $row['friday']; ?>"></td>
+                                            <td><input style="width: 90px ;" id="<?php echo $row['uid'] ?>_saturday-sched" placeholder="<?php echo $row['saturday']; ?>"></td>
                                             <!-- <td><input style="width: 90px ;" id="hours" placeholder="<?php echo $row['username']; ?>"></td> -->
-                                            <td><button type="button" name="button" id="<?php echo $row['id'] ?>_sumbit_approved_sched" class="btn">sumbit</button></td>
+                                            <td><button type="button" name="button" id="<?php echo $row['uid'] ?>_sumbit_approved_sched" class="btn">sumbit</button></td>
                                         </form>
                                         <script>
                                             $(function() {
-                                                $('#<?php echo $row['id'] ?>_sumbit_approved_sched').click(function(e) {
+                                                $('#<?php echo $row['uid'] ?>_sumbit_approved_sched').click(function(e) {
 
                                                     var valid = this.form.checkValidity();
 
                                                     if (valid) {
-                                                        var id = '<?php echo $row['id'] ?>';
+                                                        var id = '<?php echo $row['uid'] ?>';
                                                         var approved = '<?php echo $name; ?>';
                                                         var name = "<?php echo $row['name']; ?>";
                                                         var username = "<?php echo $row['username']; ?>";
                                                         var monday_sched = $(
-                                                                '#<?php echo $row['id'] ?>_monday-sched')
+                                                                '#<?php echo $row['uid'] ?>_monday-sched')
                                                             .val();
                                                         var tuesday_sched = $(
-                                                                '#<?php echo $row['id'] ?>_tuesday-sched')
+                                                                '#<?php echo $row['uid'] ?>_tuesday-sched')
                                                             .val();
                                                         var wednesday_sched = $(
-                                                                '#<?php echo $row['id'] ?>_wednesday-sched')
+                                                                '#<?php echo $row['uid'] ?>_wednesday-sched')
                                                             .val();
                                                         var thursday_sched = $(
-                                                                '#<?php echo $row['id'] ?>_thursday-sched')
+                                                                '#<?php echo $row['uid'] ?>_thursday-sched')
                                                             .val();
                                                         var friday_sched = $(
-                                                                '#<?php echo $row['id'] ?>_friday-sched')
+                                                                '#<?php echo $row['uid'] ?>_friday-sched')
                                                             .val();
                                                         var saturday_sched = $(
-                                                                '#<?php echo $row['id'] ?>_saturday-sched')
+                                                                '#<?php echo $row['uid'] ?>_saturday-sched')
                                                             .val();
                                                         // var hours = $('#hours-sched').val();
                                                         // console.log(hours);

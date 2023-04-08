@@ -16,7 +16,7 @@ if (!isset($_SESSION['userlogin'])) {
 $name = $_SESSION['userlogin'][0];
 $role = $_SESSION['userlogin'][1];
 $username = $_SESSION['userlogin'][2];
-$status = $_SESSION['userlogin'][3];
+ 
 $WEB_TITLE = 'Manager Home';
 
 
@@ -94,7 +94,7 @@ print_r(getUserPermissions($db, $userId)) ;
         echo $out_of_service;
     } elseif (($role == 'Server')) {
         echo $fourohthree;
-    } elseif (($status == 'pending')) {
+    } elseif (($role == 'pending')) {
         echo $pending;
     } else {
     ?>

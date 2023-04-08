@@ -18,7 +18,7 @@ if (isset($_GET['logout'])) {
 $name = $_SESSION['userlogin'][0];
 $role = $_SESSION['userlogin'][1];
 $username = $_SESSION['userlogin'][2];
-$status = $_SESSION['userlogin'][3];
+ 
 $WEB_TITLE = 'Approval';
 
 $_DEV = false;
@@ -42,17 +42,15 @@ setAccessPages($role);
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
         <link rel="stylesheet" href="/css/home.css">
         <link rel="stylesheet" href="/css/nav.css">
-        <title><?php echo $WEB_TITLE ?>
-            |
-            <?php echo $WEBSITE_NAME; ?></title>
+        <title><?php echo $WEB_TITLE ?> | <?php echo $WEBSITE_NAME; ?></title>
     </head>
     <?php require("/var/www/html/php/template.php");
 echo $header ?>
 <?php if (($_DEV) && (($role == 'Server') || ($role == 'Manager') || ($role == 'Cook')) == '1') {
     echo $out_of_service;
-} elseif (($role == 'Server')) {
+} elseif (($role == 'Server' || $role == 'Cook')) {
     echo $fourohthree;
-} elseif (($status == 'pending')) {
+} elseif (($role == 'pending')) {
     echo $pending;
 } else {
 ?>
@@ -88,10 +86,10 @@ echo $header ?>
                                         <tbody>
                                             <?php
                                             include('/var/www/html/config.php');
-                                            $result = $db->prepare("SELECT id, date, username, firstname, lastname, approved FROM users ORDER BY username ASC");
+                                            $result = $db->prepare("SELECT uid, date, username, firstname, lastname, role  FROM users ORDER BY username ASC");
                                             $result->execute();
                                             for ($i = 0; $row = $result->fetch(); $i++) {
-                                                if ($row['approved'] == 'pending') {
+                                                if ($row['role'] == 'pending') {
 
 
                                             ?>
@@ -111,17 +109,17 @@ echo $header ?>
                                                             </select>
                                                         </td>
                                                         <td>
-                                                            <button class="btn btn-success" id="<?php echo $row['id']; ?>_approved">Approve</button>
-                                                            <button class="btn btn-danger" id="<?php echo $row['id']; ?>_deny">Deny</button>
+                                                            <button class="btn btn-success" id="<?php echo $row['uid']; ?>_approved">Approve</button>
+                                                            <button class="btn btn-danger" id="<?php echo $row['uid']; ?>_deny">Deny</button>
                                                         </td>
                                                     </tr>
                                                 </form>
                                                 <script>
                                                     $(function () {
-                                                        $('#<?php echo $row['id']; ?>_approved').click(function (e) {
+                                                        $('#<?php echo $row['uid']; ?>_approved').click(function (e) {
                                                             var valid = this.form.checkValidity();
                                                             if (valid) {
-                                                                var id = '<?php echo $row['id']; ?>';
+                                                                var id = '<?php echo $row['uid']; ?>';
                                                                 var role = $('#role').val();
                                                                 console.info(role);
                                                                 $.ajax({
@@ -141,10 +139,10 @@ echo $header ?>
 
                                                 <script>
                                                     $(function () {
-                                                        $('#<?php echo $row['id']; ?>_deny').click(function (e) {
+                                                        $('#<?php echo $row['uid']; ?>_deny').click(function (e) {
                                                             var valid = this.form.checkValidity();
                                                             if (valid) {
-                                                                var id = '<?php echo $row['id']; ?>';
+                                                                var id = '<?php echo $row['uid']; ?>';
                                                                 $.ajax({
                                                                     url: '/php/db/handling/denied.php',
                                                                     type: 'POST',
@@ -160,16 +158,18 @@ echo $header ?>
                                                 </script>
                                             <?php
                                                 }
+                                                elseif ($i == 0) {
+                                                    echo '<td colspan="8">No new users registered</td>';
+                                                }
                                                 
                                                 // echo $i;
                                                 
                                             }
                                             
                                             
+                                            
                                         }
-                                        if ($i == 0) {
-                                            echo '<td colspan="8">No new users registered</td>';
-                                        }
+                                        
 
                                         ?>
                                         </tbody>

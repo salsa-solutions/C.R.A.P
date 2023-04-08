@@ -20,7 +20,7 @@ if (isset($_GET['logout'])) {
 $name = $_SESSION['userlogin'][0];
 $role = $_SESSION['userlogin'][1];
 $username = $_SESSION['userlogin'][2];
-$status = $_SESSION['userlogin'][3];
+ 
 $WEB_TITLE = 'Schedule';
 
 // to turn off a site uncomment the following line:
@@ -54,7 +54,7 @@ setAccessPages($role);
     echo $header; ?>
     <?php if (($_DEV) && (($role == 'Server') || ($role == 'Manager') || ($role == 'Cook')) == '1') {
         echo $out_of_service;
-    } elseif (($status == 'pending')) {
+    } elseif (($role == 'pending')) {
         echo $pending;
     } else {
     ?>

@@ -10,7 +10,7 @@ if (!isset($_SESSION['userlogin'])) {
 $name = $_SESSION['userlogin'][0];
 $role = $_SESSION['userlogin'][1];
 $username = $_SESSION['userlogin'][2];
-$status = $_SESSION['userlogin'][3];
+ 
 $WEB_TITLE = 'PUT TITLE HERE';
 // to turn off a site uncomment the following line:
 // $_DEV = true;
@@ -74,7 +74,7 @@ if (($role == 'Admin')) {
         echo $out_of_service;
     } elseif (($role == 'Server')) {
         echo $fourohthree;
-    } elseif (($status == 'pending')) {
+    } elseif (($role == 'pending')) {
         echo $pending;
     } else {
     ?>

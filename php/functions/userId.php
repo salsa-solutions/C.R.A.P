@@ -21,6 +21,6 @@ function getUserId($db, $username) {
     // Check if the result is an array
     if (is_array($result)) {
         // Return the user ID
-        return $result['id'];
+        return $result['uid'];
 }
 }

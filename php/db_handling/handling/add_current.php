@@ -41,7 +41,7 @@ if (isset($_POST)) {
 
 <?php
 if (isset($_POST)) {
-  $id                = $_POST['id'];
+  $id                = $_POST['uid'];
 
   $sql = "UPDATE availability SET approved='approved' WHERE id=$id";
   $stmtinsert = $db->prepare($sql);

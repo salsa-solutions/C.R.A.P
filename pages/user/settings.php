@@ -17,10 +17,10 @@ if (isset($_GET['logout'])) {
 $name = $_SESSION['userlogin'][0];
 $role = $_SESSION['userlogin'][1];
 $username = $_SESSION['userlogin'][2];
-$status = $_SESSION['userlogin'][3];
+ 
 $WEB_TITLE = 'Settings';
 $account = getUsersDropdown($db)['dropdown'];
-$account_id = getUsersDropdown($db)['id'];
+$account_id = getUsersDropdown($db)['uid'];
 $account_role = getUsersDropdown($db)['role'];
 
 // to turn off a site uncomment the following line:
@@ -53,7 +53,7 @@ setAccessPages($role);
 echo $header ?>
 <?php if (($_DEV) && (($role == 'Server') || ($role == 'Manager') || ($role == 'Cook')) == '1') {
   echo $out_of_service;
-} elseif (($status == 'pending')) {
+} elseif (($role == 'pending')) {
   echo $pending;
 } else {
 
@@ -125,7 +125,7 @@ echo $header ?>
               // Get the selected user ID
               var userId = $(this).val();
               // Get the selected user's full name from the $ids array
-              var userName = "<?php echo json_encode(getUsersDropdown($db)['id']); ?>";
+              var userName = "<?php echo json_encode(getUsersDropdown($db)['uid']); ?>";
               userName = JSON.parse(userName)[userId];
               // Set the ID of the submit button to the selected user's full name
               $('#update_user').attr('id', userName + '_update_user');
