@@ -23,11 +23,15 @@ function checkLogin($username, $password, $db)
   $query->execute([$username]);
   $user = $query->fetch();
   $passwordCorrect = password_verify($password, $user['password']);
+  $usernameCorrect = $username == $user['username'];
   if (!$user) {
     logUnsuccessfulLogin($username, 'Guest', 'User not found', $db);
     return 1;
   } elseif (!$passwordCorrect) {
     logUnsuccessfulLogin($username, $user['name'], 'Wrong password', $db);
+    return 2;
+  } elseif ($usernameCorrect) {
+    logUnsuccessfulLogin($username, $user['name'], 'Wrong username', $db);
     return 2;
   } elseif ($passwordCorrect) {
     logSuccessfulLogin($username, $user['name'], $db);

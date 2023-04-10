@@ -121,7 +121,7 @@ https://cdn.jsdelivr.net/npm/notiflix/dist/notiflix-3.2.5.min.css
                         success: function(data) {
                             if ($.trim(data) === "1") {
                                 Notiflix.Report.warning(
-                                    data,
+                                    'User doesnt exist',
                                     'User not found. Did you sign up?',
                                     'Okay',
                                 );
@@ -129,7 +129,7 @@ https://cdn.jsdelivr.net/npm/notiflix/dist/notiflix-3.2.5.min.css
 
                             if (data === "2") {
                                 Notiflix.Report.warning(
-                                    data,
+                                    'Mismatched password',
                                     'Wrong password, I really hope you didnt forget it.',
                                     'Okay',
                                 );
@@ -137,23 +137,16 @@ https://cdn.jsdelivr.net/npm/notiflix/dist/notiflix-3.2.5.min.css
                             if (data === "3") {
                                 console.log(data);
                                 setTimeout(' window.location.href =  <?php echo $home_page_url; ?>/', 1000);
-                                // Notiflix.Report.success(
-                                //     'Notiflix Success',
-                                //     '"Do not try to become a person of success but try to become a person of value." <br/><br/>- Albert Einstein',
-                                //     'Okay',
-                                // );
-
                             }
                             if (data === "4") {
                                 Notiflix.Report.failure(
-                                    data,
+                                    'Critical Error!',
                                     'System error. Please contact support! <br/> Error code: 4',
                                     'Okay',
                                 );
                             }
                         },
                         error: function(data) {
-                            // Define a function to get the status code
                             function getStatusCode(url, callback) {
                                 var xhr = new XMLHttpRequest();
                                 xhr.open('GET', url, true);
@@ -163,14 +156,24 @@ https://cdn.jsdelivr.net/npm/notiflix/dist/notiflix-3.2.5.min.css
                                 xhr.send();
                             }
 
-                            // Call getStatusCode to retrieve the status code, then use it in the Notiflix.Report.failure function
+                            // Example usage:
                             getStatusCode('/php/login_registration/jslogin.php', function(statusCode) {
-                                var message = 'System error. Error code: ' + statusCode;
-                                Notiflix.Report.failure(
-                                    'System error. Contact support!',
-                                    message,
-                                    'Okay'
-                                );
+                                var message = 'There was an error while processing your request.';
+                                message += '\nURL: ' + '/php/login_registration/jslogin.php';
+                                message += '\nStatus code: ' + statusCode;
+
+                                // Send the error message to a SQL database using PHP
+                                var xmlhttp = new XMLHttpRequest();
+                                xmlhttp.onreadystatechange = function() {
+                                    if (this.readyState == 4 && this.status == 200) {
+                                        console.log('Error message sent to SQL database.');
+                                    }
+                                };
+                                xmlhttp.open('GET', '/php/error_handler.php?message=' + encodeURIComponent(message), true);
+                                xmlhttp.send();
+
+                                // Display the error message to the user
+                                Notiflix.Report.failure('System error. Contact support!', message, 'Okay');
                             });
 
                         }
