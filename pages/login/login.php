@@ -3,7 +3,7 @@ require_once '/var/www/html/config.php';
 require_once '/var/www/html/pages/page-index.php';
 session_start();
 
-if (isset($_SESSION['userlogin'])) {
+if (isset($_SESSION['name']) || isset($_SESSION['username']) || isset($_SESSION['role']) || isset($_SESSION['role_name']) || isset($_SESSION['uid'])) {
     header("Location: /index.php");
 }
 $WEB_TITLE = 'Login';
@@ -27,6 +27,13 @@ $WEB_TITLE = 'Login';
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="
+    https://cdn.jsdelivr.net/npm/notiflix/dist/notiflix-3.2.5.min.js
+"></script>
+    <link href="
+https://cdn.jsdelivr.net/npm/notiflix/dist/notiflix-3.2.5.min.css
+" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/css/backround.css">
     <link rel="stylesheet" href="/css/login-signup.css">
@@ -110,26 +117,65 @@ $WEB_TITLE = 'Login';
                             username: username,
                             password: password
                         },
+
                         success: function(data) {
-                            // alert(data);
                             if ($.trim(data) === "1") {
-                                setTimeout(' window.location.href =  "<?php $index_page;?>"', 1000);
-                            } else {
-                                Swal.fire(
-                                    'Errors',
+                                Notiflix.Report.warning(
                                     data,
-                                    'error'
-                                )
+                                    'User not found. Did you sign up?',
+                                    'Okay',
+                                );
+                            }
+
+                            if (data === "2") {
+                                Notiflix.Report.warning(
+                                    data,
+                                    'Wrong password, I really hope you didnt forget it.',
+                                    'Okay',
+                                );
+                            }
+                            if (data === "3") {
+                                console.log(data);
+                                setTimeout(' window.location.href =  <?php echo $home_page_url; ?>/', 1000);
+                                // Notiflix.Report.success(
+                                //     'Notiflix Success',
+                                //     '"Do not try to become a person of success but try to become a person of value." <br/><br/>- Albert Einstein',
+                                //     'Okay',
+                                // );
+
+                            }
+                            if (data === "4") {
+                                Notiflix.Report.failure(
+                                    data,
+                                    'System error. Please contact support! <br/> Error code: 4',
+                                    'Okay',
+                                );
                             }
                         },
                         error: function(data) {
-                            Swal.fire(
-                                'Errors',
-                                'well... shit',
-                                'error'
-                            )
+                            // Define a function to get the status code
+                            function getStatusCode(url, callback) {
+                                var xhr = new XMLHttpRequest();
+                                xhr.open('GET', url, true);
+                                xhr.onload = function() {
+                                    callback(xhr.status);
+                                };
+                                xhr.send();
+                            }
+
+                            // Call getStatusCode to retrieve the status code, then use it in the Notiflix.Report.failure function
+                            getStatusCode('/php/login_registration/jslogin.php', function(statusCode) {
+                                var message = 'System error. Error code: ' + statusCode;
+                                Notiflix.Report.failure(
+                                    'System error. Contact support!',
+                                    message,
+                                    'Okay'
+                                );
+                            });
 
                         }
+
+
                     });
                 }
             });

@@ -4,9 +4,9 @@ session_start();
 
 require_once('/var/www/html/config.php');
 require_once('/var/www/html/pages/page-index.php');
-require_once('/var/www/html/php/functions/navPage.php');
+ require_once('/var/www/html/php/functions/permissons.php');
 
-if (!isset($_SESSION['userlogin'])) {
+if (!isset($_SESSION['name']) || !isset($_SESSION['username']) || !isset($_SESSION['role']) || !isset($_SESSION['role_name']) || !isset($_SESSION['uid'])) {
     header('Location: ' . $login_page_url . '');
 }
 
@@ -15,17 +15,22 @@ if (isset($_GET['logout'])) {
     unset($_SESSION);
     header("Location: /pages/login/login.php");
 }
-$name = $_SESSION['userlogin'][0];
-$role = $_SESSION['userlogin'][1];
-$username = $_SESSION['userlogin'][2];
+$name = $_SESSION['name']; 
+      $username = $_SESSION['username'];
+      $role = $_SESSION['role'];
+      $role_name = $_SESSION['role_name'];
+      $uid = $_SESSION['uid'];
  
 $WEB_TITLE = 'Approval';
 
 $_DEV = false;
-setAccessPages($role);
-// if ($role == 'Admin') {
-//     header("Location: /index.php");
-// }
+if (($role == 'Dev')) {
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+} elseif ($role = 'Employee') {
+    header("Location: ". $home_page_url ."");
+}
 
 ?>
 <!DOCTYPE html>

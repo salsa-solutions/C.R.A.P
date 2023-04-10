@@ -7,7 +7,7 @@ function getUserId($db, $username) {
     require_once('/var/www/html/config.php');
     // Create a new PDO object
     
-    $stmt = $db->prepare("SELECT username FROM users WHERE id = :id");
+    $stmt = $db->prepare("SELECT username FROM users WHERE uid = :id");
 
     // Bind the ID parameter to the prepared statement
     $stmt->bindParam(':id', $username);

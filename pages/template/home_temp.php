@@ -4,14 +4,16 @@ require_once('/var/www/html/config.php');
 require_once('/var/www/html/pages/page-index.php');
 
 
-if (!isset($_SESSION['userlogin'])) {
+if (!isset($_SESSION['name']) || !isset($_SESSION['username']) || !isset($_SESSION['role']) || !isset($_SESSION['role_name']) || !isset($_SESSION['uid'])) {
     header('Location: ' . $login_page_url . '');
 }
 
 
-$name = $_SESSION['userlogin'][0];
-$role = $_SESSION['userlogin'][1];
-$username = $_SESSION['userlogin'][2];
+$name = $_SESSION['name']; 
+      $username = $_SESSION['username'];
+      $role = $_SESSION['role'];
+      $role_name = $_SESSION['role_name'];
+      $uid = $_SESSION['uid'];
  
 $WEB_TITLE = 'PUT TITLE HERE';
 

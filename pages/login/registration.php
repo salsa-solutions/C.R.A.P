@@ -3,7 +3,9 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-
+if (isset($_SESSION['name']) || isset($_SESSION['username']) || isset($_SESSION['role']) || isset($_SESSION['role_name']) || isset($_SESSION['uid'])) {
+    header("Location: /index.php");
+}
 require_once('/var/www/html/config.php');
 
 $WEB_TITLE = 'User Registration';

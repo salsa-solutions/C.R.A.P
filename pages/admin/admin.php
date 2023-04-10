@@ -3,27 +3,26 @@
 session_start();
 require_once('/var/www/html/config.php');
 require_once('/var/www/html/pages/page-index.php');
-require_once('/var/www/html/php/functions/navPage.php');
+ require_once('/var/www/html/php/functions/permissons.php');
 require_once('/var/www/html/php/functions/userPermissions.php');
 require_once('/var/www/html/php/functions/userId.php');
 // to turn off a page uncomment the following line:
 // $_DEV = true;
 
-if (!isset($_SESSION['userlogin'])) {
+if (!isset($_SESSION['name']) || !isset($_SESSION['username']) || !isset($_SESSION['role']) || !isset($_SESSION['role_name']) || !isset($_SESSION['uid'])) {
     header('Location: ' . $login_page_url . '');
 }
 
-$name = $_SESSION['userlogin'][0];
-$role = $_SESSION['userlogin'][1];
-$username = $_SESSION['userlogin'][2];
+$name = $_SESSION['name']; 
+      $username = $_SESSION['username'];
+      $role = $_SESSION['role'];
+      $role_name = $_SESSION['role_name'];
+      $uid = $_SESSION['uid'];
  
 $WEB_TITLE = 'Manager Home';
 
 
 setAccessPages($role);
-
-echo $userId = getUserId($db, $username);
-print_r(getUserPermissions($db, $userId)) ;
 
 // if(($role != 'Manager' || $role != 'Admin')){
 //     header("Location: /index.php");

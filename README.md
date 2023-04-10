@@ -30,18 +30,19 @@ C.R.A.P is a highly efficient and localized scheduling program designed to cater
 ## Pricing
 
 One line = $0.10
-Current work price = $304.60
+Current work price = $344.00
 
 ``` bash
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
-PHP                             30            355            132           2229
-CSS                             11             90             56            590
+PHP                             30            392            143           2412
+CSS                             11             87             77            706
 SQL                              3             60            112            179
+HTML                             1              7              4            129
 Markdown                         1             14              0             14
 -------------------------------------------------------------------------------
-SUM:                            45            519            300           3012
+SUM:                            46            560            336           3440
 -------------------------------------------------------------------------------
 ```
 Current retial price: 500$ + 50$ a year to renew subscription

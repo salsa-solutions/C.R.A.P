@@ -9,7 +9,7 @@ error_reporting(E_ALL);
 
 function getUsersDropdown($db)
 {
-  $query = "SELECT CONCAT(firstname, ' ', lastname) AS fullname, role, uid FROM users";
+  $query = "SELECT name, role, uid FROM users";
   $stmt = $db->prepare($query);
   $stmt->execute();
   $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -19,7 +19,7 @@ function getUsersDropdown($db)
   $ids = array();
 
   foreach ($users as $user) {
-    $fullname = $user['fullname'];
+    $fullname = $user['name'];
     $role = $user['role'];
     $id = $user['uid'];
 

@@ -2,31 +2,27 @@
 session_start();
 require_once('/var/www/html/config.php');
 require_once('/var/www/html/pages/page-index.php');
-require_once('/var/www/html/php/functions/navPage.php');
+ require_once('/var/www/html/php/functions/permissons.php');
 
 if (!isset($_SESSION['userlogin'])) {
     header('Location: login.php');
 }
 
-$name = $_SESSION['userlogin'][0];
-$role = $_SESSION['userlogin'][1];
-$username = $_SESSION['userlogin'][2];
+$name = $_SESSION['name']; 
+      $username = $_SESSION['username'];
+      $role = $_SESSION['role'];
+      $role_name = $_SESSION['role_name'];
+      $uid = $_SESSION['uid'];
  
 $WEB_TITLE = 'Scheduling';
 // to turn off a site uncomment the following line:
 // $_DEV = true;
-if (($role == 'Admin')) {
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
-}
 setAccessPages($role);
-if (($role == 'Admin')) {
+if (($role == 'Dev')) {
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
-} elseif ($role == 'Manager' || ) {
-} else {
+} elseif ($role = 'Employee') {
     header("Location: ". $home_page_url ."");
 }
 

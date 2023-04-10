@@ -9,6 +9,7 @@ $approval_page_url = '/pages/admin/approval.php';
 
 // regular user 
 $home_page_url = '/index.php';
+$home_page_full_url = '/var/www/html/index.php';
 $schedule_page_url = '/pages/general/schedule.php';
 $settings_page_url = '/pages/user/settings.php';
 
