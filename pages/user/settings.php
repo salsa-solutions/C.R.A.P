@@ -3,7 +3,7 @@ session_start();
 require_once('/var/www/html/config.php');
 require_once('/var/www/html/pages/page-index.php');
 require_once('/var/www/html/php/functions/select.php');
- require_once('/var/www/html/php/functions/permissons.php');
+require_once('/var/www/html/php/functions/permissons.php');
 
 if (!isset($_SESSION['name']) || !isset($_SESSION['username']) || !isset($_SESSION['role']) || !isset($_SESSION['role_name']) || !isset($_SESSION['uid'])) {
   header('Location: ' . $login_page_url . '');
@@ -14,12 +14,12 @@ if (isset($_GET['logout'])) {
   unset($_SESSION);
   header("Location: /pages/login/login.php");
 }
-$name = $_SESSION['name']; 
-      $username = $_SESSION['username'];
-      $role = $_SESSION['role'];
-      $role_name = $_SESSION['role_name'];
-      $uid = $_SESSION['uid'];
- 
+$name = $_SESSION['name'];
+$username = $_SESSION['username'];
+$role = $_SESSION['role'];
+$role_name = $_SESSION['role_name'];
+$uid = $_SESSION['uid'];
+
 $WEB_TITLE = 'Settings';
 $account = getUsersDropdown($db)['dropdown'];
 $account_id = getUsersDropdown($db)['uid'];
@@ -83,7 +83,7 @@ echo $header ?>
       <br>
     </div>
     <?php
-    if ($role == 'Admin' || $role == 'Manager' || $role == 'Dev') {
+    if ($role == 'admin' || $role == 'manager' || $role == 'dev') {
 
     ?>
       <br>
@@ -181,7 +181,7 @@ echo $header ?>
           <br>
           <label for="role">Role Permissions:</label>
           <select id="role_permisions" name="status">
-            <option value="user">User</option>
+            <option value="employee">Employee</option>
             <option value="manager">Manager</option>
             <option value="admin">Admin</option>
           </select>
@@ -199,10 +199,10 @@ echo $header ?>
           </div>
           <div class="role_cheat_sheet_item">
             <h5>Manager</h5>
-            <p>Full access to all features but effected by developer mode </p>
+            <p>Full access to Manager pages </p>
           </div>
           <div class="role_cheat_sheet_item">
-            <h5>User</h5>
+            <h5>Employee</h5>
             <p>Full access to user features (i.e home page, schedule and settings )</p>
           </div>
 

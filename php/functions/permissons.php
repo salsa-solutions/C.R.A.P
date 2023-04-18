@@ -1,8 +1,8 @@
 <?php
 
 function setAccessPages($role) {
-    require_once '/var/www/html/pages/page_index.php';
-    // global $managment_page, $admin_page, $scheduling_page, $approval_page, $test_page, $test_page_php, $test_page_html ;
+    require_once '/var/www/html/pages/page-index.php';
+    global $managment_page, $admin_page, $scheduling_page, $approval_page, $test_page, $test_page_php, $test_page_html ;
     if ($role == 'dev') {
         $managment_page = $managment_page;
         $admin_page = $admin_page;
@@ -34,18 +34,18 @@ function setAccessPages($role) {
     }
 }
 
-function setPagePermissions($role, $mode){
-    
-    if($mode == 'admin' && ($role == 'admin' || 'dev')){
-        return 'admin';
-    }elseif($mode == 'admin' && ($role == 'employee' || 'pending' || !isset($role))){
-        return 'denied';
-    }elseif($mode == 'employee' && ($role == 'employee' )){
-        return 'employee';
-    }elseif($mode == 'employee' && ($role == 'admin' || 'dev')){
-        return 'denied';
-    }elseif($mode == 'employee' || 'admin' && ($role == 'pending' || !isset($role))){
-        return 'denied';
-    }
+function setPagePermissions($role, $mode)
+{
 
+    if (($mode == 'admin' && $role == 'admin') || $role == 'dev') {
+        return 'admin';
+    } elseif (($mode == 'manager' && $role == 'manager') || $role == 'dev' || $role == 'admin') {
+        return 'manager';
+    } elseif (($mode == 'employee' && $role == 'employee') || $role == 'dev' || $role == 'admin' || $role == 'manager') {
+        return 'public';
+    } elseif ($role == 'pending') {
+        return 'pending';
+    } else {
+        return 'none';
+    }
 }

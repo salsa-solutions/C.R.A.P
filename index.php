@@ -49,14 +49,15 @@ setAccessPages($role);
 </head>
 
 <?php require("/var/www/html/php/template.php");
-echo $header ?>
-<?php if (($_DEV) && (($role == 'employee') || ($role == 'manager') || ($role == 'admin')) == '1') {
+echo $header;
+if ($_DEV && in_array($role, array('employee', 'manager', 'admin'))) {
     echo $out_of_service;
-} elseif (($role == 'pending')) {
+} elseif ($role == 'pending') {
     echo $pending;
 } elseif (!isset($_SESSION['session_id'])) {
     echo $fourohthree;
-} elseif(($role == 'employee') || ($role == 'manager') || ($role == 'admin')) {
+} elseif (in_array($role, array('employee', 'manager', 'admin', 'dev'))) {
+    
 
 ?>
     <div class="container h-100 scroll">
@@ -323,6 +324,8 @@ echo $header ?>
     </script>
 
 <?php
+} else {
+    
 }
 
 

@@ -58,7 +58,7 @@ setAccessPages($role);
 
 <body>
 
-    <style>
+    <!-- <style>
         table {
             border-collapse: collapse;
             width: 100%;
@@ -86,7 +86,7 @@ setAccessPages($role);
             float: right;
             width: 48%;
         }
-    </style>
+    </style> -->
 
 
     <!-- <?php echo $userId = getUserId($db, $username); ?> -->
