@@ -1,1 +1,0 @@
-CREATE DEFINER=`tibthink`@`localhost` EVENT `flush availability` ON SCHEDULE EVERY 1 WEEK STARTS '2023-03-26 00:07:53' ON COMPLETION NOT PRESERVE ENABLE COMMENT 'flushes availability from the table every week' DO DELETE FROM availability$$

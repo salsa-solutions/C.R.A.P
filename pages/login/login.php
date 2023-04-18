@@ -3,8 +3,8 @@ require_once '/var/www/html/config.php';
 require_once '/var/www/html/pages/page-index.php';
 session_start();
 
-if (isset($_SESSION['name']) || isset($_SESSION['username']) || isset($_SESSION['role']) || isset($_SESSION['role_name']) || isset($_SESSION['uid'])) {
-    header("Location: /index.php");
+if (isset($session_id) && isset($_SESSION['name']) && isset($_SESSION['username']) && isset($_SESSION['role']) && isset($_SESSION['role_name']) && isset($_SESSION['uid'])) {
+    header('Location: ' . $home_page_url . '');
 }
 $WEB_TITLE = 'Login';
 
@@ -26,7 +26,6 @@ $WEB_TITLE = 'Login';
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script src="
     https://cdn.jsdelivr.net/npm/notiflix/dist/notiflix-3.2.5.min.js
@@ -119,7 +118,7 @@ https://cdn.jsdelivr.net/npm/notiflix/dist/notiflix-3.2.5.min.css
                         },
 
                         success: function(data) {
-                            if ($.trim(data) === "1") {
+                            if ($.trim(data) === "100") {
                                 Notiflix.Report.warning(
                                     'User doesnt exist',
                                     'User not found. Did you sign up?',
@@ -127,21 +126,21 @@ https://cdn.jsdelivr.net/npm/notiflix/dist/notiflix-3.2.5.min.css
                                 );
                             }
 
-                            if (data === "2") {
+                            if (data === "200") {
                                 Notiflix.Report.warning(
                                     'Mismatched password',
                                     'Wrong password, I really hope you didnt forget it.',
                                     'Okay',
                                 );
                             }
-                            if (data === "3") {
+                            if (data === "300") {
                                 console.log(data);
                                 setTimeout(' window.location.href =  <?php echo $home_page_url; ?>/', 1000);
                             }
-                            if (data === "4") {
+                            if (data === "400") {
                                 Notiflix.Report.failure(
                                     'Critical Error!',
-                                    'System error. Please contact support! <br/> Error code: 4',
+                                    'System error. Please contact support! <br/> Error code: ' + data,
                                     'Okay',
                                 );
                             }

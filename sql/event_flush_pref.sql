@@ -1,1 +1,0 @@
-CREATE DEFINER=`tibthink`@`localhost` EVENT `flush wanted_days` ON SCHEDULE EVERY 1 WEEK STARTS '2023-03-26 00:00:00' ON COMPLETION NOT PRESERVE ENABLE COMMENT 'flushes wanted_days from the table every week' DO DELETE FROM wanted_days$$

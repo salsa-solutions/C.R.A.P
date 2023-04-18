@@ -1,48 +1,59 @@
-FROM ubuntu:20.04
+FROM debian:bullseye
 
-# Set environment variables
+# Set command line arguments
+ARG TIMEZONE=UTC
+ARG WEB_SERVER=apache
+ARG SQL_USERNAME=root
+ARG SQL_PASSWORD=
 
-# Install Apache, PHP, and necessary extensions
-RUN apt-get update && apt-get install -y \
-    apache2 \
-    php \
+# Set environment variables for Git
+ENV GIT_USERNAME=your_git_username
+ENV GIT_TOKEN=your_git_token
+
+# Install required packages
+RUN apt-get update && \
+    apt-get install -y \
+    uuid-dev \
+    git \
+    php-uuid \
     libapache2-mod-php \
-    php-mysql \
-    php-curl \
+    php-opcache \
+    php-cli \
     php-gd \
-    php-json \
-    php-mbstring \
-    php-intl \
-    php-xml \
-    php-zip
+    php-curl \
+    php-mysql \
+    tzdata \
+    mariadb-server \
+    mariadb-client && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
-# Enable necessary Apache modules
-RUN a2enmod rewrite && \
-    a2enmod ssl && \
-    service apache2 restart
+# Set timezone
+RUN ln -fs "/usr/share/zoneinfo/$TIMEZONE" /etc/localtime && \
+    dpkg-reconfigure -f noninteractive tzdata
 
-# Install MariaDB client and necessary tools
-RUN apt-get install -y mariadb-client
+# Clone Git repository using token
+RUN mkdir /app && \
+    cd /app && \
+    git clone https://$GIT_USERNAME:$GIT_TOKEN@pioxy.net/salsa/C.R.A.P && \
+    cd your-repo
 
-# Install Git
-RUN apt-get install -y git
+# Configure MariaDB
+RUN sed -i "s/^bind-address/#bind-address/" /etc/mysql/mariadb.conf.d/50-server.cnf && \
+    service mysql start && \
+    mysql -e "CREATE USER '$SQL_USERNAME'@'localhost' IDENTIFIED BY '$SQL_PASSWORD';" && \
+    mysql -e "GRANT ALL PRIVILEGES ON *.* TO '$SQL_USERNAME'@'localhost';" && \
+    mysql -e "FLUSH PRIVILEGES;"
 
-# Clone source code from Git repository
-RUN git clone http://pioxy.net:Salsa/C.R.A.P.git /var/www/html
+# Set environment variables for web server and SQL
+RUN echo "export WEB_SERVER=$WEB_SERVER" >> /etc/profile.d/web_server.sh && \
+    echo "export SQL_USERNAME=$SQL_USERNAME" >> /etc/profile.d/sql.sh && \
+    echo "export SQL_PASSWORD=$SQL_PASSWORD" >> /etc/profile.d/sql.sh
 
-# Copy Apache site configuration
-COPY ./config/apache2.conf /etc/apache2/sites-available/000-default.conf
 
-# Copy PHP configuration
-COPY ./config/php.ini /etc/php//apache2/php.ini
-
-# Copy SSL certificates
-COPY ./config/ssl.crt /etc/ssl/certs/ssl.crt
-COPY ./config/ssl.key /etc/ssl/private/ssl.key
-
-# Expose HTTP and HTTPS ports
+# Expose port 80
 EXPOSE 80
-EXPOSE 443
 
-# Start Apache
-CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
+# Set working directory and entry point
+WORKDIR /app/your-repo
+ENTRYPOINT ["/bin/bash"]

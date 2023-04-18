@@ -1,13 +1,14 @@
 <?php
-session_start();
 require_once('/var/www/html/config.php');
 require_once('/var/www/html/pages/page-index.php');
 require_once('/var/www/html/php/functions/permissons.php');
 
-
-if (!isset($_SESSION['name']) || !isset($_SESSION['username']) || !isset($_SESSION['role']) || !isset($_SESSION['role_name']) || !isset($_SESSION['uid'])) {
-    header('Location: ' . $login_page_url . '');
-}
+// echo $session_id;
+session_start();
+print_r($_SESSION);
+// if (!isset($_SESSION['session_id']) && !isset($_SESSION['name']) && !isset($_SESSION['username']) && !isset($_SESSION['role']) && !isset($_SESSION['role_name']) && !isset($_SESSION['uid'])) {
+//     header('Location: ' . $login_page_url . '');
+// }
 
 
 $name = $_SESSION['name'];
@@ -47,16 +48,15 @@ setAccessPages($role);
 
 </head>
 
-
-
 <?php require("/var/www/html/php/template.php");
 echo $header ?>
 <?php if (($_DEV) && (($role == 'employee') || ($role == 'manager') || ($role == 'admin')) == '1') {
     echo $out_of_service;
 } elseif (($role == 'pending')) {
     echo $pending;
-} else {
-
+} elseif (!isset($_SESSION['session_id'])) {
+    echo $fourohthree;
+} elseif(($role == 'employee') || ($role == 'manager') || ($role == 'admin')) {
 
 ?>
     <div class="container h-100 scroll">
@@ -324,6 +324,7 @@ echo $header ?>
 
 <?php
 }
+
 
 include_once("php/template.php");
 echo $footer;

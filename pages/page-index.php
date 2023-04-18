@@ -30,7 +30,7 @@ $info = '/test/info.php';
 
 
 // page links
-
+// manager
 $managment_page = 'Management';
 $admin_page= '<a href="' . $admin_page_url .'">Manager</a>';
 $scheduling_page= '<a href="' . $scheduling_page_url .'">Scheduling</a>';

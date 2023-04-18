@@ -1,24 +1,26 @@
 <?php
 
-session_start();
+
 require_once('/var/www/html/config.php');
 require_once('/var/www/html/pages/page-index.php');
- require_once('/var/www/html/php/functions/permissons.php');
+require_once('/var/www/html/php/functions/permissons.php');
 require_once('/var/www/html/php/functions/userPermissions.php');
 require_once('/var/www/html/php/functions/userId.php');
 // to turn off a page uncomment the following line:
 // $_DEV = true;
 
-if (!isset($_SESSION['name']) || !isset($_SESSION['username']) || !isset($_SESSION['role']) || !isset($_SESSION['role_name']) || !isset($_SESSION['uid'])) {
+session_start();
+$session_id = session_id();
+if (!isset($session_id) || !isset($_SESSION['name']) && !isset($_SESSION['username']) && !isset($_SESSION['role']) && !isset($_SESSION['role_name']) && !isset($_SESSION['uid'])) {
     header('Location: ' . $login_page_url . '');
 }
 
-$name = $_SESSION['name']; 
-      $username = $_SESSION['username'];
-      $role = $_SESSION['role'];
-      $role_name = $_SESSION['role_name'];
-      $uid = $_SESSION['uid'];
- 
+$name = $_SESSION['name'];
+$username = $_SESSION['username'];
+$role = $_SESSION['role'];
+$role_name = $_SESSION['role_name'];
+$uid = $_SESSION['uid'];
+
 $WEB_TITLE = 'Manager Home';
 
 
@@ -56,13 +58,14 @@ setAccessPages($role);
 
 <body>
 
-<style>
+    <style>
         table {
             border-collapse: collapse;
             width: 100%;
         }
 
-        th, td {
+        th,
+        td {
             text-align: left;
             padding: 8px;
             border-bottom: 1px solid #ddd;
@@ -89,105 +92,105 @@ setAccessPages($role);
     <!-- <?php echo $userId = getUserId($db, $username); ?> -->
     <?php require("/var/www/html/php/template.php");
     echo $header ?>
-    <?php if (($_DEV) && (($role == 'Server') || ($role == 'Manager') || ($role == 'Cook')) == '1') {
+    <?php if (($_DEV) && (($role == 'employee') || ($role == 'manager')) == '1') {
         echo $out_of_service;
-    } elseif (($role == 'Server')) {
+    } elseif (($role == 'employee')) {
         echo $fourohthree;
     } elseif (($role == 'pending')) {
         echo $pending;
     } else {
     ?>
 
-<h1>Manager Portal</h1>
+        <h1>Manager Portal</h1>
 
-<h2>Messages</h2>
-<?php
-// Connect to the database
-$pdo = $db;
-
-// Retrieve messages from the database
-$stmt = $pdo->query("SELECT * FROM messages ORDER BY date DESC");
-while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-    echo "<p><strong>{$row['name']}</strong> ({$row['date']}): {$row['message']}</p>";
-}
-if ($stmt->rowCount() == 0) {
-    echo "<p>No messages</p>";
-}
-?>
-<br>
-<br>
-<br>
-<div class="availability-box">
-    <h2>Availability</h2>
-    <table>
-        <tr>
-            <th>Date</th>
-            <th>Name</th>
-            <th>Monday</th>
-            <th>Tuesday</th>
-            <th>Wednesday</th>
-            <th>Thursday</th>
-            <th>Friday</th>
-            <th>Saturday</th>
-        </tr>
+        <h2>Messages</h2>
         <?php
-        // Retrieve availability from the database
-        $stmt = $pdo->query("SELECT * FROM availability ORDER BY date DESC");
+        // Connect to the database
+        $pdo = $db;
+
+        // Retrieve messages from the database
+        $stmt = $pdo->query("SELECT * FROM messages ORDER BY date DESC");
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            echo "<tr>";
-            echo "<td>{$row['date']}</td>";
-            echo "<td>{$row['name']}</td>";
-            echo "<td>{$row['monday']}</td>";
-            echo "<td>{$row['tuesday']}</td>";
-            echo "<td>{$row['wednesday']}</td>";
-            echo "<td>{$row['thursday']}</td>";
-            echo "<td>{$row['friday']}</td>";
-            echo "<td>{$row['saturday']}</td>";
-            echo "</tr>";
+            echo "<p><strong>{$row['name']}</strong> ({$row['date']}): {$row['message']}</p>";
         }
         if ($stmt->rowCount() == 0) {
-            echo "<tr><td colspan=\"8\">No availability found</td></tr>";
+            echo "<p>No messages</p>";
         }
         ?>
-    </table>
-</div>
+        <br>
+        <br>
+        <br>
+        <div class="availability-box">
+            <h2>Availability</h2>
+            <table>
+                <tr>
+                    <th>Date</th>
+                    <th>Name</th>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                    <th>Saturday</th>
+                </tr>
+                <?php
+                // Retrieve availability from the database
+                $stmt = $pdo->query("SELECT * FROM availability ORDER BY date DESC");
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    echo "<tr>";
+                    echo "<td>{$row['date']}</td>";
+                    echo "<td>{$row['name']}</td>";
+                    echo "<td>{$row['monday']}</td>";
+                    echo "<td>{$row['tuesday']}</td>";
+                    echo "<td>{$row['wednesday']}</td>";
+                    echo "<td>{$row['thursday']}</td>";
+                    echo "<td>{$row['friday']}</td>";
+                    echo "<td>{$row['saturday']}</td>";
+                    echo "</tr>";
+                }
+                if ($stmt->rowCount() == 0) {
+                    echo "<tr><td colspan=\"8\">No availability found</td></tr>";
+                }
+                ?>
+            </table>
+        </div>
 
-<div class="wanted-days-box">
-    <h2>Wanted Days</h2>
-    <table>
-        <tr>
-            <th>Date</th>
-            <th>Name</th>
-            <th>Monday</th>
-            <th>Tuesday</th>
-            <th>Wednesday</th>
-            <th>Thursday</th>
-            <th>Friday</th>
-            <th>Saturday</th>
-        </tr>
+        <div class="wanted-days-box">
+            <h2>Wanted Days</h2>
+            <table>
+                <tr>
+                    <th>Date</th>
+                    <th>Name</th>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                    <th>Saturday</th>
+                </tr>
+                <?php
+                // Retrieve availability from the database
+                $stmt = $pdo->query("SELECT * FROM wanted_days ORDER BY date DESC");
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    echo "<tr>";
+                    echo "<td>{$row['date']}</td>";
+                    echo "<td>{$row['name']}</td>";
+                    echo "<td>{$row['monday']}</td>";
+                    echo "<td>{$row['tuesday']}</td>";
+                    echo "<td>{$row['wednesday']}</td>";
+                    echo "<td>{$row['thursday']}</td>";
+                    echo "<td>{$row['friday']}</td>";
+                    echo "<td>{$row['saturday']}</td>";
+                    echo "</tr>";
+                }
+                if ($stmt->rowCount() == 0) {
+                    echo "<tr><td colspan=\"8\">No prefered days found</td></tr>";
+                }
+                ?>
+            </table>
+
         <?php
-        // Retrieve availability from the database
-        $stmt = $pdo->query("SELECT * FROM wanted_days ORDER BY date DESC");
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            echo "<tr>";
-            echo "<td>{$row['date']}</td>";
-            echo "<td>{$row['name']}</td>";
-            echo "<td>{$row['monday']}</td>";
-            echo "<td>{$row['tuesday']}</td>";
-            echo "<td>{$row['wednesday']}</td>";
-            echo "<td>{$row['thursday']}</td>";
-            echo "<td>{$row['friday']}</td>";
-            echo "<td>{$row['saturday']}</td>";
-            echo "</tr>";
-        }
-        if ($stmt->rowCount() == 0) {
-            echo "<tr><td colspan=\"8\">No prefered days found</td></tr>";
-        }
-        ?>
-    </table>
-
-    <?php
     }
     require("/var/www/html/php/template.php");
     echo $footer;
-    ?>
+        ?>
