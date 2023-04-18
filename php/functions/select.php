@@ -4,55 +4,36 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-function getRoles($db, $role)
+
+
+
+function getUsersDropdown($db)
 {
-  require_once('/var/www/html/config.php');
-  $result = $db->prepare("SELECT id, role FROM role ORDER BY role ASC");
-  $result->execute();
-  $options = '';
-  for ($i = 0; $row = $result->fetch(); $i++) {
-    if ($row['role'] != 'Admin') {
-      $options .= '<option value="' . $row['id'] . '">'  . $row['role'] . '</option>';
-    } elseif ($row['role'] == 'Admin' && $role == 'Admin') {
-      $options .= '<option value="' . $row['id'] . '">'  . $row['role'] . '</option>';
-    } else {
-      $options .= '<option value="' . $row['id'] . '" disabled>' . $row['role'] . '</option>';
-    }
+  $query = "SELECT name, role, uid FROM users";
+  $stmt = $db->prepare($query);
+  $stmt->execute();
+  $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+  $dropdown = '<select name="user_id">';
+  $roles = array();
+  $ids = array();
+
+  foreach ($users as $user) {
+    $fullname = $user['name'];
+    $role = $user['role'];
+    $id = $user['uid'];
+
+    // Add the fullname to the dropdown menu as an option with the user ID as the value
+    $dropdown .= '<option value="' . $id . '">' . $fullname . ' - '. $role . '</option>';
+
+    // Save the role and user ID to the roles and ids arrays
+    $roles[$id] = $role;
+    $ids[$id] = $fullname;
   }
 
-  return $options;
+  $dropdown .= '</select>';
+
+  // Return the dropdown menu, roles array, and ids array as an array
+  return array('dropdown' => $dropdown, 'role' => $roles, 'uid' => $ids);
 }
 
-function getUsers($db, $role)
-{
-  $result = $db->prepare("SELECT id, firstname, lastname, username, role FROM users ORDER BY lastname ASC");
-  $result->execute();
-  $users = array();
-
-  $options = '';
-
-  for ($i = 0; $row = $result->fetch(); $i++) {
-    if ($role == 'Admin' || $role == 'Manager') {
-          $options = '<option value="' . $row['id'] . '">' . $row['firstname'] . ' ' . $row['lastname'] . ' - ' . $row['role'] . '</option>';
-        } elseif ($row['role'] == 'Admin' && $role == 'Admin') {
-          $options = '<option value="' . $row['id'] . '">' . $row['firstname'] . ' ' . $row['lastname'] . ' - ' . $row['role'] . '</option>';
-        } else {
-          $options = '<option value="' . $row['id'] . '" disabled>' . $row['firstname'] . ' ' . $row['lastname'] . ' - ' . $row['role'] . '</option>';
-        }
-  }
-  // while ($row = $result->fetch()) {
-  //   if ($row['role'] != 'Admin') {
-  //     $options = '<option value="' . $row['id'] . '">' . $row['firstname'] . ' ' . $row['lastname'] . ' - ' . $row['role'] . '</option>';
-  //   } elseif ($row['role'] == 'Admin' && $role == 'Admin') {
-  //     $options = '<option value="' . $row['id'] . '">' . $row['firstname'] . ' ' . $row['lastname'] . ' - ' . $row['role'] . '</option>';
-  //   } else {
-  //     $options = '<option value="' . $row['id'] . '" disabled>' . $row['firstname'] . ' ' . $row['lastname'] . ' - ' . $row['role'] . '</option>';
-  //   }
-  //   $users[] = array(
-  //     'id' => $row['id'],
-  //     'name' => $options
-  //   );
-  // }
-
-  return $options;
-}

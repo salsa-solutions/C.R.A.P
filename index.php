@@ -1,41 +1,31 @@
 <?php
-session_start();
 require_once('/var/www/html/config.php');
 require_once('/var/www/html/pages/page-index.php');
+require_once('/var/www/html/php/functions/permissons.php');
+
+// echo $session_id;
+session_start();
+print_r($_SESSION);
+// if (!isset($_SESSION['session_id']) && !isset($_SESSION['name']) && !isset($_SESSION['username']) && !isset($_SESSION['role']) && !isset($_SESSION['role_name']) && !isset($_SESSION['uid'])) {
+//     header('Location: ' . $login_page_url . '');
+// }
 
 
-if (!isset($_SESSION['userlogin'])) {
-  header("Location: /pages/login/login.php");
-}
+$name = $_SESSION['name'];
+$username = $_SESSION['username'];
+$role = $_SESSION['role'];
+$role_name = $_SESSION['role_name'];
+$uid = $_SESSION['uid'];
 
-
-$name = $_SESSION['userlogin'][0];
-$role = $_SESSION['userlogin'][1];
-$username = $_SESSION['userlogin'][2];
-$status = $_SESSION['userlogin'][3];
 $WEB_TITLE = 'Home';
 
 // to turn off a site uncomment the following line:
 //$_DEV = true;
-if (($role == 'Admin')) {
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
-}
-if ( ($role == 'Admin') || ($role == 'Manager')) {
-    
-    $managment = $managment_page;
-    $Admin_page= $admin_page;
-    $scheduling_page= $scheduling_page;
-	$approval = $approval_page;
-}
-else {
-    $managment = NULL;
-    $Admin_page= NULL;
-    $scheduling_page= NULL;
-    $approval = NULL;
-}
-// echo '<pre>'; print_r($_SESSION['userlogin']); echo '</pre>';
+
+
+
+setAccessPages($role);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -51,25 +41,25 @@ else {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="css/backround.css">
-    <link rel="stylesheet" href="css/home.css">
-    <link rel="stylesheet" href="css/nav.css">
+    <link rel="stylesheet" href="/css/backround.css">
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/nav.css">
     <title><?php echo $WEB_TITLE ?> | <?php echo $WEBSITE_NAME; ?></title>
 
 </head>
 
+<?php require("/var/www/html/php/template.php");
+echo $header ?>
+<?php if (($_DEV) && (($role == 'employee') || ($role == 'manager') || ($role == 'admin')) == '1') {
+    echo $out_of_service;
+} elseif (($role == 'pending')) {
+    echo $pending;
+} elseif (!isset($_SESSION['session_id'])) {
+    echo $fourohthree;
+} elseif(($role == 'employee') || ($role == 'manager') || ($role == 'admin')) {
 
-
-<?php require("/var/www/html/php/template.php"); echo $header ?>
-<?php if (($_DEV) && (($role == 'Server') || ($role == 'Manager') || ($role == 'Cook')) == '1') {
-        echo $out_of_service;
-    }elseif(($status == 'pending')){
-        echo $pending;
-    }else{
-
-    
-    ?>
-    <div class="container h-50 scroll">
+?>
+    <div class="container h-100 scroll">
         <div class="d-flex justify-content-left form-container">
             <div class="user_card">
                 <div class="d-flex justify-content-center p-5">
@@ -81,37 +71,37 @@ else {
                             <div class="input-group-append text">
                                 <p>Monday</p>
                             </div>
-                            <input type="text" placeholder="9am-4pm" name="monday-avil" id="monday-avil" class="form-control form-control-sm input_user " >
+                            <input type="text" placeholder="9am-4pm" name="monday-avil" id="monday-avil" class="form-control form-control-sm input_user ">
                         </div>
                         <div class="input-group mb-1">
                             <div class="input-group-append text">
                                 <p>Tuesday</p>
                             </div>
-                            <input type="text" placeholder="9am-4pm" name="tuesday-avil" id="tuesday-avil" class="form-control form-control-sm input_user " >
+                            <input type="text" placeholder="9am-4pm" name="tuesday-avil" id="tuesday-avil" class="form-control form-control-sm input_user ">
                         </div>
                         <div class="input-group mb-1">
                             <div class="input-group-append text">
                                 <p>Wednesday</p>
                             </div>
-                            <input type="text" placeholder="9am-4pm" name="wednesday-avil" id="wednesday-avil" class="form-control form-control-sm input_user " >
+                            <input type="text" placeholder="9am-4pm" name="wednesday-avil" id="wednesday-avil" class="form-control form-control-sm input_user ">
                         </div>
                         <div class="input-group mb-1">
                             <div class="input-group-append text">
                                 <p>Thursday</p>
                             </div>
-                            <input type="text" placeholder="9am-4pm" name="thursday-avil" id="thursday-avil" class="form-control form-control-sm input_user " >
+                            <input type="text" placeholder="9am-4pm" name="thursday-avil" id="thursday-avil" class="form-control form-control-sm input_user ">
                         </div>
                         <div class="input-group mb-1">
                             <div class="input-group-append text">
                                 <p>Friday</p>
                             </div>
-                            <input type="text" placeholder="9am-4pm" name="friday-avil" id="friday-avil" class="form-control form-control-sm input_user " >
+                            <input type="text" placeholder="9am-4pm" name="friday-avil" id="friday-avil" class="form-control form-control-sm input_user ">
                         </div>
                         <div class="input-group mb-1">
                             <div class="input-group-append text">
                                 <p>Saturday</p>
                             </div>
-                            <input type="text" placeholder="9am-4pm" name="saturday-avil" id="saturday-avil" class="form-control form-control-sm input_user " >
+                            <input type="text" placeholder="9am-4pm" name="saturday-avil" id="saturday-avil" class="form-control form-control-sm input_user ">
                         </div>
                         <div class="d-flex justify-content-center mt-3 submit-container">
                             <button type="button" name="button" id="submit_avil" class="btn submit_btn">submit</button>
@@ -129,37 +119,37 @@ else {
                             <div class="input-group-append text">
                                 <p>Monday</p>
                             </div>
-                            <input type="text" placeholder="9am-4pm" name="monday-pref" id="monday-pref" class="form-control form-control-sm input_user " >
+                            <input type="text" placeholder="9am-4pm" name="monday-pref" id="monday-pref" class="form-control form-control-sm input_user ">
                         </div>
                         <div class="input-group mb-1">
                             <div class="input-group-append text">
                                 <p>Tuesday</p>
                             </div>
-                            <input type="text" placeholder="9am-4pm" name="tuesday-pref" id="tuesday-pref" class="form-control form-control-sm input_user " >
+                            <input type="text" placeholder="9am-4pm" name="tuesday-pref" id="tuesday-pref" class="form-control form-control-sm input_user ">
                         </div>
                         <div class="input-group mb-1">
                             <div class="input-group-append text">
                                 <p>Wednesday</p>
                             </div>
-                            <input type="text" placeholder="9am-4pm" name="wednesday-pref" id="wednesday-pref" class="form-control form-control-sm input_user " >
+                            <input type="text" placeholder="9am-4pm" name="wednesday-pref" id="wednesday-pref" class="form-control form-control-sm input_user ">
                         </div>
                         <div class="input-group mb-1">
                             <div class="input-group-append text">
                                 <p>Thursday</p>
                             </div>
-                            <input type="text" placeholder="9am-4pm" name="thursday-pref" id="thursday-pref" class="form-control form-control-sm input_user " >
+                            <input type="text" placeholder="9am-4pm" name="thursday-pref" id="thursday-pref" class="form-control form-control-sm input_user ">
                         </div>
                         <div class="input-group mb-1">
                             <div class="input-group-append text">
                                 <p>Friday</p>
                             </div>
-                            <input type="text" placeholder="9am-4pm" name="friday-pref" id="friday-pref" class="form-control form-control-sm input_user " >
+                            <input type="text" placeholder="9am-4pm" name="friday-pref" id="friday-pref" class="form-control form-control-sm input_user ">
                         </div>
                         <div class="input-group mb-1">
                             <div class="input-group-append text">
                                 <p>Saturday</p>
                             </div>
-                            <input type="text" placeholder="9am-4pm" name="saturday" id="saturday-pref" class="form-control form-control-sm input_user " >
+                            <input type="text" placeholder="9am-4pm" name="saturday" id="saturday-pref" class="form-control form-control-sm input_user ">
                         </div>
                         <!-- <div class="input-group mb-1">
                             <input type="number" placeholder="Hours" name="hours" id="hours" class="form-control form-control-sm input_user" min=1 max=40 >
@@ -177,12 +167,12 @@ else {
                 <form action="">
                     <div class="d-flex justify-content-center form-container">
                         <div class=" mb-1">
-                            <textarea type="text" name="textarea" id="message" cols="30" rows="10" placeholder="I need so and so off because... "   class="form-control form-control-sm input_user " required ></textarea>    
-                        
-                        
-                        <!-- <text type="text" placeholder="I need so and so off because... " name="request" id="message"  class="form-control form-control-sm input_user input-size"  > -->
+                            <textarea type="text" name="textarea" id="message" cols="30" rows="10" placeholder="I need so and so off because... " class="form-control form-control-sm input_user " required></textarea>
+
+
+                            <!-- <text type="text" placeholder="I need so and so off because... " name="request" id="message"  class="form-control form-control-sm input_user input-size"  > -->
                         </div>
-                        
+
                     </div>
                     <div class="d-flex justify-content-center mt-3 sumbit-container">
                         <button type="button" name="button" id="submit_sr" class="btn submit_btn">sumbit</button>
@@ -214,7 +204,7 @@ else {
                     var friday_avil = $('#friday-avil').val();
                     var saturday_avil = $('#saturday-avil').val();
                     $.ajax({
-                        url: '/php/db/handling/add_avil.php',
+                        url: '/php/db_handling/handling/add_avil.php',
                         type: 'POST',
                         data: {
                             name: name,
@@ -264,7 +254,7 @@ else {
                     var hours = $('#hours').val();
                     // console.log(hours);
                     $.ajax({
-                        url: '/php/db/handling/add_pref.php',
+                        url: '/php/db_handling/handling/add_pref.php',
                         type: 'POST',
                         data: {
                             name: name,
@@ -302,11 +292,11 @@ else {
 
                 var valid = this.form.checkValidity();
 
-                if (valid) { 
+                if (valid) {
                     var name = "<?php echo $name; ?>";
                     var message = $('#message').val();
                     $.ajax({
-                        url: '/php/db/handling/add_sr.php',
+                        url: '/php/db_handling/handling/add_sr.php',
                         type: 'POST',
                         data: {
                             name: name,
@@ -330,13 +320,12 @@ else {
                 }
             });
         });
-
     </script>
 
-    <?php
+<?php
 }
+
 
 include_once("php/template.php");
 echo $footer;
 ?>
-

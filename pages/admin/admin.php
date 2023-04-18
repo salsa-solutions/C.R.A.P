@@ -1,43 +1,34 @@
 <?php
 
-session_start();
+
 require_once('/var/www/html/config.php');
 require_once('/var/www/html/pages/page-index.php');
+require_once('/var/www/html/php/functions/permissons.php');
+require_once('/var/www/html/php/functions/userPermissions.php');
+require_once('/var/www/html/php/functions/userId.php');
 // to turn off a page uncomment the following line:
 // $_DEV = true;
 
-if (!isset($_SESSION['userlogin'])) {
-    header('Location: login.php');
+session_start();
+$session_id = session_id();
+if (!isset($session_id) || !isset($_SESSION['name']) && !isset($_SESSION['username']) && !isset($_SESSION['role']) && !isset($_SESSION['role_name']) && !isset($_SESSION['uid'])) {
+    header('Location: ' . $login_page_url . '');
 }
 
-$name = $_SESSION['userlogin'][0];
-$role = $_SESSION['userlogin'][1];
-$username = $_SESSION['userlogin'][2];
-$status = $_SESSION['userlogin'][3];
+$name = $_SESSION['name'];
+$username = $_SESSION['username'];
+$role = $_SESSION['role'];
+$role_name = $_SESSION['role_name'];
+$uid = $_SESSION['uid'];
+
 $WEB_TITLE = 'Manager Home';
 
 
-if ( ($role == 'Admin') || ($role == 'Manager')) {
-    
-    $managment = $managment_page;
-    $Admin_page= $admin_page;
-    $scheduling_page= $scheduling_page;
-	$approval = $approval_page;
-}
-else {
-    $managment = NULL;
-    $Admin_page= NULL;
-    $scheduling_page= NULL;
-    $approval = NULL;
-}
-if (($role == 'Admin')) {
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
-} elseif ($role == 'Manager') {
-} else {
-    header("Location: index.php");
-}
+setAccessPages($role);
+
+// if(($role != 'Manager' || $role != 'Admin')){
+//     header("Location: /index.php");
+// }
 
 ?>
 
@@ -66,184 +57,140 @@ if (($role == 'Admin')) {
 </head>
 
 <body>
+
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .availability-box {
+            float: left;
+            width: 48%;
+            margin-right: 2%;
+        }
+
+        .wanted-days-box {
+            float: right;
+            width: 48%;
+        }
+    </style>
+
+
+    <!-- <?php echo $userId = getUserId($db, $username); ?> -->
     <?php require("/var/www/html/php/template.php");
     echo $header ?>
-    <?php if (($_DEV) && (($role == 'Server') || ($role == 'Manager') || ($role == 'Cook')) == '1') {
+    <?php if (($_DEV) && (($role == 'employee') || ($role == 'manager')) == '1') {
         echo $out_of_service;
-    } elseif (($role == 'Server')) {
+    } elseif (($role == 'employee')) {
         echo $fourohthree;
-    } elseif (($status == 'pending')) {
+    } elseif (($role == 'pending')) {
         echo $pending;
     } else {
     ?>
 
-        <div class="message_container">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h1>Messages</h1>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="table-responsive">
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Date</th>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Message</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    // ini_set('display_errors', 1);
-                                    // ini_set('display_startup_errors', 1);
-                                    // error_reporting(E_ALL);
+        <h1>Manager Portal</h1>
 
-                                    include('/var/www/html/config.php');
-                                    $result = $db->prepare("SELECT date, name, message FROM sr ORDER BY date DESC");
-                                    $result->execute();
-                                    for ($i = 0; $row = $result->fetch(); $i++) {
-                                    ?>
+        <h2>Messages</h2>
+        <?php
+        // Connect to the database
+        $pdo = $db;
 
-                                        <td><?php echo $row['date']; ?></td>
-                                        <td><?php echo $row['name']; ?></td>
-                                        <td><?php echo $row['message']; ?></td>
-                                </tbody>
-                            <?php
-                                    }
-                                    if ($i == 0) {
-                                        echo '<td colspan="8">No new messages</td>';
-                                    }
-                            ?>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        // Retrieve messages from the database
+        $stmt = $pdo->query("SELECT * FROM messages ORDER BY date DESC");
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            echo "<p><strong>{$row['name']}</strong> ({$row['date']}): {$row['message']}</p>";
+        }
+        if ($stmt->rowCount() == 0) {
+            echo "<p>No messages</p>";
+        }
+        ?>
+        <br>
+        <br>
+        <br>
+        <div class="availability-box">
+            <h2>Availability</h2>
+            <table>
+                <tr>
+                    <th>Date</th>
+                    <th>Name</th>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                    <th>Saturday</th>
+                </tr>
+                <?php
+                // Retrieve availability from the database
+                $stmt = $pdo->query("SELECT * FROM availability ORDER BY date DESC");
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    echo "<tr>";
+                    echo "<td>{$row['date']}</td>";
+                    echo "<td>{$row['name']}</td>";
+                    echo "<td>{$row['monday']}</td>";
+                    echo "<td>{$row['tuesday']}</td>";
+                    echo "<td>{$row['wednesday']}</td>";
+                    echo "<td>{$row['thursday']}</td>";
+                    echo "<td>{$row['friday']}</td>";
+                    echo "<td>{$row['saturday']}</td>";
+                    echo "</tr>";
+                }
+                if ($stmt->rowCount() == 0) {
+                    echo "<tr><td colspan=\"8\">No availability found</td></tr>";
+                }
+                ?>
+            </table>
         </div>
-        <div class="sched-container">
-        <div class="avil_schedule_container">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h1>Availability</h1>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-15">
-                        <div class="table-responsive">
-                            <table class="table table-striped ">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Date</th>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Monday</th>
-                                        <th scope="col">Tuesday</th>
-                                        <th scope="col">Wednesday</th>
-                                        <th scope="col">Thursday</th>
-                                        <th scope="col">Friday</th>
-                                        <th scope="col">Saturday</th>
 
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    // ini_set('display_errors', 1);
-                                    // ini_set('display_startup_errors', 1);
-                                    // error_reporting(E_ALL);
+        <div class="wanted-days-box">
+            <h2>Wanted Days</h2>
+            <table>
+                <tr>
+                    <th>Date</th>
+                    <th>Name</th>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                    <th>Saturday</th>
+                </tr>
+                <?php
+                // Retrieve availability from the database
+                $stmt = $pdo->query("SELECT * FROM wanted_days ORDER BY date DESC");
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    echo "<tr>";
+                    echo "<td>{$row['date']}</td>";
+                    echo "<td>{$row['name']}</td>";
+                    echo "<td>{$row['monday']}</td>";
+                    echo "<td>{$row['tuesday']}</td>";
+                    echo "<td>{$row['wednesday']}</td>";
+                    echo "<td>{$row['thursday']}</td>";
+                    echo "<td>{$row['friday']}</td>";
+                    echo "<td>{$row['saturday']}</td>";
+                    echo "</tr>";
+                }
+                if ($stmt->rowCount() == 0) {
+                    echo "<tr><td colspan=\"8\">No prefered days found</td></tr>";
+                }
+                ?>
+            </table>
 
-                                    include('/var/www/html/config.php');
-                                    $result = $db->prepare("SELECT date, name, monday, tuesday, wednesday, thursday, friday, saturday FROM avil_day ORDER BY date DESC");
-                                    $result->execute();
-                                    for ($i = 0; $row = $result->fetch(); $i++) {
-                                    ?>
-
-                                        <td><?php echo $row['date']; ?></td>
-                                        <td><?php echo $row['name']; ?></td>
-                                        <td><?php echo $row['monday']; ?></td>
-                                        <td><?php echo $row['tuesday']; ?></td>
-                                        <td><?php echo $row['wednesday']; ?></td>
-                                        <td><?php echo $row['thursday']; ?></td>
-                                        <td><?php echo $row['friday']; ?></td>
-                                        <td><?php echo $row['saturday']; ?></td>
-                                </tbody>
-                            <?php
-                                    }
-                                    if ($i == 0) {
-                                        echo '<td colspan="8">No schedules</td>';
-                                    }
-                            ?>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="pref_schedule_container">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-15">
-                        <h1>Wanted days</h1>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-15">
-                        <div class="table-responsive">
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Date</th>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Monday</th>
-                                        <th scope="col">Tuesday</th>
-                                        <th scope="col">Wednesday</th>
-                                        <th scope="col">Thursday</th>
-                                        <th scope="col">Friday</th>
-                                        <th scope="col">Saturday</th>
-
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    // ini_set('display_errors', 1);
-                                    // ini_set('display_startup_errors', 1);
-                                    // error_reporting(E_ALL);
-
-                                    include('/var/www/html/config.php');
-                                    $result = $db->prepare("SELECT date, name, monday, tuesday, wednesday, thursday, friday, saturday FROM pref_day ORDER BY date DESC");
-                                    $result->execute();
-                                    for ($i = 0; $row = $result->fetch(); $i++) {
-                                    ?>
-
-                                        <td><?php echo $row['date']; ?></td>
-                                        <td><?php echo $row['name']; ?></td>
-                                        <td><?php echo $row['monday']; ?></td>
-                                        <td><?php echo $row['tuesday']; ?></td>
-                                        <td><?php echo $row['wednesday']; ?></td>
-                                        <td><?php echo $row['thursday']; ?></td>
-                                        <td><?php echo $row['friday']; ?></td>
-                                        <td><?php echo $row['saturday']; ?></td>
-                                </tbody>
-                            <?php
-                                    }
-                                    if ($i == 0) {
-                                        echo '<td colspan="8">No schedules</td>';
-                                    }
-                            ?>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </div>
-        
-        <!-- menu that approves users -->
-
-    <?php
+        <?php
     }
     require("/var/www/html/php/template.php");
     echo $footer;
-    ?>
+        ?>

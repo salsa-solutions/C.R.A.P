@@ -3,9 +3,10 @@ session_start();
 require_once('/var/www/html/config.php');
 require_once('/var/www/html/pages/page-index.php');
 require_once('/var/www/html/php/functions/select.php');
+ require_once('/var/www/html/php/functions/permissons.php');
 
-if (!isset($_SESSION['userlogin'])) {
-  header("Location: /pages/login/login.php");
+if (!isset($_SESSION['name']) || !isset($_SESSION['username']) || !isset($_SESSION['role']) || !isset($_SESSION['role_name']) || !isset($_SESSION['uid'])) {
+  header('Location: ' . $login_page_url . '');
 }
 
 if (isset($_GET['logout'])) {
@@ -13,49 +14,20 @@ if (isset($_GET['logout'])) {
   unset($_SESSION);
   header("Location: /pages/login/login.php");
 }
-$name = $_SESSION['userlogin'][0];
-$role = $_SESSION['userlogin'][1];
-$username = $_SESSION['userlogin'][2];
-$status = $_SESSION['userlogin'][3];
+$name = $_SESSION['name']; 
+      $username = $_SESSION['username'];
+      $role = $_SESSION['role'];
+      $role_name = $_SESSION['role_name'];
+      $uid = $_SESSION['uid'];
+ 
 $WEB_TITLE = 'Settings';
+$account = getUsersDropdown($db)['dropdown'];
+$account_id = getUsersDropdown($db)['uid'];
+$account_role = getUsersDropdown($db)['role'];
 
 // to turn off a site uncomment the following line:
 //$_DEV = true;
-function get_pages_for_role($role)
-{
-  global $managment_page, $admin_page, $scheduling_page, $approval_page;
-  $pages = array(
-    'managment' => NULL,
-    'admin_page' => NULL,
-    'scheduling_page' => NULL,
-    'approval_page' => NULL
-  );
-
-  if ($role == 'Admin') {
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
-
-    $pages['managment'] = $managment_page;
-    $pages['admin_page'] = $admin_page;
-    $pages['scheduling_page'] = $scheduling_page;
-    $pages['approval_page'] = $approval_page;
-  } else if ($role == 'Manager') {
-    $pages['managment'] = $managment_page;
-    $pages['scheduling_page'] = $scheduling_page;
-    $pages['approval_page'] = $approval_page;
-  } elseif ($role == 'Server' || $role == 'Cook') {
-    $pages = array(
-      'managment' => NULL,
-      'admin_page' => NULL,
-      'scheduling_page' => NULL,
-      'approval_page' => NULL
-    );
-  }
-
-  return $pages;
-}
-get_pages_for_role($role);
+setAccessPages($role);
 
 // echo '<pre>'; print_r($_SESSION['userlogin']); echo '</pre>';
 ?>
@@ -83,7 +55,7 @@ get_pages_for_role($role);
 echo $header ?>
 <?php if (($_DEV) && (($role == 'Server') || ($role == 'Manager') || ($role == 'Cook')) == '1') {
   echo $out_of_service;
-} elseif (($status == 'pending')) {
+} elseif (($role == 'pending')) {
   echo $pending;
 } else {
 
@@ -111,30 +83,19 @@ echo $header ?>
       <br>
     </div>
     <?php
-    if ($role == 'Admin' || $role == 'Manager') {
+    if ($role == 'Admin' || $role == 'Manager' || $role == 'Dev') {
 
     ?>
       <br>
       <div class="settings">
         <h2>Manage Users</h2>
         <h3>Update User Information</h3>
-        <?php $account = getUsers($db, $role); ?>
+        <?php $user_dropdown = getUsersDropdown($db)['dropdown']; ?>
         <form>
           <label for="user">Select User:</label>
           <td id="user_selection">
             <label for="user"></label>
-            <select name="user_id">
-              <?php
-              echo $account;
-              // foreach ($account as $user){
-              //   // echo $user['id'];
-                
-              // }
-                
-              
-              
-              ?>
-            </select>
+            <?php echo $user_dropdown; ?>
           </td>
           <label for="username">Username:</label>
           <input type="text" id="username" name="username">
@@ -146,7 +107,8 @@ echo $header ?>
           <td id="role_selection">
             <label for="role"></label>
             <select id="role" name="role">
-              <?php echo getRoles($db, $role); ?>
+              <?php //echo getRoles($db, $role); 
+              ?>
             </select>
           </td>
           <br>
@@ -156,29 +118,19 @@ echo $header ?>
             <option value="inactive">Inactive</option>
           </select>
           <br>
-          <button class="button" type="submit" id="<?php echo $account?>_update_user">Save Changes</button>
+          <button class="button" type="submit" id="update_user">Save Changes</button>
         </form>
-
-        <?php echo '<pre>'; print_r($account); echo '</pre>'; ?>
         <script>
           $(document).ready(function() {
-            // Listen for changes in the select dropdown
-            $('#user-select').change(function() {
+            // When the user selection changes
+            $('select[name="user_id"]').on('change', function() {
               // Get the selected user ID
               var userId = $(this).val();
-
-              // Make an AJAX request to a PHP script that will return the user information
-              $.ajax({
-                url: 'get_user_info.php',
-                type: 'POST',
-                data: {
-                  user_id: userId
-                },
-                success: function(response) {
-                  // Display the user information in the container element
-                  $('#user-info').html(response);
-                }
-              });
+              // Get the selected user's full name from the $ids array
+              var userName = "<?php echo json_encode(getUsersDropdown($db)['uid']); ?>";
+              userName = JSON.parse(userName)[userId];
+              // Set the ID of the submit button to the selected user's full name
+              $('#update_user').attr('id', userName + '_update_user');
             });
           });
         </script>
@@ -203,7 +155,8 @@ echo $header ?>
           <td id="role_selection">
             <label for="role"></label>
             <select id="role" name="role">
-              <?php echo getRoles($db, $role); ?>
+              <?php //echo getRoles($db, $role); 
+              ?>
             </select>
           </td>
           <br>

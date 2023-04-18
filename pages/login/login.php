@@ -3,8 +3,8 @@ require_once '/var/www/html/config.php';
 require_once '/var/www/html/pages/page-index.php';
 session_start();
 
-if (isset($_SESSION['userlogin'])) {
-    header("Location: /index.php");
+if (isset($session_id) && isset($_SESSION['name']) && isset($_SESSION['username']) && isset($_SESSION['role']) && isset($_SESSION['role_name']) && isset($_SESSION['uid'])) {
+    header('Location: ' . $home_page_url . '');
 }
 $WEB_TITLE = 'Login';
 
@@ -26,7 +26,13 @@ $WEB_TITLE = 'Login';
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="
+    https://cdn.jsdelivr.net/npm/notiflix/dist/notiflix-3.2.5.min.js
+"></script>
+    <link href="
+https://cdn.jsdelivr.net/npm/notiflix/dist/notiflix-3.2.5.min.css
+" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/css/backround.css">
     <link rel="stylesheet" href="/css/login-signup.css">
@@ -110,26 +116,68 @@ $WEB_TITLE = 'Login';
                             username: username,
                             password: password
                         },
+
                         success: function(data) {
-                            // alert(data);
-                            if ($.trim(data) === "1") {
-                                setTimeout(' window.location.href =  "<?php $index_page;?>"', 1000);
-                            } else {
-                                Swal.fire(
-                                    'Errors',
-                                    data,
-                                    'error'
-                                )
+                            if ($.trim(data) === "100") {
+                                Notiflix.Report.warning(
+                                    'User doesnt exist',
+                                    'User not found. Did you sign up?',
+                                    'Okay',
+                                );
+                            }
+
+                            if (data === "200") {
+                                Notiflix.Report.warning(
+                                    'Mismatched password',
+                                    'Wrong password, I really hope you didnt forget it.',
+                                    'Okay',
+                                );
+                            }
+                            if (data === "300") {
+                                console.log(data);
+                                setTimeout(' window.location.href =  <?php echo $home_page_url; ?>/', 1000);
+                            }
+                            if (data === "400") {
+                                Notiflix.Report.failure(
+                                    'Critical Error!',
+                                    'System error. Please contact support! <br/> Error code: ' + data,
+                                    'Okay',
+                                );
                             }
                         },
                         error: function(data) {
-                            Swal.fire(
-                                'Errors',
-                                'well... shit',
-                                'error'
-                            )
+                            function getStatusCode(url, callback) {
+                                var xhr = new XMLHttpRequest();
+                                xhr.open('GET', url, true);
+                                xhr.onload = function() {
+                                    callback(xhr.status);
+                                };
+                                xhr.send();
+                            }
+
+                            // Example usage:
+                            getStatusCode('/php/login_registration/jslogin.php', function(statusCode) {
+                                var message = 'There was an error while processing your request.';
+                                message += '\nURL: ' + '/php/login_registration/jslogin.php';
+                                message += '\nStatus code: ' + statusCode;
+
+                                // Send the error message to a SQL database using PHP
+                                var xmlhttp = new XMLHttpRequest();
+                                xmlhttp.onreadystatechange = function() {
+                                    if (this.readyState == 4 && this.status == 200) {
+                                        console.log('Error message sent to SQL database.');
+                                    }
+                                };
+                                xmlhttp.open('GET', '/php/error_handler.php?message=' + encodeURIComponent(message), true);
+                                xmlhttp.send();
+
+                                // Display the error message to the user
+                                Notiflix.Report.failure('System error. Contact support!', message, 'Okay');
+                            });
 
                         }
+
+
                     });
                 }
             });

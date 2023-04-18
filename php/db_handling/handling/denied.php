@@ -9,7 +9,7 @@ error_reporting(E_ALL);
 
 <?php
   if(isset($_POST)){
-    $id                = $_POST['id'];
+    $id                = $_POST['uid'];
 
     $sql = "DELETE FROM users WHERE id='$id'";
     $stmtinsert = $db->prepare($sql);

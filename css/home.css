@@ -35,8 +35,7 @@ html {
     position: relative;
     min-height: 20vh;
     padding-bottom: 50px;
-    min-height: calc(100vh - 145px);
-    /* adjust this value to match the height of your footer */
+    /* min-height: calc(100vh - 145px); */
 }
 
 footer {
@@ -49,16 +48,28 @@ footer {
     line-height: 50px;
     max-width: 100%;
     /* margin: 0%; */
-    /* adjust this value as needed */
 }
 
 footer p {
-    /* position: relative; */
     color: white;
     padding: 0px;
     margin: 0px;
     line-height: 1.2;
-    /* adjust this value as needed */
+}
+
+
+/* Option 1 */
+
+
+/* .f-container {
+    padding-top: 20%;
+} */
+
+
+/* Option 2 */
+
+footer {
+    top: 145px;
 }
 
 .user_card {

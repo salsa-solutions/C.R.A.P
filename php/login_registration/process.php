@@ -11,20 +11,35 @@
     // echo '<pre>'; print_r($_POST); echo '</pre>';
     require_once('/var/www/html/config.php');
     if($_DEV_DB){
-        echo 'Logging in and sign up are disabled due to maintenance';
+        echo 'sign up are disabled due to maintenance';
     }else{
         if(isset($_POST)){
             $date              = $currentDate->format('Y-m-d H:i:s');
-            $firstname         = $_POST['firstname'];
-            $lastname          = $_POST['lastname'];
+            $name              = $_POST['firstname'] . ' ' . $_POST['lastname'];
             $email             = $_POST['email'];
+            $phone             = $_POST['phone'];
             $username          = $_POST['username'];
-            $password          = sha1($_POST['password']);
-            $approved          = 'pending';
+            $password          = password_hash($_POST['password'], PASSWORD_DEFAULT);
+            // if first user is created, make them admin
+            $sql_make_admin = "SELECT * FROM users";
+            $stmt = $db->prepare($sql_make_admin);
+            $stmt->execute();
+            $result = $stmt->fetchAll();
+            if (count($result) == 0) {
+                $role_name         = 'Admin';
+                $role              = 'admin';
+                $active            = 'true';
+            }else{
+                $role_name         = 'Pending';
+                $role              = 'pending';
+                $active            = 'true';
+            }
 
-            $sql = "INSERT INTO users (date, firstname, lastname, email, username, password, approved ) VALUES(?,?,?,?,?,?,?)";
+            $sql = "INSERT INTO users (registration_date, role, role_name, name, email, phone, username, password, active) VALUES(?,?,?,?,?,?,?,?,?)";
+
+
             $stmtinsert = $db->prepare($sql);
-            $result = $stmtinsert->execute([$date, $firstname, $lastname, $email, $username, $password, $approved]);
+            $result = $stmtinsert->execute([$date, $role, $role_name, $name, $email, $phone, $username, $password, $active]);
             if ($result) {
                 echo 'Successfully saved.';
             } else {

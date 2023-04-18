@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 24, 2023 at 02:53 AM
+-- Generation Time: Apr 17, 2023 at 10:00 PM
 -- Server version: 10.5.18-MariaDB-0+deb11u1
 -- PHP Version: 7.4.33
 
@@ -18,16 +18,16 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `gs_useraccounts`
+-- Database: `churro_useraccounts`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `avil_day`
+-- Table structure for table `availability`
 --
 
-CREATE TABLE `avil_day` (
+CREATE TABLE `availability` (
   `id` int(11) NOT NULL,
   `approved` varchar(100) NOT NULL DEFAULT 'pending',
   `date` date NOT NULL,
@@ -65,10 +65,111 @@ CREATE TABLE `current_schedule` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pref_day`
+-- Table structure for table `error_logs`
 --
 
-CREATE TABLE `pref_day` (
+CREATE TABLE `error_logs` (
+  `id` int(100) NOT NULL,
+  `date` timestamp(6) NOT NULL DEFAULT current_timestamp(6) ON UPDATE current_timestamp(6),
+  `name` varchar(25) NOT NULL,
+  `ip` text NOT NULL,
+  `error_code` varchar(1000) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `messages`
+--
+
+CREATE TABLE `messages` (
+  `id` int(11) NOT NULL,
+  `date` varchar(100) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `message` mediumtext NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `role_name`
+--
+
+CREATE TABLE `role_name` (
+  `id` int(100) NOT NULL,
+  `role_name` varchar(100) NOT NULL,
+  `created_date` varchar(100) NOT NULL,
+  `created_by` varchar(40) NOT NULL,
+  `role_permissions` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `site_settings`
+--
+
+CREATE TABLE `site_settings` (
+  `site_name` varchar(100) NOT NULL,
+  `theme` varchar(10) NOT NULL,
+  `icon_path` int(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `successful_logins`
+--
+
+CREATE TABLE `successful_logins` (
+  `id` int(11) NOT NULL,
+  `date` text NOT NULL,
+  `username` mediumtext NOT NULL,
+  `name` mediumtext NOT NULL,
+  `ip_address` mediumtext NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `unsuccessful_logins`
+--
+
+CREATE TABLE `unsuccessful_logins` (
+  `id` int(11) NOT NULL,
+  `date` text NOT NULL,
+  `username` mediumtext NOT NULL,
+  `name` mediumtext NOT NULL,
+  `ip_address` mediumtext NOT NULL,
+  `reason` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `uid` int(11) NOT NULL,
+  `registration_date` varchar(100) NOT NULL,
+  `role` varchar(1000) NOT NULL,
+  `role_name` varchar(100) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `phone` varchar(20) NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `active` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wanted_days`
+--
+
+CREATE TABLE `wanted_days` (
   `id` int(11) NOT NULL,
   `date` varchar(100) NOT NULL,
   `name` varchar(100) NOT NULL,
@@ -82,91 +183,14 @@ CREATE TABLE `pref_day` (
   `hours` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `sp`
---
-
-CREATE TABLE `sp` (
-  `id` int(11) NOT NULL,
-  `date` varchar(100) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `message` mediumtext NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `succesful_logins`
---
-
-CREATE TABLE `succesful_logins` (
-  `id` int(11) NOT NULL,
-  `date` text NOT NULL,
-  `username` mediumtext NOT NULL,
-  `name` mediumtext NOT NULL,
-  `ip` mediumtext NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `succesful_logins`
---
-
-INSERT INTO `succesful_logins` (`id`, `date`, `username`, `name`, `ip`) VALUES
-(1, '2023-03-24 01:40:46', 'tibthink', 'ben tsardoulias', '192.168.1.1'),
-(2, '2023-03-24 02:07:46', 'test', 'jane doe', '192.168.1.1'),
-(3, '2023-03-24 02:27:37', 'test', 'jane doe', '192.168.1.1'),
-(4, '2023-03-24 02:27:55', 'test', 'jane doe', '192.168.1.1'),
-(5, '2023-03-24 02:28:05', 'tibthink', 'ben tsardoulias', '192.168.1.1');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `unsuccesful_logins`
---
-
-CREATE TABLE `unsuccesful_logins` (
-  `id` int(11) NOT NULL,
-  `date` text NOT NULL,
-  `username` mediumtext NOT NULL,
-  `name` mediumtext NOT NULL,
-  `ip` mediumtext NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `users`
---
-
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
-  `date` varchar(100) NOT NULL,
-  `role` varchar(1000) NOT NULL DEFAULT 'pending',
-  `firstname` varchar(100) NOT NULL,
-  `lastname` varchar(100) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `username` varchar(100) NOT NULL,
-  `password` varchar(100) NOT NULL,
-  `approved` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id`, `date`, `role`, `firstname`, `lastname`, `email`, `username`, `password`, `approved`) VALUES
-(1, '2023-03-22 23:42:43', 'Admin', 'ben', 'tsardoulias', 'bent23jam@gmail.com', 'tibthink', '67f27f4a07cfac964d2db9fef1f8f94c2b4d5a04', 'approved');
-
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `avil_day`
+-- Indexes for table `availability`
 --
-ALTER TABLE `avil_day`
+ALTER TABLE `availability`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -176,33 +200,39 @@ ALTER TABLE `current_schedule`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `pref_day`
+-- Indexes for table `error_logs`
 --
-ALTER TABLE `pref_day`
+ALTER TABLE `error_logs`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `sp`
+-- Indexes for table `messages`
 --
-ALTER TABLE `sp`
+ALTER TABLE `messages`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `succesful_logins`
+-- Indexes for table `successful_logins`
 --
-ALTER TABLE `succesful_logins`
+ALTER TABLE `successful_logins`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `unsuccesful_logins`
+-- Indexes for table `unsuccessful_logins`
 --
-ALTER TABLE `unsuccesful_logins`
+ALTER TABLE `unsuccessful_logins`
   ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
+  ADD PRIMARY KEY (`uid`);
+
+--
+-- Indexes for table `wanted_days`
+--
+ALTER TABLE `wanted_days`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -210,9 +240,9 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT for table `avil_day`
+-- AUTO_INCREMENT for table `availability`
 --
-ALTER TABLE `avil_day`
+ALTER TABLE `availability`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -222,44 +252,40 @@ ALTER TABLE `current_schedule`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `pref_day`
+-- AUTO_INCREMENT for table `error_logs`
 --
-ALTER TABLE `pref_day`
+ALTER TABLE `error_logs`
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `messages`
+--
+ALTER TABLE `messages`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `sp`
+-- AUTO_INCREMENT for table `successful_logins`
 --
-ALTER TABLE `sp`
+ALTER TABLE `successful_logins`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `succesful_logins`
+-- AUTO_INCREMENT for table `unsuccessful_logins`
 --
-ALTER TABLE `succesful_logins`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `unsuccesful_logins`
---
-ALTER TABLE `unsuccesful_logins`
+ALTER TABLE `unsuccessful_logins`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT;
 
-DELIMITER $$
 --
--- Events
+-- AUTO_INCREMENT for table `wanted_days`
 --
-CREATE DEFINER=`tibthink`@`localhost` EVENT `flush avil_day` ON SCHEDULE EVERY 1 WEEK STARTS '2023-03-26 00:00:00' ON COMPLETION NOT PRESERVE ENABLE COMMENT 'flushes avil_day from the table every week' DO DELETE FROM avil_day$$
-
-CREATE DEFINER=`tibthink`@`localhost` EVENT `flush pref_day` ON SCHEDULE EVERY 1 WEEK STARTS '2023-03-26 00:00:00' ON COMPLETION NOT PRESERVE ENABLE COMMENT 'flushes avil_day from the table every week' DO DELETE FROM pref_day$$
-
-DELIMITER ;
+ALTER TABLE `wanted_days`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
