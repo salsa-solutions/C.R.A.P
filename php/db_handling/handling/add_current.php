@@ -34,6 +34,16 @@ if (isset($_POST)) {
   } else {
     echo 'There were erros while saving the data.';
   }
+
+  $sql = "INSERT INTO past_schedule (approved, status, date, name, username, monday, tuesday, wednesday, thursday, friday, saturday) VALUES(  ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?)";
+  $stmtinsert = $log_db->prepare($sql);
+  // print_r($stmtinsert) ;
+  $result = $stmtinsert->execute([$approved, $status, $date, $name, $username, $monday, $tuesday, $wednesday, $thursday, $friday, $saturday]);
+  if ($result) {
+    echo 'Successfully saved.';
+  } else {
+    echo 'There were erros while saving the data.';
+  }
 } else {
   echo "No data";
 }

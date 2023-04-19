@@ -6,7 +6,7 @@ require_once('/var/www/html/php/functions/permissons.php');
 // echo $session_id;
 session_start();
 print_r($_SESSION);
-// if (!isset($_SESSION['session_id']) && !isset($_SESSION['name']) && !isset($_SESSION['username']) && !isset($_SESSION['role']) && !isset($_SESSION['role_name']) && !isset($_SESSION['uid'])) {
+// if (!isset($_SESSION['session_id']) && !isset($_SESSION['name']) && !isset($_SESSION['username']) && !isset($_SESSION['role']) && !isset($_SESSION['role_name']) && !isset($_SESSION['uuid'])) {
 //     header('Location: ' . $login_page_url . '');
 // }
 
@@ -15,7 +15,7 @@ $name = $_SESSION['name'];
 $username = $_SESSION['username'];
 $role = $_SESSION['role'];
 $role_name = $_SESSION['role_name'];
-$uid = $_SESSION['uid'];
+$uid = $_SESSION['uuid'];
 
 $WEB_TITLE = 'Home';
 
@@ -39,7 +39,12 @@ setAccessPages($role);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="
+    https://cdn.jsdelivr.net/npm/notiflix/dist/notiflix-3.2.5.min.js
+"></script>
+    <link href="
+https://cdn.jsdelivr.net/npm/notiflix/dist/notiflix-3.2.5.min.css
+" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/css/backround.css">
     <link rel="stylesheet" href="/css/home.css">
@@ -57,7 +62,7 @@ if ($_DEV && in_array($role, array('employee', 'manager', 'admin'))) {
 } elseif (!isset($_SESSION['session_id'])) {
     echo $fourohthree;
 } elseif (in_array($role, array('employee', 'manager', 'admin', 'dev'))) {
-    
+
 
 ?>
     <div class="container h-100 scroll">
@@ -218,19 +223,10 @@ if ($_DEV && in_array($role, array('employee', 'manager', 'admin'))) {
                             saturday: saturday_avil
                         },
                         success: function(data) {
-                            Swal.fire(
-                                'Successful',
-                                'Your request has been submited',
-                                'success'
-                            )
+                            Notiflix.Notify.success('Your request has been submited');
                         },
                         error: function(data) {
-                            Swal.fire(
-                                'Errors',
-                                'Whoops!',
-                                'error'
-                            )
-
+                            Notiflix.Notify.failure('Somthings not right, Error code:' + data);
                         }
                     });
                 }
@@ -252,7 +248,7 @@ if ($_DEV && in_array($role, array('employee', 'manager', 'admin'))) {
                     var thursday_pref = $('#thursday-pref').val();
                     var friday_pref = $('#friday-pref').val();
                     var saturday_pref = $('#saturday-pref').val();
-                    var hours = $('#hours').val();
+                    // var hours = $('#hours').val();
                     // console.log(hours);
                     $.ajax({
                         url: '/php/db_handling/handling/add_pref.php',
@@ -266,21 +262,19 @@ if ($_DEV && in_array($role, array('employee', 'manager', 'admin'))) {
                             thursday: thursday_pref,
                             friday: friday_pref,
                             saturday: saturday_pref,
-                            hours: hours
+                            // hours: hours
                         },
                         success: function(data) {
-                            Swal.fire(
-                                'Successful',
-                                'Your request has been submited',
-                                'success'
-                            )
+                            if ($.trim(data) === "100") {
+
+                                Notiflix.Notify.success('Your request has been submited');
+                            }
+                            if ($.trim(data) === "200") {
+                                Notiflix.Notify.failure('There were erros while saving the data, Error:' + data);
+                            }
                         },
                         error: function(data) {
-                            Swal.fire(
-                                'Errors',
-                                'Whoops!',
-                                'error'
-                            )
+                            Notiflix.Notify.failure('Somthings not right, Error:' + data);
                         }
                     });
                 }
@@ -304,18 +298,10 @@ if ($_DEV && in_array($role, array('employee', 'manager', 'admin'))) {
                             message: message
                         },
                         success: function(data) {
-                            Swal.fire(
-                                'Successful',
-                                'Your request has been submited',
-                                'success'
-                            )
+                            Notiflix.Notify.success('Your request has been submited');
                         },
                         error: function(data) {
-                            Swal.fire(
-                                'Errors',
-                                'Whoops!',
-                                'error'
-                            )
+                            Notiflix.Notify.failure('Somthings not right, Error code:' + data);
                         }
                     });
                 }
@@ -325,7 +311,6 @@ if ($_DEV && in_array($role, array('employee', 'manager', 'admin'))) {
 
 <?php
 } else {
-    
 }
 
 

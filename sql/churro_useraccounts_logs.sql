@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 17, 2023 at 10:00 PM
+-- Generation Time: Apr 19, 2023 at 01:33 AM
 -- Server version: 10.5.18-MariaDB-0+deb11u1
 -- PHP Version: 7.4.33
 
@@ -34,6 +34,27 @@ CREATE TABLE `error_logs` (
   `ip` text NOT NULL,
   `error_code` varchar(1000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `past_schedule`
+--
+
+CREATE TABLE `past_schedule` (
+  `id` int(11) NOT NULL,
+  `approved` varchar(100) NOT NULL,
+  `status` text NOT NULL,
+  `date` varchar(100) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `monday` varchar(9) NOT NULL,
+  `tuesday` varchar(9) NOT NULL,
+  `wednesday` varchar(9) NOT NULL,
+  `thursday` varchar(9) NOT NULL,
+  `friday` varchar(9) NOT NULL,
+  `saturday` varchar(9) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -75,6 +96,12 @@ ALTER TABLE `error_logs`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `past_schedule`
+--
+ALTER TABLE `past_schedule`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `successful_logins`
 --
 ALTER TABLE `successful_logins`
@@ -95,6 +122,12 @@ ALTER TABLE `unsuccessful_logins`
 --
 ALTER TABLE `error_logs`
   MODIFY `id` int(100) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `past_schedule`
+--
+ALTER TABLE `past_schedule`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `successful_logins`

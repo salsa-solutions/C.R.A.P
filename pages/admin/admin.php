@@ -11,7 +11,7 @@ require_once('/var/www/html/php/functions/userId.php');
 
 session_start();
 $session_id = session_id();
-if (!isset($session_id) || !isset($_SESSION['name']) && !isset($_SESSION['username']) && !isset($_SESSION['role']) && !isset($_SESSION['role_name']) && !isset($_SESSION['uid'])) {
+if (!isset($session_id) || !isset($_SESSION['name']) && !isset($_SESSION['username']) && !isset($_SESSION['role']) && !isset($_SESSION['role_name']) && !isset($_SESSION['uuid'])) {
     header('Location: ' . $login_page_url . '');
 }
 
@@ -19,7 +19,7 @@ $name = $_SESSION['name'];
 $username = $_SESSION['username'];
 $role = $_SESSION['role'];
 $role_name = $_SESSION['role_name'];
-$uid = $_SESSION['uid'];
+$uid = $_SESSION['uuid'];
 
 $WEB_TITLE = 'Manager Home';
 
@@ -58,38 +58,12 @@ setAccessPages($role);
 
 <body>
 
-    <!-- <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
+    <style>
 
-        th,
-        td {
-            text-align: left;
-            padding: 8px;
-            border-bottom: 1px solid #ddd;
-        }
-
-        th {
-            background-color: #4CAF50;
-            color: white;
-        }
-
-        .availability-box {
-            float: left;
-            width: 48%;
-            margin-right: 2%;
-        }
-
-        .wanted-days-box {
-            float: right;
-            width: 48%;
-        }
-    </style> -->
+    </style>
 
 
-    <!-- <?php echo $userId = getUserId($db, $username); ?> -->
+    <?php echo $userId = getUserId($db, $username); ?>
     <?php require("/var/www/html/php/template.php");
     echo $header ?>
     <?php if (($_DEV) && (($role == 'employee') || ($role == 'manager')) == '1') {
@@ -103,20 +77,22 @@ setAccessPages($role);
 
         <h1>Manager Portal</h1>
 
-        <h2>Messages</h2>
-        <?php
-        // Connect to the database
-        $pdo = $db;
+        <div class="messages-container">
+            <h2>Messages</h2>
+            <?php
+            // Connect to the database
+            $pdo = $db;
 
-        // Retrieve messages from the database
-        $stmt = $pdo->query("SELECT * FROM messages ORDER BY date DESC");
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            echo "<p><strong>{$row['name']}</strong> ({$row['date']}): {$row['message']}</p>";
-        }
-        if ($stmt->rowCount() == 0) {
-            echo "<p>No messages</p>";
-        }
-        ?>
+            // Retrieve messages from the database
+            $stmt = $pdo->query("SELECT * FROM messages ORDER BY date DESC");
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                echo "<div class='message-box'><strong>{$row['name']}</strong> <small>({$row['date']})</small>:<br> {$row['message']}</div>";
+            }
+            if ($stmt->rowCount() == 0) {
+                echo "<p>No messages</p>";
+            }
+            ?>
+        </div>
         <br>
         <br>
         <br>
@@ -154,7 +130,8 @@ setAccessPages($role);
                 ?>
             </table>
         </div>
-
+        <br>
+        <br>
         <div class="wanted-days-box">
             <h2>Wanted Days</h2>
             <table>
@@ -188,6 +165,7 @@ setAccessPages($role);
                 }
                 ?>
             </table>
+        </div>
 
         <?php
     }

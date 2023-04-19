@@ -5,7 +5,7 @@ require_once('/var/www/html/pages/page-index.php');
 require_once('/var/www/html/php/functions/select.php');
 require_once('/var/www/html/php/functions/permissons.php');
 
-if (!isset($_SESSION['name']) || !isset($_SESSION['username']) || !isset($_SESSION['role']) || !isset($_SESSION['role_name']) || !isset($_SESSION['uid'])) {
+if (!isset($_SESSION['name']) || !isset($_SESSION['username']) || !isset($_SESSION['role']) || !isset($_SESSION['role_name']) || !isset($_SESSION['uuid'])) {
   header('Location: ' . $login_page_url . '');
 }
 
@@ -18,11 +18,11 @@ $name = $_SESSION['name'];
 $username = $_SESSION['username'];
 $role = $_SESSION['role'];
 $role_name = $_SESSION['role_name'];
-$uid = $_SESSION['uid'];
+$uid = $_SESSION['uuid'];
 
 $WEB_TITLE = 'Settings';
 $account = getUsersDropdown($db)['dropdown'];
-$account_id = getUsersDropdown($db)['uid'];
+$account_id = getUsersDropdown($db)['uuid'];
 $account_role = getUsersDropdown($db)['role'];
 
 // to turn off a site uncomment the following line:
@@ -127,7 +127,7 @@ echo $header ?>
               // Get the selected user ID
               var userId = $(this).val();
               // Get the selected user's full name from the $ids array
-              var userName = "<?php echo json_encode(getUsersDropdown($db)['uid']); ?>";
+              var userName = "<?php echo json_encode(getUsersDropdown($db)['uuid']); ?>";
               userName = JSON.parse(userName)[userId];
               // Set the ID of the submit button to the selected user's full name
               $('#update_user').attr('id', userName + '_update_user');

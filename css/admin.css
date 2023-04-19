@@ -1,86 +1,63 @@
-.message_container {
-    /* padding: 0 2rem; */
-    margin: 2rem;
-    overflow-y: scroll;
-    height: 600px;
-    width: 450px;
-    background-color: rgb(216, 216, 216);
-    right: 40px;
+/* CSS styles for the Manager Portal */
+
+h1 {
+    color: black;
+    text-align: center;
 }
 
-.message_container::-webkit-scrollbar {
-    width: 0px;
-    background: transparent;
+h2 {
+    color: green;
+    font-size: 1.5em;
 }
 
-.avil_schedule_container {
-    /* padding: 0 2rem; */
-    /* position: absolute; */
-    margin: 2rem;
-    overflow-y: scroll;
-    height: 300px;
-    width: 900px;
-    background-color: rgb(216, 216, 216);
-    right: 0px;
-    top: 40px;
+table {
+    border-collapse: collapse;
+    width: 100%;
 }
 
-.avil_schedule_container::-webkit-scrollbar {
-    width: 0px;
-    background: transparent;
+th,
+td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
 }
 
-.pref_schedule_container {
-    /* padding: 0 2rem; */
-    position: absolute;
-    margin: 2rem;
-    overflow-y: scroll;
-    height: 300px;
-    width: 900px;
-    background-color: rgb(216, 216, 216);
-    right: 0px;
-    top: 40%;
+tr:nth-child(even) {
+    background-color: #f2f2f2;
 }
 
-.pref_schedule_container::-webkit-scrollbar {
-    width: 0px;
-    background: transparent;
+.messages-container {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
 }
 
-@media screen and (min-width: 0px) and (max-width: 720px) {
-    .scrole {
-        overflow-y: auto;
-    }
-    .pref_schedule_container {
-        /* padding: 0 2rem; */
-        position: relative;
-        margin: 1rem;
-        overflow-y: scroll;
-        height: 300/2px;
-        width: 900/2px;
-        background-color: rgb(216, 216, 216);
-        right: 0px;
-        top: 40%;
-    }
-    .avil_schedule_container {
-        /* padding: 0 2rem; */
-        position: relative;
-        margin: 1rem;
-        overflow-y: scroll;
-        height: 300/2px;
-        width: 900/2px;
-        background-color: rgb(216, 216, 216);
-        right: 0px;
-        top: 40px;
-    }
-    .message_container {
-        position: relative;
-        /* padding: 0 2rem; */
-        margin: 2rem;
-        overflow-y: scroll;
-        height: 600px;
-        width: 450px;
-        background-color: rgb(216, 216, 216);
-        right: 40px;
-    }
+.message-box {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.message-box strong {
+    font-weight: bold;
+}
+
+.message-box small {
+    font-size: 12px;
+    color: #888;
+    margin-left: 10px;
+}
+
+.availability-box {
+    background-color: lightblue;
+    padding: 10px;
+}
+
+.wanted-days-box {
+    background-color: lightgreen;
+    padding: 10px;
 }

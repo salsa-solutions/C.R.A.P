@@ -4,7 +4,7 @@ require_once('/var/www/html/config.php');
 require_once('/var/www/html/pages/page-index.php');
  require_once('/var/www/html/php/functions/permissons.php');
 
-if (!isset($_SESSION['name']) || !isset($_SESSION['username']) || !isset($_SESSION['role']) || !isset($_SESSION['role_name']) || !isset($_SESSION['uid'])) {
+if (!isset($_SESSION['name']) || !isset($_SESSION['username']) || !isset($_SESSION['role']) || !isset($_SESSION['role_name']) || !isset($_SESSION['uuid'])) {
     header('Location: ' . $login_page_url . '');
 }
 // ini_set('display_errors', 1);
@@ -21,7 +21,7 @@ $name = $_SESSION['name'];
       $username = $_SESSION['username'];
       $role = $_SESSION['role'];
       $role_name = $_SESSION['role_name'];
-      $uid = $_SESSION['uid'];
+      $uid = $_SESSION['uuid'];
  
 $WEB_TITLE = 'Schedule';
 

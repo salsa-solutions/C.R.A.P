@@ -11,7 +11,7 @@ $name = $_SESSION['name'];
       $username = $_SESSION['username'];
       $role = $_SESSION['role'];
       $role_name = $_SESSION['role_name'];
-      $uid = $_SESSION['uid'];
+      $uid = $_SESSION['uuid'];
  
 $WEB_TITLE = 'PUT TITLE HERE';
 // to turn off a site uncomment the following line:

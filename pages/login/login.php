@@ -3,7 +3,7 @@ require_once '/var/www/html/config.php';
 require_once '/var/www/html/pages/page-index.php';
 session_start();
 
-if (isset($session_id) && isset($_SESSION['name']) && isset($_SESSION['username']) && isset($_SESSION['role']) && isset($_SESSION['role_name']) && isset($_SESSION['uid'])) {
+if (isset($session_id) && isset($_SESSION['name']) && isset($_SESSION['username']) && isset($_SESSION['role']) && isset($_SESSION['role_name']) && isset($_SESSION['uuid'])) {
     header('Location: ' . $home_page_url . '');
 }
 $WEB_TITLE = 'Login';

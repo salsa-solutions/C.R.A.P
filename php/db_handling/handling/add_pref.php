@@ -25,9 +25,9 @@ error_reporting(E_ALL);
         $stmtinsert = $db->prepare($sql);
         $result = $stmtinsert->execute([$date, $name, $username, $monday, $tuesday, $wednesday, $thursday, $friday, $saturday]);
         if ($result) {
-            echo 'Successfully saved.';
+            echo 100;
         } else {
-            echo 'There were erros while saving the data.';
+            echo 200;
         }
     }else{
         echo "No data";
