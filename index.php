@@ -2,6 +2,7 @@
 require_once('/var/www/html/config.php');
 require_once('/var/www/html/pages/page-index.php');
 require_once('/var/www/html/php/functions/permissons.php');
+require_once('/var/www/html/php/functions/select.php');
 
 // echo $session_id;
 session_start();
@@ -16,7 +17,7 @@ $username = $_SESSION['username'];
 $role = $_SESSION['role'];
 $role_name = $_SESSION['role_name'];
 $uuid = $_SESSION['uuid'];
-
+$time = generate_time_options('9:00 AM', '5:00 PM');
 $WEB_TITLE = 'Home';
 
 // to turn off a site uncomment the following line:
@@ -66,57 +67,11 @@ if ($_DEV && in_array($role, array('employee', 'manager', 'admin'))) {
 
 ?>
 
-    
+
+
+
     <div class="container h-100 scroll">
         <div class="d-flex justify-content-left form-container">
-            <div class="user_card">
-                <div class="d-flex justify-content-center p-5">
-                    <h3>Availability</h3>
-                </div>
-                <div class="d-flex justify-content-center form-container">
-                    <form action="">
-                        <div class="input-group mb-1">
-                            <div class="input-group-append text">
-                                <p>Monday</p>
-                            </div>
-                            <input type="text" placeholder="9am-4pm" name="monday-avil" id="monday-avil" class="form-control form-control-sm input_user ">
-                        </div>
-                        <div class="input-group mb-1">
-                            <div class="input-group-append text">
-                                <p>Tuesday</p>
-                            </div>
-                            <input type="text" placeholder="9am-4pm" name="tuesday-avil" id="tuesday-avil" class="form-control form-control-sm input_user ">
-                        </div>
-                        <div class="input-group mb-1">
-                            <div class="input-group-append text">
-                                <p>Wednesday</p>
-                            </div>
-                            <input type="text" placeholder="9am-4pm" name="wednesday-avil" id="wednesday-avil" class="form-control form-control-sm input_user ">
-                        </div>
-                        <div class="input-group mb-1">
-                            <div class="input-group-append text">
-                                <p>Thursday</p>
-                            </div>
-                            <input type="text" placeholder="9am-4pm" name="thursday-avil" id="thursday-avil" class="form-control form-control-sm input_user ">
-                        </div>
-                        <div class="input-group mb-1">
-                            <div class="input-group-append text">
-                                <p>Friday</p>
-                            </div>
-                            <input type="text" placeholder="9am-4pm" name="friday-avil" id="friday-avil" class="form-control form-control-sm input_user ">
-                        </div>
-                        <div class="input-group mb-1">
-                            <div class="input-group-append text">
-                                <p>Saturday</p>
-                            </div>
-                            <input type="text" placeholder="9am-4pm" name="saturday-avil" id="saturday-avil" class="form-control form-control-sm input_user ">
-                        </div>
-                        <div class="d-flex justify-content-center mt-3 submit-container">
-                            <button type="button" name="button" id="submit_avil" class="btn submit_btn">submit</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
             <div class="user_card">
                 <div class="d-flex justify-content-center p-5">
                     <h3>Wanted days</h3>
@@ -276,7 +231,8 @@ if ($_DEV && in_array($role, array('employee', 'manager', 'admin'))) {
                                 Notiflix.Notify.success('Your request has been submited');
                             }
                             if ($.trim(data) === "200") {
-                                Notiflix.Notify.failure('There were erros while saving the data, Error:' + data);
+                                Notiflix.Notify.failure(
+                                    'There were erros while saving the data, Error:' + data);
                             }
                         },
                         error: function(data) {

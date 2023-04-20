@@ -1,357 +1,97 @@
 <?php
-session_start();
 require_once('/var/www/html/config.php');
 require_once('/var/www/html/pages/page-index.php');
- require_once('/var/www/html/php/functions/permissons.php');
-
-
-if (!isset($_SESSION['name']) || !isset($_SESSION['username']) || !isset($_SESSION['role']) || !isset($_SESSION['role_name']) || !isset($_SESSION['uuid'])) {
-    header('Location: ' . $login_page_url . '');
-}
-
-
-$name = $_SESSION['name']; 
-      $username = $_SESSION['username'];
-      $role = $_SESSION['role'];
-      $role_name = $_SESSION['role_name'];
-      $uid = $_SESSION['uuid'];
- 
-$WEB_TITLE = 'Home';
-
-// to turn off a site uncomment the following line:
-//$_DEV = true;
-
-
-
-setAccessPages($role);
-
-// if (($role == 'Admin')) {
-//     ini_set('display_errors', 1);
-//     ini_set('display_startup_errors', 1);
-//     error_reporting(E_ALL);
-// }
-// elseif (($role == 'Admin') || ($role == 'Manager')) {
-
-//     $managment_page = $managment_page;
-//     $admin_page = $admin_page;
-//     $scheduling_page = $scheduling_page;
-// 	$approval_page = $approval_page;
-// }
-// elseif (( $role == 'Dev')) {
-//     $test_page = $test_page;
-//     $test_page_php = $test_page_php;
-//     $test_page_html = $test_page_html;
-// }else {
-//     $managment_page = NULL;
-//     $admin_page = NULL;
-//     $scheduling_page = NULL;
-//     $approval_page = NULL;
-//     $test_page = NULL;
-//     $test_page_php = NULL;
-//     $test_page_html = NULL;
-// }
-// echo '<pre>'; print_r($_SESSION['userlogin']); echo '</pre>';
-?>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
-    </script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="css/backround.css">
-    <!-- <link rel="stylesheet" href="/css/home.css"> -->
-    <link rel="stylesheet" href="css/test.css">
-    <link rel="stylesheet" href="/css/nav.css">
-    <title><?php echo $WEB_TITLE ?> | <?php echo $WEBSITE_NAME; ?></title>
-
-</head>
-
-
-
-<?php require("/var/www/html/php/template.php");
-echo $header ?>
-<?php if (($_DEV) && (($role == 'Server') || ($role == 'Manager') || ($role == 'Cook')) == '1') {
-    echo $out_of_service;
-} elseif (($role == 'pending')) {
-    echo $pending;
-} else {
-
+require_once('/var/www/html/php/functions/permissons.php');
+require_once('/var/www/html/php/functions/select.php');
+$times = generate_time_options('9:00 AM', '5:00 PM');
 
 ?>
-    <div class="container h-100 scroll">
-        <div class="d-flex justify-content-left form-container">
-            <div class="user_card">
-                <div class="d-flex justify-content-center p-5">
-                    <h3>Availability</h3>
-                </div>
-                <div class="d-flex justify-content-center form-container">
-                    <form action="">
-                        <div class="input-group mb-1">
-                            <div class="input-group-append text">
-                                <p>Monday</p>
-                            </div>
-                            <input type="text" placeholder="9am-4pm" name="monday-avil" id="monday-avil" class="form-control form-control-sm input_user ">
-                        </div>
-                        <div class="input-group mb-1">
-                            <div class="input-group-append text">
-                                <p>Tuesday</p>
-                            </div>
-                            <input type="text" placeholder="9am-4pm" name="tuesday-avil" id="tuesday-avil" class="form-control form-control-sm input_user ">
-                        </div>
-                        <div class="input-group mb-1">
-                            <div class="input-group-append text">
-                                <p>Wednesday</p>
-                            </div>
-                            <input type="text" placeholder="9am-4pm" name="wednesday-avil" id="wednesday-avil" class="form-control form-control-sm input_user ">
-                        </div>
-                        <div class="input-group mb-1">
-                            <div class="input-group-append text">
-                                <p>Thursday</p>
-                            </div>
-                            <input type="text" placeholder="9am-4pm" name="thursday-avil" id="thursday-avil" class="form-control form-control-sm input_user ">
-                        </div>
-                        <div class="input-group mb-1">
-                            <div class="input-group-append text">
-                                <p>Friday</p>
-                            </div>
-                            <input type="text" placeholder="9am-4pm" name="friday-avil" id="friday-avil" class="form-control form-control-sm input_user ">
-                        </div>
-                        <div class="input-group mb-1">
-                            <div class="input-group-append text">
-                                <p>Saturday</p>
-                            </div>
-                            <input type="text" placeholder="9am-4pm" name="saturday-avil" id="saturday-avil" class="form-control form-control-sm input_user ">
-                        </div>
-                        <div class="d-flex justify-content-center mt-3 submit-container">
-                            <button type="button" name="button" id="submit_avil" class="btn submit_btn">submit</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="user_card">
-                <div class="d-flex justify-content-center p-5">
-                    <h3>Wanted days</h3>
-                </div>
-                <div class="d-flex justify-content-center form-container">
-                    <form action="">
-                        <div class="input-group mb-1">
-                            <div class="input-group-append text">
-                                <p>Monday</p>
-                            </div>
-                            <input type="text" placeholder="9am-4pm" name="monday-pref" id="monday-pref" class="form-control form-control-sm input_user ">
-                        </div>
-                        <div class="input-group mb-1">
-                            <div class="input-group-append text">
-                                <p>Tuesday</p>
-                            </div>
-                            <input type="text" placeholder="9am-4pm" name="tuesday-pref" id="tuesday-pref" class="form-control form-control-sm input_user ">
-                        </div>
-                        <div class="input-group mb-1">
-                            <div class="input-group-append text">
-                                <p>Wednesday</p>
-                            </div>
-                            <input type="text" placeholder="9am-4pm" name="wednesday-pref" id="wednesday-pref" class="form-control form-control-sm input_user ">
-                        </div>
-                        <div class="input-group mb-1">
-                            <div class="input-group-append text">
-                                <p>Thursday</p>
-                            </div>
-                            <input type="text" placeholder="9am-4pm" name="thursday-pref" id="thursday-pref" class="form-control form-control-sm input_user ">
-                        </div>
-                        <div class="input-group mb-1">
-                            <div class="input-group-append text">
-                                <p>Friday</p>
-                            </div>
-                            <input type="text" placeholder="9am-4pm" name="friday-pref" id="friday-pref" class="form-control form-control-sm input_user ">
-                        </div>
-                        <div class="input-group mb-1">
-                            <div class="input-group-append text">
-                                <p>Saturday</p>
-                            </div>
-                            <input type="text" placeholder="9am-4pm" name="saturday" id="saturday-pref" class="form-control form-control-sm input_user ">
-                        </div>
-                        <!-- <div class="input-group mb-1">
-                            <input type="number" placeholder="Hours" name="hours" id="hours" class="form-control form-control-sm input_user" min=1 max=40 >
-                        </div> -->
-                        <div class="d-flex justify-content-center mt-3 submit-container">
-                            <button type="button" name="button" id="submit-pref" class="btn submit_btn">submit</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="user_card">
-                <div class="d-flex justify-content-center p-5">
-                    <h3>Special request</h3>
-                </div>
-                <form action="">
-                    <div class="d-flex justify-content-center form-container">
-                        <div class=" mb-1">
-                            <textarea type="text" name="textarea" id="message" cols="30" rows="10" placeholder="I need so and so off because... " class="form-control form-control-sm input_user " required></textarea>
-
-
-                            <!-- <text type="text" placeholder="I need so and so off because... " name="request" id="message"  class="form-control form-control-sm input_user input-size"  > -->
-                        </div>
-
-                    </div>
-                    <div class="d-flex justify-content-center mt-3 submit-container">
-                        <button type="button" name="button" id="submit_sr" class="btn submit_btn">submit</button>
-                    </div>
-                </form>
-            </div>
-
-        </div>
-
+<div class="card">
+    <div class="card-header">
+        Work Hours for Every Day
     </div>
-    <script>
-        document.getElementById('message').style.height = '322px';
-        document.getElementById('message').style.width = '250px';
-    </script>
+    <div class="card-body">
+        <form>
+            <?php $days = array('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'); ?>
+            <?php foreach ($days as $day) { ?>
+                <div class="form-group">
+                    <label for="work-hours-<?php echo strtolower($day); ?>"><?php echo $day; ?>:</label>
+                    <?php echo $times('work-hours-' . strtolower($day), 'required'); ?>
+                </div>
+            <?php } ?>
+            <div class="form-group">
+                <label for="break-time">Break Time:</label>
+                <input type="number" id="break-time" name="break-time" min="0" max="240" step="15" required> minutes
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
 
-    <script>
-        $(function() {
-            $('#submit_avil').click(function(e) {
 
-                var valid = this.form.checkValidity();
 
-                if (valid) {
-                    var name = "<?php echo $name; ?>";
-                    var username = "<?php echo $username; ?>";
-                    var monday_avil = $('#monday-avil').val();
-                    var tuesday_avil = $('#tuesday-avil').val();
-                    var wednesday_avil = $('#wednesday-avil').val();
-                    var thursday_avil = $('#thursday-avil').val();
-                    var friday_avil = $('#friday-avil').val();
-                    var saturday_avil = $('#saturday-avil').val();
-                    $.ajax({
-                        url: '/php/db_handling/handling/add_avil.php',
-                        type: 'POST',
-                        data: {
-                            name: name,
-                            username: username,
-                            monday: monday_avil,
-                            tuesday: tuesday_avil,
-                            wednesday: wednesday_avil,
-                            thursday: thursday_avil,
-                            friday: friday_avil,
-                            saturday: saturday_avil
-                        },
-                        success: function(data) {
-                            Swal.fire(
-                                'Successful',
-                                'Your request has been submited',
-                                'success'
-                            )
-                        },
-                        error: function(data) {
-                            Swal.fire(
-                                'Errors',
-                                'Whoops!',
-                                'error'
-                            )
+        <style>
+            .card {
+                width: 400px;
+                background-color: #fff;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+                margin: 20px auto;
+            }
 
-                        }
-                    });
-                }
-            });
-        });
-    </script>
-    <script>
-        $(function() {
-            $('#submit-pref').click(function(e) {
+            .card-header {
+                font-size: 24px;
+                font-weight: bold;
+                padding: 10px 20px;
+                border-bottom: 1px solid #ccc;
+                background-color: #f7f7f7;
+            }
 
-                var valid = this.form.checkValidity();
+            .card-body {
+                padding: 20px;
+            }
 
-                if (valid) {
-                    var name = "<?php echo $name; ?>";
-                    var username = "<?php echo $username; ?>";
-                    var monday_pref = $('#monday-pref').val();
-                    var tuesday_pref = $('#tuesday-pref').val();
-                    var wednesday_pref = $('#wednesday-pref').val();
-                    var thursday_pref = $('#thursday-pref').val();
-                    var friday_pref = $('#friday-pref').val();
-                    var saturday_pref = $('#saturday-pref').val();
-                    var hours = $('#hours').val();
-                    // console.log(hours);
-                    $.ajax({
-                        url: '/php/db_handling/handling/add_pref.php',
-                        type: 'POST',
-                        data: {
-                            name: name,
-                            username: username,
-                            monday: monday_pref,
-                            tuesday: tuesday_pref,
-                            wednesday: wednesday_pref,
-                            thursday: thursday_pref,
-                            friday: friday_pref,
-                            saturday: saturday_pref,
-                            hours: hours
-                        },
-                        success: function(data) {
-                            Swal.fire(
-                                'Successful',
-                                'Your request has been submited',
-                                'success'
-                            )
-                        },
-                        error: function(data) {
-                            Swal.fire(
-                                'Errors',
-                                'Whoops!',
-                                'error'
-                            )
-                        }
-                    });
-                }
-            });
-        });
-    </script>
-    <script>
-        $(function() {
-            $('#submit_sr').click(function(e) {
+            .form-group {
+                margin-bottom: 20px;
+            }
 
-                var valid = this.form.checkValidity();
+            label {
+                display: block;
+                font-weight: bold;
+                margin-bottom: 5px;
+            }
 
-                if (valid) {
-                    var name = "<?php echo $name; ?>";
-                    var message = $('#message').val();
-                    $.ajax({
-                        url: '/php/db_handling/handling/add_sr.php',
-                        type: 'POST',
-                        data: {
-                            name: name,
-                            message: message
-                        },
-                        success: function(data) {
-                            Swal.fire(
-                                'Successful',
-                                'Your request has been submited',
-                                'success'
-                            )
-                        },
-                        error: function(data) {
-                            Swal.fire(
-                                'Errors',
-                                'Whoops!',
-                                'error'
-                            )
-                        }
-                    });
-                }
-            });
-        });
-    </script>
+            input[type="time"],
+            input[type="number"] {
+                width: 100%;
+                padding: 10px;
+                border-radius: 5px;
+                border: 1px solid #ccc;
+                font-size: 16px;
+            }
 
-<?php
-}
+            input[type="number"]::-webkit-inner-spin-button,
+            input[type="number"]::-webkit-outer-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
 
-include_once("/var/www/html/php/template.php");
-echo $footer;
-?>
+            input[type="number"] {
+                -moz-appearance: textfield;
+            }
+
+            button {
+                display: block;
+                width: 100%;
+                padding: 10px;
+                background-color: #007bff;
+                color: #fff;
+                border: none;
+                border-radius: 5px;
+                font-size: 16px;
+                cursor: pointer;
+            }
+
+            button:hover {
+                background-color: #0069d9;
+            }
+        </style>

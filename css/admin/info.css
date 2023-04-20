@@ -1,0 +1,54 @@
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+    
+    th,
+    td {
+        text-align: center;
+        padding: 8px;
+    }
+    
+    th {
+        background-color: #ddd;
+    }
+    
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+    
+    .messages-container {
+        margin-top: 20px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+    
+    .message-box {
+        margin-bottom: 10px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #fff;
+    }
+    
+    .message-box strong {
+        font-weight: bold;
+    }
+    
+    .message-box small {
+        font-size: 12px;
+        color: #888;
+        margin-left: 10px;
+    }
+    
+    .availability-box {
+        background-color: lightblue;
+        padding: 10px;
+    }
+    
+    .wanted-days-box {
+        background-color: lightgreen;
+        padding: 10px;
+    }

@@ -49,7 +49,7 @@ setAccessPages($role);
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/css/home.css">
-    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="/css/admin/info.css">
     <link rel="stylesheet" href="/css/scrollbar.css">
     <link rel="stylesheet" href="/css/nav.css">
     <title><?php echo $WEB_TITLE ?> | <?php echo $WEBSITE_NAME; ?></title>
@@ -166,9 +166,61 @@ setAccessPages($role);
                 ?>
             </table>
         </div>
+        <br>
+        <div class="shift-container">
+            <h2>Add Shifts</h2>
+            <form>
+                <div class="form-group row">
+                    <label for="day" class="col-sm-2 col-form-label">Day:</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" id="day" name="day">
+                            <option value="monday">Monday</option>
+                            <option value="tuesday">Tuesday</option>
+                            <option value="wednesday">Wednesday</option>
+                            <option value="thursday">Thursday</option>
+                            <option value="friday">Friday</option>
+                            <option value="saturday">Saturday</option>
+                            <option value="sunday">Sunday</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="start-time" class="col-sm-2 col-form-label">Start Time:</label>
+                    <div class="col-sm-10">
+                        <input type="time" class="form-control" id="start-time" name="start-time">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="end-time" class="col-sm-2 col-form-label">End Time:</label>
+                    <div class="col-sm-10">
+                        <input type="time" class="form-control" id="end-time" name="end-time">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="employee-max" class="col-sm-2 col-form-label">Max Employees:</label>
+                    <div class="col-sm-4">
+                        <input type="number" class="form-control" id="employee-max" name="employee-max">
+                    </div>
+                    <label for="employee-type" class="col-sm-2 col-form-label">Employee Type:</label>
+                    <div class="col-sm-4">
+                        <select class="form-control" id="employee-type" name="employee-type">
+                            <option value="full-time">Full Time</option>
+                            <option value="part-time">Part Time</option>
+                            <option value="contractor">Contractor</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-10">
+                        <button type="submit" class="btn btn-primary">Add Shift</button>
+                    </div>
+                </div>
+            </form>
+        </div>
 
-        <?php
+
+    <?php
     }
     require("/var/www/html/php/template.php");
     echo $footer;
-        ?>
+    ?>

@@ -37,3 +37,22 @@ function getUsersDropdown($db)
   return array('dropdown' => $dropdown, 'role' => $roles, 'uuid' => $ids);
 }
 
+function generate_time_options($start_time, $end_time, $interval = 15)
+{
+  $times = array();
+  $current_time = strtotime($start_time);
+  $end_time = strtotime($end_time);
+
+  while ($current_time <= $end_time) {
+    $times[] = date('h:i A', $current_time);
+    $current_time += $interval * 60;
+  }
+
+  $html = '';
+  foreach ($times as $time) {
+    $html .= '<option value="' . $time . '"> ' . $time . '</option>';
+  }
+  
+
+  return $html;
+}
