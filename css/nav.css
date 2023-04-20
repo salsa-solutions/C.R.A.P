@@ -1,68 +1,80 @@
-    /* The navigation menu */
-    
-    .navbar-d {
-        overflow: hidden;
-        background-color: #333;
-    }
-    /* Navigation links */
-    
-    .navbar-d a {
-        float: left;
-        font-size: 16px;
-        color: white;
-        text-align: center;
-        padding: 14px 16px;
-        text-decoration: none;
-    }
-    /* The subnav-digation menu */
-    
-    .subnav-d {
-        float: left;
-        overflow: hidden;
-    }
-    /* subnav-d button */
-    
-    .subnav-d .subnavbtn-d {
-        font-size: 16px;
-        border: none;
-        outline: none;
-        color: white;
-        padding: 14px 16px;
-        background-color: inherit;
-        font-family: inherit;
-        margin: 0;
-    }
-    /* Add a red background color to navigation links on hover */
-    
-    .navbar-d a:hover,
-    .subnav-d:hover .subnavbtn-d {
-        background-color: #19138d;
-    }
-    /* Style the subnav-d content - positioned absolute */
-    
-    .subnav-content-d {
-        display: none;
-        position: absolute;
-        left: 0;
-        background-color: #19138d;
-        width: 100%;
-        z-index: 1;
-    }
-    /* Style the subnav-d links */
-    
-    .subnav-content-d a {
-        float: left;
-        color: white;
-        text-decoration: none;
-    }
-    /* Add a grey background color on hover */
-    
-    .subnav-content-d a:hover {
-        background-color: #eee;
-        color: black;
-    }
-    /* When you move the mouse over the subnav-d container, open the subnav-d content */
-    
-    .subnav-d:hover .subnav-content-d {
-        display: block;
-    }
+        .navbar-d {
+            background-color: #333;
+            overflow: hidden;
+        }
+        
+        .navbar-d a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+        }
+        
+        .subnav-d {
+            float: left;
+            overflow: hidden;
+        }
+        
+        .subnavbtn-d {
+            font-size: 17px;
+            border: none;
+            outline: none;
+            color: white;
+            padding: 14px 16px;
+            background-color: inherit;
+            font-family: inherit;
+            margin: 0;
+        }
+        
+        .navbar-d a:hover,
+        .subnavbtn-d:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        
+        .subnav-content-d {
+            display: none;
+            position: absolute;
+            left: 0;
+            background-color: #1034A6;
+            width: 25%;
+            z-index: 1;
+        }
+        
+        .subnav-content-d a {
+            float: none;
+            color: black;
+            padding: 14px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+            color: white;
+        }
+        
+        .subnav-content-d a:hover {
+            background-color: #ddd;
+        }
+        
+        .subnav-d:hover .subnav-content-d {
+            display: block;
+        }
+        
+        .btn_logout {
+            float: right;
+            margin-right: 20px;
+            margin-top: 0px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 16px;
+            font-size: 17px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        
+        .btn_logout:hover {
+            background-color: #45a049;
+        }

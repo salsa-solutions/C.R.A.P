@@ -181,8 +181,8 @@ echo $header ?>
                         <!-- <div class="input-group mb-1">
                             <input type="number" placeholder="Hours" name="hours" id="hours" class="form-control form-control-sm input_user" min=1 max=40 >
                         </div> -->
-                        <div class="d-flex justify-content-center mt-3 sumbit-container">
-                            <button type="button" name="button" id="sumbit-pref" class="btn submit_btn">sumbit</button>
+                        <div class="d-flex justify-content-center mt-3 submit-container">
+                            <button type="button" name="button" id="submit-pref" class="btn submit_btn">submit</button>
                         </div>
                     </form>
                 </div>
@@ -201,8 +201,8 @@ echo $header ?>
                         </div>
 
                     </div>
-                    <div class="d-flex justify-content-center mt-3 sumbit-container">
-                        <button type="button" name="button" id="submit_sr" class="btn submit_btn">sumbit</button>
+                    <div class="d-flex justify-content-center mt-3 submit-container">
+                        <button type="button" name="button" id="submit_sr" class="btn submit_btn">submit</button>
                     </div>
                 </form>
             </div>
@@ -265,7 +265,7 @@ echo $header ?>
     </script>
     <script>
         $(function() {
-            $('#sumbit-pref').click(function(e) {
+            $('#submit-pref').click(function(e) {
 
                 var valid = this.form.checkValidity();
 

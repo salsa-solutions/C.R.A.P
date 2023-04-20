@@ -5,17 +5,17 @@ require_once('/var/www/html/php/functions/permissons.php');
 
 // echo $session_id;
 session_start();
-print_r($_SESSION);
-// if (!isset($_SESSION['session_id']) && !isset($_SESSION['name']) && !isset($_SESSION['username']) && !isset($_SESSION['role']) && !isset($_SESSION['role_name']) && !isset($_SESSION['uuid'])) {
-//     header('Location: ' . $login_page_url . '');
-// }
+// print_r($_SESSION);
+if (!isset($_SESSION['session_id']) && !isset($_SESSION['name']) && !isset($_SESSION['username']) && !isset($_SESSION['role']) && !isset($_SESSION['role_name']) && !isset($_SESSION['uuid'])) {
+    header('Location: ' . $login_page_url . '');
+}
 
 
 $name = $_SESSION['name'];
 $username = $_SESSION['username'];
 $role = $_SESSION['role'];
 $role_name = $_SESSION['role_name'];
-$uid = $_SESSION['uuid'];
+$uuid = $_SESSION['uuid'];
 
 $WEB_TITLE = 'Home';
 
@@ -65,6 +65,8 @@ if ($_DEV && in_array($role, array('employee', 'manager', 'admin'))) {
 
 
 ?>
+
+    
     <div class="container h-100 scroll">
         <div class="d-flex justify-content-left form-container">
             <div class="user_card">
@@ -160,8 +162,8 @@ if ($_DEV && in_array($role, array('employee', 'manager', 'admin'))) {
                         <!-- <div class="input-group mb-1">
                             <input type="number" placeholder="Hours" name="hours" id="hours" class="form-control form-control-sm input_user" min=1 max=40 >
                         </div> -->
-                        <div class="d-flex justify-content-center mt-3 sumbit-container">
-                            <button type="button" name="button" id="sumbit-pref" class="btn submit_btn">sumbit</button>
+                        <div class="d-flex justify-content-center mt-3 submit-container">
+                            <button type="button" name="button" id="submit-pref" class="btn submit_btn">submit</button>
                         </div>
                     </form>
                 </div>
@@ -180,8 +182,8 @@ if ($_DEV && in_array($role, array('employee', 'manager', 'admin'))) {
                         </div>
 
                     </div>
-                    <div class="d-flex justify-content-center mt-3 sumbit-container">
-                        <button type="button" name="button" id="submit_sr" class="btn submit_btn">sumbit</button>
+                    <div class="d-flex justify-content-center mt-3 submit-container">
+                        <button type="button" name="button" id="submit_sr" class="btn submit_btn">submit</button>
                     </div>
                 </form>
             </div>
@@ -201,6 +203,7 @@ if ($_DEV && in_array($role, array('employee', 'manager', 'admin'))) {
                 var valid = this.form.checkValidity();
 
                 if (valid) {
+                    var uuid = "<?php echo $uuid; ?>";
                     var name = "<?php echo $name; ?>";
                     var username = "<?php echo $username; ?>";
                     var monday_avil = $('#monday-avil').val();
@@ -213,6 +216,7 @@ if ($_DEV && in_array($role, array('employee', 'manager', 'admin'))) {
                         url: '/php/db_handling/handling/add_avil.php',
                         type: 'POST',
                         data: {
+                            uuid: uuid,
                             name: name,
                             username: username,
                             monday: monday_avil,
@@ -235,11 +239,12 @@ if ($_DEV && in_array($role, array('employee', 'manager', 'admin'))) {
     </script>
     <script>
         $(function() {
-            $('#sumbit-pref').click(function(e) {
+            $('#submit-pref').click(function(e) {
 
                 var valid = this.form.checkValidity();
 
                 if (valid) {
+                    var uuid = "<?php echo $uuid; ?>";
                     var name = "<?php echo $name; ?>";
                     var username = "<?php echo $username; ?>";
                     var monday_pref = $('#monday-pref').val();
@@ -254,6 +259,7 @@ if ($_DEV && in_array($role, array('employee', 'manager', 'admin'))) {
                         url: '/php/db_handling/handling/add_pref.php',
                         type: 'POST',
                         data: {
+                            uuid: uuid,
                             name: name,
                             username: username,
                             monday: monday_pref,
@@ -288,12 +294,14 @@ if ($_DEV && in_array($role, array('employee', 'manager', 'admin'))) {
                 var valid = this.form.checkValidity();
 
                 if (valid) {
+                    var uuid = "<?php echo $uuid; ?>";
                     var name = "<?php echo $name; ?>";
                     var message = $('#message').val();
                     $.ajax({
                         url: '/php/db_handling/handling/add_sr.php',
                         type: 'POST',
                         data: {
+                            uuid: uuid,
                             name: name,
                             message: message
                         },

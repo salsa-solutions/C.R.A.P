@@ -52,19 +52,21 @@ setAccessPages($role);
 
 </head>
 <?php require("/var/www/html/php/template.php");
-echo $header ?>
-<?php if (($_DEV) && (($role == 'Server') || ($role == 'Manager') || ($role == 'Cook')) == '1') {
+echo $header;
+
+if ($_DEV && in_array($role, array('employee', 'manager', 'admin'))) {
   echo $out_of_service;
-} elseif (($role == 'pending')) {
+} elseif ($role == 'pending') {
   echo $pending;
-} else {
-
-
+} elseif (!isset($_SESSION['session_id'])) {
+  echo $fourohthree;
+} elseif (in_array($role, array('employee', 'manager', 'admin', 'dev'))) {
 ?>
+
 
   <body>
     <br>
-    <div class="settings">
+    <div class="settings container h-100 scroll">
       <h2>User Settings</h2>
 
       <h3>Change Password</h3>

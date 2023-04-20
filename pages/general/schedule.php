@@ -2,10 +2,10 @@
 session_start();
 require_once('/var/www/html/config.php');
 require_once('/var/www/html/pages/page-index.php');
- require_once('/var/www/html/php/functions/permissons.php');
+require_once('/var/www/html/php/functions/permissons.php');
 
-if (!isset($_SESSION['name']) || !isset($_SESSION['username']) || !isset($_SESSION['role']) || !isset($_SESSION['role_name']) || !isset($_SESSION['uuid'])) {
-    header('Location: ' . $login_page_url . '');
+if (!isset($_SESSION['session_id']) && !isset($_SESSION['name']) && !isset($_SESSION['username']) && !isset($_SESSION['role']) && !isset($_SESSION['role_name']) && !isset($_SESSION['uuid'])) {
+	header('Location: ' . $login_page_url . '');
 }
 // ini_set('display_errors', 1);
 // ini_set('display_startup_errors', 1);
@@ -13,16 +13,16 @@ if (!isset($_SESSION['name']) || !isset($_SESSION['username']) || !isset($_SESSI
 
 
 if (isset($_GET['logout'])) {
-    session_destroy();
-    unset($_SESSION);
-    header("Location: /pages/login/login.php");
+	session_destroy();
+	unset($_SESSION);
+	header("Location: /pages/login/login.php");
 }
-$name = $_SESSION['name']; 
-      $username = $_SESSION['username'];
-      $role = $_SESSION['role'];
-      $role_name = $_SESSION['role_name'];
-      $uid = $_SESSION['uuid'];
- 
+$name = $_SESSION['name'];
+$username = $_SESSION['username'];
+$role = $_SESSION['role'];
+$role_name = $_SESSION['role_name'];
+$uid = $_SESSION['uuid'];
+
 $WEB_TITLE = 'Schedule';
 
 // to turn off a site uncomment the following line:
@@ -52,68 +52,71 @@ setAccessPages($role);
 </head>
 
 <body>
-<?php require '/var/www/html/php/template.php';
-    echo $header; ?>
-    <?php if (($_DEV) && (($role == 'Server') || ($role == 'Manager') || ($role == 'Cook')) == '1') {
-        echo $out_of_service;
-    } elseif (($role == 'pending')) {
-        echo $pending;
-    } else {
-    ?>
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<h1>Schedule</h1>
+	<?php require '/var/www/html/php/template.php';
+	echo $header;
+	if ($_DEV && in_array($role, array('employee', 'manager', 'admin'))) {
+		echo $out_of_service;
+	} elseif ($role == 'pending') {
+		echo $pending;
+	} elseif (!isset($_SESSION['session_id'])) {
+		echo $fourohthree;
+	} elseif (in_array($role, array('employee', 'manager', 'admin', 'dev'))) {
+
+	?>
+		<div class="container h-100 scroll">
+			<div class="row">
+				<div class="col-md-12">
+					<h1>Schedule</h1>
+				</div>
 			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-12">
-				<div class="table-responsive">
-					<table class="table table-striped">
-						<thead>
-							<tr>
-								<th scope="col">Name</th>
-								<th scope="col">Monday</th>
-								<th scope="col">Tuesday</th>
-								<th scope="col">Wednesday</th>
-								<th scope="col">Thursday</th>
-								<th scope="col">Friday</th>
-								<th scope="col">Saturday</th>
-								<!-- <th scope="col">hours</th> -->
-							</tr>
-						</thead>
-						<tbody>
-							<?php
+			<div class="row">
+				<div class="col-md-12">
+					<div class="table-responsive">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th scope="col">Name</th>
+									<th scope="col">Monday</th>
+									<th scope="col">Tuesday</th>
+									<th scope="col">Wednesday</th>
+									<th scope="col">Thursday</th>
+									<th scope="col">Friday</th>
+									<th scope="col">Saturday</th>
+									<!-- <th scope="col">hours</th> -->
+								</tr>
+							</thead>
+							<tbody>
+								<?php
 								include('/var/www/html/config.php');
 								$result = $db->prepare("SELECT * FROM current_schedule ORDER BY name ASC");
 								$result->execute();
 								for ($i = 0; $row = $result->fetch(); $i++) {
-							?>
+								?>
 
-								<td><?php echo $row['name']; ?></td>
-								<td><?php echo $row['monday']; ?></td>
-								<td><?php echo $row['tuesday']; ?></td>
-								<td><?php echo $row['wednesday']; ?></td>
-								<td><?php echo $row['thursday']; ?></td>
-								<td><?php echo $row['friday']; ?></td>
-								<td><?php echo $row['saturday']; ?></td>
-								
-						</tbody>
-					<?php
-							}
-							if ($i == 0) {
-								echo '<td colspan="8">Schedule has not been posted yet</td>';
-							}
-					?>
-					</table>
+									<td><?php echo $row['name']; ?></td>
+									<td><?php echo $row['monday']; ?></td>
+									<td><?php echo $row['tuesday']; ?></td>
+									<td><?php echo $row['wednesday']; ?></td>
+									<td><?php echo $row['thursday']; ?></td>
+									<td><?php echo $row['friday']; ?></td>
+									<td><?php echo $row['saturday']; ?></td>
+
+							</tbody>
+						<?php
+								}
+								if ($i == 0) {
+									echo '<td colspan="8">Schedule has not been posted yet</td>';
+								}
+						?>
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 
 	<?php
-}
+	}
 
-include_once("/var/www/html/php/template.php");
-echo $footer;
-?>
+	include_once("/var/www/html/php/template.php");
+	echo $footer;
+	?>

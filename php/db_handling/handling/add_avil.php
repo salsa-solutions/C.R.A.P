@@ -10,6 +10,7 @@ error_reporting(E_ALL);
     $currentDate = new DateTime();
     
     if(isset($_POST)){
+        $uuid              = $_POST['uuid'];
         $approved          = $_POST['approved'];
         $date              = $currentDate->format('Y-m-d H:i:s');
         $name              = $_POST['name'];
@@ -21,9 +22,9 @@ error_reporting(E_ALL);
         $friday            = empty($_POST['friday']) ? 'OFF' : $_POST['friday'];
         $saturday          = empty($_POST['saturday']) ? 'OFF' : $_POST['saturday'];
         
-        $sql = "INSERT INTO availability (date, name, username, monday, tuesday, wednesday, thursday, friday, saturday ) VALUES(?,?,?,?,?,?,?,?,?)";
+        $sql = "INSERT INTO availability (uuid, date, name, username, monday, tuesday, wednesday, thursday, friday, saturday ) VALUES(?,?,?,?,?,?,?,?,?,?)";
         $stmtinsert = $db->prepare($sql);
-        $result = $stmtinsert->execute([$date, $name, $username, $monday, $tuesday, $wednesday, $thursday, $friday, $saturday]);
+        $result = $stmtinsert->execute([$uuid, $date, $name, $username, $monday, $tuesday, $wednesday, $thursday, $friday, $saturday]);
         if ($result) {
             echo 'Successfully saved.';
         } else {

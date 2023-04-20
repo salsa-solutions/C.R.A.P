@@ -1,27 +1,63 @@
-body {
-    /* padding-bottom: 100px; */
+/* Style the table */
+
+table {
+    width: 100%;
 }
 
-.grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-    justify-items: center;
-    align-items: stretch;
-    column-gap: 0%;
-    row-gap: 20px;
+.row_container {
+    background-color: #dfdfdf;
 }
 
-.content {
-    font-weight: 6;
+
+/* Style the table header */
+
+th {
+    font-weight: bold;
     text-align: center;
-    /* box-sizing: border-box; */
-    height: 10%;
-    width: 10%;
-    padding: 10px;
 }
 
-.btn_submit_sched {
-    width: 75%;
-    background: black !important;
-    color: white !important;
+
+/* Style the table rows */
+
+tr {
+    text-align: center;
+}
+
+
+/* Style the table cells */
+
+td {
+    vertical-align: middle;
+    padding: 5px;
+}
+
+
+/* Style the submit button */
+
+.btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+
+/* Style the input fields */
+
+input {
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    text-align: center;
+}
+
+
+/* Style the table header for smaller screens */
+
+@media only screen and (max-width: 576px) {
+    th {
+        font-size: 14px;
+    }
 }
