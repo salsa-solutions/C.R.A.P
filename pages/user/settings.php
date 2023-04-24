@@ -189,7 +189,7 @@ if ($_DEV && in_array($role, array('employee', 'manager', 'admin'))) {
           </select>
 
           <br>
-          <button class="button" type="submit" id="add_role">Add Role</button>
+          <button class="button" type="submit" id="submit_role">Add Role</button>
         </form>
         <br>
         <br>
@@ -214,7 +214,56 @@ if ($_DEV && in_array($role, array('employee', 'manager', 'admin'))) {
     }
     ?>
 
+    <script>
+      $(function() {
+        $('#submit-role').click(function(e) {
 
+          var valid = this.form.checkValidity();
+
+          if (valid) {
+
+
+            var uuid = "<?php echo $uuid; ?>";
+            var created_by = "<?php echo $name; ?>";
+            var role_name = $('#role-name').val();
+            var role_description = $('#role-description').val();
+
+
+            // var hours = $('#hours').val();
+            // console.log(hours);
+            $.ajax({
+              url: '/php/db_handling/handling/add_role.php',
+              type: 'POST',
+              data: {
+                uuid: uuid,
+                created_by: created_by,
+                role_name: role_name,
+                role_description: role_description
+                
+                // hours: hours
+              },
+              success: function(data) {
+                if (data === "100") {
+
+                  Notiflix.Notify.success('Your request has been submited');
+                }
+                if (data === "200") {
+                  Notiflix.Notify.failure(
+                    'There were erros while saving the data, Error:' + data);
+                }
+                if (data === "300") {
+                  Notiflix.Notify.failure(
+                    'No Data, Error:' + data);
+                }
+              },
+              error: function(data) {
+                Notiflix.Notify.failure('Somthings not right, Error:' + data);
+              }
+            });
+          }
+        });
+      });
+    </script>
   </body>
 
 

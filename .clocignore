@@ -1,16 +1,11 @@
-test.php
-test.html
-test.css
-test.js
-test.sql
-test.py
+# files
 thefixer.sh
 git.sh
-docker/docker.sh
-docker/docker-compose.yml
-docker/Dockerfile
 cloc.sh
 README.md
 DEPENDS.md
 LICENSE.md
+# folders
 phpMyAdmin
+test
+docker

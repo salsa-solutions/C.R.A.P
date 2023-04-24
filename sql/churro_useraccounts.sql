@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 19, 2023 at 11:32 PM
+-- Generation Time: Apr 23, 2023 at 10:27 PM
 -- Server version: 10.5.18-MariaDB-0+deb11u1
 -- PHP Version: 7.4.33
 
@@ -21,62 +21,226 @@ SET time_zone = "+00:00";
 -- Database: `churro_useraccounts`
 --
 
---
--- Dumping data for table `availability`
---
-
-INSERT INTO `availability` (`id`, `uuid`, `approved`, `date`, `name`, `username`, `monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `saturday`) VALUES
-(2, 'f80db120-6a05-4154-9115-4916cf59cb03', 'pending', '2023-04-19', 'ben tsardoulias', 'tibthink', 'OFF', 'OFF', 'OFF', 'OFF', 'OFF', 'OFF');
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `current_schedule`
+-- Table structure for table `availability`
 --
 
-INSERT INTO `current_schedule` (`id`, `approved`, `status`, `date`, `name`, `username`, `monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `saturday`) VALUES
-(1, 'David Alzuraigat', 'approved', '2023-03-24 21:52:15', 'David Alzuraigat', 'Davidz216', '9-4', 'OFF', 'OFF', '9-4', 'OFF', 'OFF'),
-(2, 'David Alzuraigat', 'approved', '2023-03-24 21:52:19', 'David Alzuraigat', 'Davidz216', '9-4', 'OFF', 'OFF', '9-4', 'OFF', 'OFF');
+CREATE TABLE `availability` (
+  `id` int(11) NOT NULL,
+  `uuid` varchar(100) NOT NULL,
+  `approved` varchar(100) NOT NULL DEFAULT 'pending',
+  `date` date NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `monday` varchar(10) NOT NULL,
+  `tuesday` varchar(10) NOT NULL,
+  `wednesday` varchar(10) NOT NULL,
+  `thursday` varchar(10) NOT NULL,
+  `friday` varchar(10) NOT NULL,
+  `saturday` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `role_name`
+-- Table structure for table `current_schedule`
 --
 
-INSERT INTO `role_name` (`id`, `role_name`, `created_date`, `created_by`, `role`) VALUES
-(1, 'Admin', 'ben', '', '');
+CREATE TABLE `current_schedule` (
+  `id` int(11) NOT NULL,
+  `approved` varchar(100) NOT NULL,
+  `status` text NOT NULL,
+  `date` varchar(100) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `monday` varchar(9) NOT NULL,
+  `tuesday` varchar(9) NOT NULL,
+  `wednesday` varchar(9) NOT NULL,
+  `thursday` varchar(9) NOT NULL,
+  `friday` varchar(9) NOT NULL,
+  `saturday` varchar(9) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `users`
+-- Table structure for table `messages`
 --
 
-INSERT INTO `users` (`id`, `uuid`, `registration_date`, `role`, `role_name`, `name`, `email`, `phone`, `username`, `password`, `active`) VALUES
-(1, 'f80db120-6a05-4154-9115-4916cf59cb03', '2023-04-09 17:36:52', 'dev', 'Dev', 'ben tsardoulias', 'bent23jam@gmail.com', '16149493962', 'tibthink', '$2y$10$CUjBIWOhiqEUyHY3GARzHOENKe2XxYSpIbfge94E5aT4HsJ/npsxi', 'true'),
-(2, 'cce3709f-63ea-4ec0-8795-74c936516ee7', '2023-04-19 01:09:46', 'pending', 'Pending', 'ben tsardoulias', 'bent23jam@gmail.com', '16149493962', 'google', '$2y$10$uOi20XsYpVylzu0L9QJKO.IY7s/xaip/3SPjbcIchHG7j8sn2gV22', 'true');
+CREATE TABLE `messages` (
+  `id` int(11) NOT NULL,
+  `date` varchar(100) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `message` mediumtext NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `wanted_days`
+-- Table structure for table `roles`
 --
 
-INSERT INTO `wanted_days` (`id`, `uuid`, `date`, `name`, `username`, `monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `saturday`) VALUES
-(1, '', '2023-04-19 01:06:00', 'ben tsardoulias', 'tibthink', 'OFF', '9am-4pm', 'OFF', 'OFF', 'OFF', 'OFF'),
-(2, '', '2023-04-19 01:06:18', 'ben tsardoulias', 'tibthink', 'OFF', '9am-4pm', '9am-4pm', 'OFF', 'OFF', 'OFF'),
-(3, '', '2023-04-19 01:06:32', 'ben tsardoulias', 'tibthink', 'OFF', '9am-4pm', '9am-4pm', 'OFF', '9am-4pm', 'OFF'),
-(4, '', '2023-04-19 01:06:34', 'ben tsardoulias', 'tibthink', '9am-4pm', '9am-4pm', '9am-4pm', 'OFF', '9am-4pm', 'OFF'),
-(5, '', '2023-04-19 01:06:36', 'ben tsardoulias', 'tibthink', '9am-4pm', '9am-4pm', '9am-4pm', 'OFF', '9am-4pm', '9am-4pm'),
-(6, '', '2023-04-19 01:06:38', 'ben tsardoulias', 'tibthink', '9am-4pm', '9am-4pm', '9am-4pm', '9am-4pm', '9am-4pm', '9am-4pm'),
-(7, '', '2023-04-19 23:06:52', 'ben tsardoulias', 'tibthink', 'OFF', 'OFF', 'OFF', 'OFF', 'OFF', 'OFF'),
-(8, '', '2023-04-19 23:08:22', 'ben tsardoulias', 'tibthink', 'OFF', 'OFF', 'OFF', 'OFF', 'OFF', 'OFF'),
-(9, 'f80db120-6a05-4154-9115-4916cf59cb03', '2023-04-19 23:10:42', 'ben tsardoulias', 'tibthink', 'OFF', 'OFF', 'OFF', 'OFF', 'OFF', 'OFF'),
-(10, 'f80db120-6a05-4154-9115-4916cf59cb03', '2023-04-19 23:11:54', 'ben tsardoulias', 'tibthink', 'OFF', 'OFF', 'OFF', 'OFF', 'OFF', 'OFF'),
-(11, 'f80db120-6a05-4154-9115-4916cf59cb03', '2023-04-19 23:12:08', 'ben tsardoulias', 'tibthink', 'OFF', 'OFF', 'OFF', 'OFF', 'OFF', 'OFF');
+CREATE TABLE `roles` (
+  `id` int(100) NOT NULL,
+  `role_name` varchar(100) NOT NULL,
+  `created_date` varchar(100) NOT NULL,
+  `created_by` varchar(40) NOT NULL,
+  `role` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-DELIMITER $$
+-- --------------------------------------------------------
+
 --
--- Events
+-- Table structure for table `shifts`
 --
-CREATE DEFINER=`tibthink`@`localhost` EVENT `flush avil_day` ON SCHEDULE EVERY 1 WEEK STARTS '2023-03-26 00:00:00' ON COMPLETION NOT PRESERVE ENABLE COMMENT 'flushes avil_day from the table every week' DO DELETE FROM avil_day$$
 
-CREATE DEFINER=`tibthink`@`localhost` EVENT `flush pref_day` ON SCHEDULE EVERY 1 WEEK STARTS '2023-03-26 00:00:00' ON COMPLETION NOT PRESERVE ENABLE COMMENT 'flushes avil_day from the table every week' DO DELETE FROM pref_day$$
+CREATE TABLE `shifts` (
+  `id` int(100) NOT NULL,
+  `uuid` varchar(36) NOT NULL,
+  `date` date NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `username` varchar(15) NOT NULL,
+  `start_time` varchar(8) NOT NULL,
+  `end_time` varchar(8) NOT NULL,
+  `employee_max` varchar(255) NOT NULL,
+  `role_name` varchar(50) NOT NULL,
+  `week` varchar(13) NOT NULL,
+  `day` varchar(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-DELIMITER ;
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `site_settings`
+--
+
+CREATE TABLE `site_settings` (
+  `site_name` varchar(100) NOT NULL,
+  `theme` varchar(10) NOT NULL,
+  `icon_path` int(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `uuid` varchar(100) NOT NULL,
+  `registration_date` varchar(100) NOT NULL,
+  `role` varchar(1000) NOT NULL,
+  `role_name` varchar(100) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `phone` varchar(20) NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `active` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wanted_days`
+--
+
+CREATE TABLE `wanted_days` (
+  `id` int(11) NOT NULL,
+  `uuid` varchar(100) NOT NULL,
+  `date` varchar(100) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `monday` varchar(9) NOT NULL,
+  `tuesday` varchar(9) NOT NULL,
+  `wednesday` varchar(9) NOT NULL,
+  `thursday` varchar(9) NOT NULL,
+  `friday` varchar(9) NOT NULL,
+  `saturday` varchar(9) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `availability`
+--
+ALTER TABLE `availability`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `current_schedule`
+--
+ALTER TABLE `current_schedule`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `messages`
+--
+ALTER TABLE `messages`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `shifts`
+--
+ALTER TABLE `shifts`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `wanted_days`
+--
+ALTER TABLE `wanted_days`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `availability`
+--
+ALTER TABLE `availability`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `current_schedule`
+--
+ALTER TABLE `current_schedule`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `messages`
+--
+ALTER TABLE `messages`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `shifts`
+--
+ALTER TABLE `shifts`
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `wanted_days`
+--
+ALTER TABLE `wanted_days`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

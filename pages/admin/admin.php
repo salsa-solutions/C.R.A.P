@@ -6,6 +6,7 @@ require_once('/var/www/html/pages/page-index.php');
 require_once('/var/www/html/php/functions/permissons.php');
 require_once('/var/www/html/php/functions/userPermissions.php');
 require_once('/var/www/html/php/functions/userId.php');
+require_once('/var/www/html/php/functions/time.php');
 // to turn off a page uncomment the following line:
 // $_DEV = true;
 
@@ -19,7 +20,7 @@ $name = $_SESSION['name'];
 $username = $_SESSION['username'];
 $role = $_SESSION['role'];
 $role_name = $_SESSION['role_name'];
-$uid = $_SESSION['uuid'];
+$uuid = $_SESSION['uuid'];
 
 $WEB_TITLE = 'Manager Home';
 
@@ -46,7 +47,12 @@ setAccessPages($role);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="
+    https://cdn.jsdelivr.net/npm/notiflix/dist/notiflix-3.2.5.min.js
+"></script>
+    <link href="
+https://cdn.jsdelivr.net/npm/notiflix/dist/notiflix-3.2.5.min.css
+" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/css/home.css">
     <link rel="stylesheet" href="/css/admin/info.css">
@@ -84,7 +90,7 @@ setAccessPages($role);
             $pdo = $db;
 
             // Retrieve messages from the database
-            $stmt = $pdo->query("SELECT * FROM messages ORDER BY date DESC");
+            $stmt = $pdo->query("SELECT * FROM messages ORDER BY id ASC");
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 echo "<div class='message-box'><strong>{$row['name']}</strong> <small>({$row['date']})</small>:<br> {$row['message']}</div>";
             }
@@ -111,7 +117,7 @@ setAccessPages($role);
                 </tr>
                 <?php
                 // Retrieve availability from the database
-                $stmt = $pdo->query("SELECT * FROM availability ORDER BY date DESC");
+                $stmt = $pdo->query("SELECT * FROM availability ORDER BY id ASC");
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     echo "<tr>";
                     echo "<td>{$row['date']}</td>";
@@ -147,7 +153,7 @@ setAccessPages($role);
                 </tr>
                 <?php
                 // Retrieve availability from the database
-                $stmt = $pdo->query("SELECT * FROM wanted_days ORDER BY date DESC");
+                $stmt = $pdo->query("SELECT * FROM wanted_days ORDER BY id ASC");
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     echo "<tr>";
                     echo "<td>{$row['date']}</td>";
@@ -173,7 +179,7 @@ setAccessPages($role);
                 <div class="form-group row">
                     <label for="day" class="col-sm-2 col-form-label">Day:</label>
                     <div class="col-sm-10">
-                        <select class="form-control" id="day" name="day">
+                        <select class="form-control" name="day" id="day">
                             <option value="monday">Monday</option>
                             <option value="tuesday">Tuesday</option>
                             <option value="wednesday">Wednesday</option>
@@ -185,25 +191,25 @@ setAccessPages($role);
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="start-time" class="col-sm-2 col-form-label">Start Time:</label>
+                    <label for="start_time" class="col-sm-2 col-form-label">Start Time:</label>
                     <div class="col-sm-10">
                         <input type="time" class="form-control" id="start-time" name="start-time">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="end-time" class="col-sm-2 col-form-label">End Time:</label>
+                    <label for="end_time" class="col-sm-2 col-form-label">End Time:</label>
                     <div class="col-sm-10">
                         <input type="time" class="form-control" id="end-time" name="end-time">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="employee-max" class="col-sm-2 col-form-label">Max Employees:</label>
+                    <label for="employee_max" class="col-sm-2 col-form-label">Max Employees:</label>
                     <div class="col-sm-4">
                         <input type="number" class="form-control" id="employee-max" name="employee-max">
                     </div>
-                    <label for="employee-type" class="col-sm-2 col-form-label">Employee Type:</label>
+                    <label for="employee_type" class="col-sm-2 col-form-label">Employee Type:</label>
                     <div class="col-sm-4">
-                        <select class="form-control" id="employee-type" name="employee-type">
+                        <select class="form-control" id="role-name" name="role-name">
                             <option value="full-time">Full Time</option>
                             <option value="part-time">Part Time</option>
                             <option value="contractor">Contractor</option>
@@ -212,11 +218,67 @@ setAccessPages($role);
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-10">
-                        <button type="submit" class="btn btn-primary">Add Shift</button>
+                        <button type="submit" id="submit-shifts" class="btn btn-primary">Add Shift</button>
                     </div>
                 </div>
             </form>
         </div>
+
+        <script>
+            $(function() {
+                $('#submit-shifts').click(function(e) {
+
+                    var valid = this.form.checkValidity();
+
+                    if (valid) {
+
+
+                        var uuid = "<?php echo $uuid; ?>";
+                        var name = "<?php echo $name; ?>";
+                        var username = "<?php echo $username; ?>";
+                        var start_time = $('#start-time').val();
+                        var end_time = $('#end-time').val();
+                        var employee_max = $('#employee-max').val();
+                        var role_name = $('#role-name').val();
+                        var day = $('#day').val();
+                        // var hours = $('#hours').val();
+                        // console.log(hours);
+                        $.ajax({
+                            url: '/php/db_handling/handling/add_shift.php',
+                            type: 'POST',
+                            data: {
+                                uuid: uuid,
+                                name: name,
+                                username: username,
+                                start_time: start_time,
+                                end_time: end_time,
+                                employee_max: employee_max,
+                                role_name: role_name,
+                                day: day
+                                // hours: hours
+                            },
+                            success: function(data) {
+                                if (data === "100") {
+
+                                    Notiflix.Notify.success('Your request has been submited');
+                                }
+                                if (data === "200") {
+                                    Notiflix.Notify.failure(
+                                        'There were erros while saving the data, Error:' + data);
+                                }
+                                if (data === "300") {
+                                    Notiflix.Notify.failure(
+                                        'No Data, Error:' + data);
+                                }
+                            },
+                            error: function(data) {
+                                Notiflix.Notify.failure('Somthings not right, Error:' + data);
+                            }
+                        });
+                    }
+                });
+            });
+        </script>
 
 
     <?php

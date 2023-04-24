@@ -56,3 +56,27 @@ function generate_time_options($start_time, $end_time, $interval = 15)
 
   return $html;
 }
+
+// get all the roles from roles table
+
+function getRolesDropdown($db)
+{
+  $query = "SELECT name FROM roles";
+  $stmt = $db->prepare($query);
+  $stmt->execute();
+  $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+  $dropdown = '<select name="role_name">';
+
+  foreach ($roles as $role) {
+    $role_name = $role['name'];
+
+    // Add the fullname to the dropdown menu as an option with the user ID as the value
+    $dropdown .= '<option value="' . $role_name . '">' . $role_name . '</option>';
+  }
+
+  $dropdown .= '</select>';
+
+  // Return the dropdown menu, roles array, and ids array as an array
+  return $dropdown;
+}
