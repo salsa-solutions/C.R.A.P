@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 23, 2023 at 10:27 PM
+-- Generation Time: Apr 25, 2023 at 03:00 AM
 -- Server version: 10.5.18-MariaDB-0+deb11u1
 -- PHP Version: 7.4.33
 
@@ -84,10 +84,12 @@ CREATE TABLE `messages` (
 
 CREATE TABLE `roles` (
   `id` int(100) NOT NULL,
+  `role` varchar(100) NOT NULL,
   `role_name` varchar(100) NOT NULL,
+  `role_description` varchar(100) NOT NULL,
+  `created_by_uuid` varchar(36) NOT NULL,
   `created_date` varchar(100) NOT NULL,
-  `created_by` varchar(40) NOT NULL,
-  `role` varchar(100) NOT NULL
+  `created_by` varchar(40) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -185,6 +187,12 @@ ALTER TABLE `messages`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `roles`
+--
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `shifts`
 --
 ALTER TABLE `shifts`
@@ -223,6 +231,12 @@ ALTER TABLE `current_schedule`
 --
 ALTER TABLE `messages`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `roles`
+--
+ALTER TABLE `roles`
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `shifts`
