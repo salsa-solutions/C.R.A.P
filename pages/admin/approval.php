@@ -33,10 +33,8 @@ setAccessPages($role);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="wuuidth=device-wuuidth, initial-scale=1.0">
     <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="
@@ -45,9 +43,7 @@ setAccessPages($role);
     <link href="
 https://cdn.jsdelivr.net/npm/notiflix/dist/notiflix-3.2.5.min.css
 " rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
-        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/css/home.css">
     <link rel="stylesheet" href="/css/nav.css">
     <title><?php echo $WEB_TITLE ?> | <?php echo $WEBSITE_NAME; ?></title>
@@ -64,36 +60,36 @@ echo $header ?>
 } else {
 ?>
 
-<body>
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <h1 class="text-center">Approval</h1>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="text-center">Approval</h1>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-12">
-                                <h3 class="text-center">Pending User Requests</h3>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h3 class="text-center">Pending User Requests</h3>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <table class="table table-striped table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Username</th>
-                                            <th scope="col">Name</th>
-                                            <th scope="col">Date</th>
-                                            <th scope="col">Status</th>
-                                            <th scope="col">Role</th>
-                                            <th scope="col">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <?php
+                            <div class="row">
+                                <div class="col-12">
+                                    <table class="table table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Username</th>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Date</th>
+                                                <th scope="col">Status</th>
+                                                <th scope="col">Role</th>
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <?php
                                         function getUserRoles()
                                         {
                                             include('/var/www/html/config.php');
@@ -103,12 +99,14 @@ echo $header ?>
                                             $users = array();
                                             while ($row = $result->fetch()) {
                                                 $user = array();
+                                                $user['id'] = $row['id'];
                                                 $user['username'] = $row['username'];
                                                 $user['name'] = $row['name'];
                                                 $user['registration_date'] = $row['registration_date'];
                                                 $user['active'] = $row['active'];
                                                 $user['uuid'] = $row['uuid'];
-                                                if ($row['role'] == 'pending') {
+                                                $user['role'] = $row['role'];
+                                                if ($user['role'] == 'pending') {
                                                     $roles = array();
                                                     $result2 = $db->prepare("SELECT * FROM roles ORDER BY role_name ASC");
                                                     $result2->execute();
@@ -127,111 +125,134 @@ echo $header ?>
                                         }
                                         ?>
 
-                                    <tbody>
-                                        <?php
+                                        <tbody>
+                                            <?php
                                             $users = getUserRoles();
                                             foreach ($users as $user) {
-                                                echo '<form action="">';
-                                                echo '<tr>';
-                                                echo '<td id="username">' . $user['username'] . '</td>';
-                                                echo '<td id="name">' . $user['name'] . '</td>';
-                                                echo '<td id="date">' . $user['registration_date'] . '</td>';
-                                                echo '<td id="status">' . $user['active'] . '</td>';
-                                                echo '<td id="role_selection">';
-                                                echo '<label for="role"></label>';
-                                                echo '<select id="role" name="role">';
-                                                if (isset($user['roles'])) {
-                                                    foreach ($user['roles'] as $role) {
-                                                        echo '<option value="' . $role['value'] . '">' . $role['name'] . '</option>';
+                                                if ($user['role'] == 'pending') {
+                                                    echo '<form action="">' . "\n";
+                                                    echo '<tr>' . "\n";
+                                                    echo '<td id="username">' . $user['username'] . '</td>' . "\n";
+                                                    echo '<td id="name">' . $user['name'] . '</td>' . "\n";
+                                                    echo '<td id="date">' . $user['registration_date'] . '</td>' . "\n";
+                                                    echo '<td id="status">' . $user['active'] . '</td>' . "\n";
+                                                    echo '<td id="role_selection">' . "\n";
+                                                    echo '<label for="role"></label>' . "\n";
+                                                    echo '<select id="role" name="role">' . "\n";
+                                                    if (isset($user['roles'])) {
+                                                        foreach ($user['roles'] as $role) {
+                                                            echo '<option value="' . $role['value'] . '" title="'. $role['name'] .'">' . $role['name'] . '</option>' . "\n";
+                                                        }
                                                     }
+                                                    echo '</select>' . "\n";
+                                                    echo '</td>' . "\n";
+                                                    echo '<td>' . "\n";
+                                                    if (isset($user['roles'])) {
+                                                        echo '<button class="btn btn-success" value="' . $user['uuid'] . '" id="approved-' . $user['id'] . '">Approve</button>' . "\n";
+                                                        echo '<button class="btn btn-danger" id="denyied-' . $user['id'] . '">Deny</button>' . "\n";
+                                                    }
+                                                    // echo '<button class="btn btn-success" id="approved-' . $user['id'] . '">Approve</button>';
+                                                    // echo '<button class="btn btn-danger" id="denyied">Deny</button>';
+                                                    echo '</td>' . "\n";
+                                                    echo '</tr>' . "\n";
+                                                    echo '</form>' . "\n";
                                                 }
-                                                echo '</select>';
-                                                echo '</td>';
-                                                echo '<td>';
-                                                echo '<button class="btn btn-success" id="' . $user['uuid'] . '_approved">Approve</button>';
-                                                echo '<button class="btn btn-danger" id="' . $user['uuid'] . '_deny">Deny</button>';
-                                                echo '</td>';
-                                                echo '</tr>';
-                                                echo '</form>';
                                             }
                                             ?>
-                                        <script>
-                                        $(function() {
-                                            $('[id$="_approved"]').click(function(e) {
-                                                e.preventDefault();
-                                                var valuuid = this.form.checkValuuidity();
-                                                if (valuuid) {
-                                                    var uuid = $(this).attr('uuid').split('_')[0];
-                                                    var role = $(this).closest('tr').find(
-                                                        'select[name=role]').val();
-                                                    console.info(role);
-                                                    $.ajax({
-                                                        url: '/php/db_handling/handling/approved.php',
-                                                        type: 'POST',
-                                                        data: {
-                                                            uuid: uuid,
-                                                            role: role
-                                                        },
-                                                        success: function(data) {
-                                                            if ($.trim(data) === "100") {
-                                                                Notiflix.Notify.success('Your request has been submitted');
-                                                                                    // Remove the row from the table
-                                                                $(this).closest('tr').remove();
-                                                            } else if ($.trim(data) === "200") {
-                                                                Notiflix.Notify.failure('There were errors while saving the data, Error: ' + data);
-                                                            }},
+                                            <script>
+                                                var buttons = document.querySelectorAll(".btn-success");
+
+                                                // Loop through the buttons and add a click event listener to each one
+                                                buttons.forEach(function(button) {
+                                                    button.addEventListener("click", function() {
+                                                        // Get the value of the button that was clicked
+                                                        var uuid = this.value;
+                                                        console.log(this.title);
+                                                        console.log(uuid);
+
+                                                        var role = $('#role').val();
+                                                        console.log(role);
+
+                                                        $.ajax({
+                                                            url: '/php/db_handling/handling/approved.php',
+                                                            type: 'POST',
+                                                            data: {
+                                                                uuid: uuid,
+                                                                role: role,
+                                                                role_name: role_name
+                                                            },
+                                                            success: function(data) {
+                                                                console.log(data);
+                                                                if ($.trim(data) === "100") {
+                                                                    Notiflix.Notify.success('Your role has been submitted');
+                                                                }
+                                                                if ($.trim(data) === "200") {
+                                                                    Notiflix.Notify.failure('There were errors while saving the data, Error: ' + data);
+                                                                }
+                                                                if ($.trim(data) === "300") {
+                                                                    Notiflix.Notify.failure('No Data, Error: ' + data);
+                                                                }
+                                                            },
                                                             error: function(data) {
-                                                                Notiflix.Notify.failure('Something went wrong, Error: ' + data);
+                                                                Notiflix.Notify.failure('Something is not right, Error: ' + data);
                                                             }
                                                         });
-                                                    }
+                                                    });
                                                 });
-                                            });
-                                        </script>
-                                        <script>
-                                           $(function() {
-                                            $('[id$="_deny"]').click(function(e) {
-                                                e.preventDefault();
-                                                var valuuid = this.form.checkValuuidity();
-                                                if (valuuid) {
-                                                    var uuid = $(this).attr('uuid').split('_')[0];
-                                                    var role = $(this).closest('tr').find(
-                                                        'select[name=role]').val();
-                                                    console.info(role);
-                                                    $.ajax({
-                                                        url: '/php/db_handling/handling/deny.php',
-                                                        type: 'POST',
-                                                        data: {
-                                                            uuid: uuid,
-                                                            role: role
-                                                        },
-                                                        success: function(data) {
-                                                            if ($.trim(data) === "100") {
-                                                                Notiflix.Notify.success('Your request has been submitted');
-                                                                                    // Remove the row from the table
-                                                                $(this).closest('tr').remove();
-                                                            } else if ($.trim(data) === "200") {
-                                                                Notiflix.Notify.failure('There were errors while saving the data, Error: ' + data);
-                                                            }},
-                                                            error: function(data) {
-                                                                Notiflix.Notify.failure('Something went wrong, Error: ' + data);
-                                                            }
-                                                        });
-                                                    }
+                                            </script>
+                                            <script>
+                                                $(function() {
+                                                    $('[id$="_deny"]').click(function(e) {
+                                                        e.preventDefault();
+                                                        var val = this.form.checkVality();
+                                                        if (val) {
+                                                            var uuid = $(this).attr('uuid').split('_')[0];
+                                                            var role = $(this).closest('tr').find(
+                                                                'select[name=role]').val();
+                                                            console.info(role);
+                                                            $.ajax({
+                                                                url: '/php/db_handling/handling/deny.php',
+                                                                type: 'POST',
+                                                                data: {
+                                                                    uuid: uuid,
+                                                                    role: role
+                                                                },
+                                                                success: function(data) {
+                                                                    if ($.trim(data) === "100") {
+                                                                        Notiflix.Notify.success(
+                                                                            'Your request has been submitted'
+                                                                        );
+                                                                        // Remove the row from the table
+                                                                        $(this).closest('tr')
+                                                                            .remove();
+                                                                    } else if ($.trim(data) ===
+                                                                        "200") {
+                                                                        Notiflix.Notify.failure(
+                                                                            'There were errors while saving the data, Error: ' +
+                                                                            data);
+                                                                    }
+                                                                },
+                                                                error: function(data) {
+                                                                    Notiflix.Notify.failure(
+                                                                        'Something went wrong, Error: ' +
+                                                                        data);
+                                                                }
+                                                            });
+                                                        }
+                                                    });
                                                 });
-                                            });
-                                        </script>
-                                </table>
+                                            </script>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <br>
+        <br>
     <?php } ?>
     <?php echo $footer ?>
-</body>
+    </body>
 
 </html>

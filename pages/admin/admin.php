@@ -241,6 +241,7 @@ https://cdn.jsdelivr.net/npm/notiflix/dist/notiflix-3.2.5.min.css
                         var employee_max = $('#employee-max').val();
                         var role_name = $('#role-name').val();
                         var day = $('#day').val();
+                        
                         // var hours = $('#hours').val();
                         // console.log(hours);
                         $.ajax({

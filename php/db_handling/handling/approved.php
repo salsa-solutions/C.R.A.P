@@ -7,11 +7,13 @@ error_reporting(E_ALL);
 ?>
 
 <?php
+  session_start();
   if(isset($_POST)){
-    $id                = $_POST['uuid'];
+    $uuid              = $_POST['uuid'];
     $role              = $_POST['role'];
+    $role_name         = $_POST['role_name'];
     
-    $sql = "UPDATE users SET role='$role', active=true WHERE uuid='$id'";
+    $sql = "UPDATE users SET role='$role', role_name='$role_name' WHERE uuid='$uuid'";
     $stmtinsert = $db->prepare($sql);
     $result = $stmtinsert->execute();
     if ($result) {

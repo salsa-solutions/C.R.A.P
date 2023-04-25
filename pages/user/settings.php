@@ -18,7 +18,7 @@ $name = $_SESSION['name'];
 $username = $_SESSION['username'];
 $role = $_SESSION['role'];
 $role_name = $_SESSION['role_name'];
-$uid = $_SESSION['uuid'];
+$uuid = $_SESSION['uuid'];
 
 $WEB_TITLE = 'Settings';
 $account = getUsersDropdown($db)['dropdown'];
@@ -43,7 +43,8 @@ setAccessPages($role);
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
   </script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.jsdelivr.net/npm/notiflix/dist/notiflix-3.2.5.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/notiflix/dist/notiflix-3.2.5.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="/css/home.css">
   <link rel="stylesheet" href="/css/nav.css">
@@ -66,7 +67,7 @@ if ($_DEV && in_array($role, array('employee', 'manager', 'admin'))) {
 
   <body>
     <br>
-    <div class="settings container h-100 scroll">
+    <div class="settings container scroll">
       <h2>User Settings</h2>
 
       <h3>Change Password</h3>
@@ -89,7 +90,7 @@ if ($_DEV && in_array($role, array('employee', 'manager', 'admin'))) {
 
     ?>
       <br>
-      <div class="settings">
+      <div class="settings container scroll">
         <h2>Manage Users</h2>
         <h3>Update User Information</h3>
         <?php $user_dropdown = getUsersDropdown($db)['dropdown']; ?>
@@ -136,9 +137,9 @@ if ($_DEV && in_array($role, array('employee', 'manager', 'admin'))) {
             });
           });
         </script>
-
-
-
+      </div>
+      <br>
+      <div class="settings container scroll">
         <h3>Add New User</h3>
         <form>
           <label for="firstname">First Name:</label>
@@ -170,26 +171,26 @@ if ($_DEV && in_array($role, array('employee', 'manager', 'admin'))) {
           <br>
           <button class="button" type="submit" id="add_user">Add User</button>
         </form>
-
-
-
+      </div>
+      <br>
+      <div class="settings container scroll">
         <h3>Add New Role</h3>
         <form>
-          <label for="role">Role:</label>
-          <input type="text" id="role" name="role">
+          <label>Role:</label>
+          <input type="text" id="role-name">
           <br>
-          <label for="role">Role Description:</label>
-          <input type="text" id="role_description" name="role_description">
+          <label>Role Description:</label>
+          <input type="text" id="role-description">
           <br>
-          <label for="role">Role Permissions:</label>
-          <select id="role_permisions" name="status">
+          <label>Role Permissions:</label>
+          <select id="role-permisions">
             <option value="employee">Employee</option>
             <option value="manager">Manager</option>
             <option value="admin">Admin</option>
           </select>
 
           <br>
-          <button class="button" type="submit" id="submit_role">Add Role</button>
+          <button class="button" type="submit" id="submit-role">Add Role</button>
         </form>
         <br>
         <br>
@@ -210,6 +211,7 @@ if ($_DEV && in_array($role, array('employee', 'manager', 'admin'))) {
 
         </div>
       </div>
+
     <?php
     }
     ?>
@@ -223,35 +225,36 @@ if ($_DEV && in_array($role, array('employee', 'manager', 'admin'))) {
           if (valid) {
 
 
-            var uuid = "<?php echo $uuid; ?>";
+            var created_by_uuid = "<?php echo $uuid; ?>";
             var created_by = "<?php echo $name; ?>";
             var role_name = $('#role-name').val();
+            var role = $('#role-permisions').val();
             var role_description = $('#role-description').val();
-
-
-            // var hours = $('#hours').val();
-            // console.log(hours);
+            e.preventDefault();
             $.ajax({
               url: '/php/db_handling/handling/add_role.php',
               type: 'POST',
               data: {
-                uuid: uuid,
+                created_by_uuid: created_by_uuid,
                 created_by: created_by,
                 role_name: role_name,
+                role: role,
                 role_description: role_description
-                
+
                 // hours: hours
               },
-              success: function(data) {
-                if (data === "100") {
 
-                  Notiflix.Notify.success('Your request has been submited');
+              success: function(data) {
+                console.log(data);
+                if ($.trim(data) === "100") {
+
+                  Notiflix.Notify.success('Your role has been submited');
                 }
-                if (data === "200") {
+                if ($.trim(data) === "200") {
                   Notiflix.Notify.failure(
                     'There were erros while saving the data, Error:' + data);
                 }
-                if (data === "300") {
+                if ($.trim(data) === "300") {
                   Notiflix.Notify.failure(
                     'No Data, Error:' + data);
                 }

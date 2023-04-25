@@ -1,3 +1,3 @@
-cloc --exclude-list-file=.clocignore --by-file * 
+cloc --exclude-list-file=.clocignore * 
 echo everything else
 cloc --exclude-dir=phpMyAdmin *
