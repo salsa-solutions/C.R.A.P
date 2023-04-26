@@ -61,7 +61,7 @@ echo $header ?>
 ?>
 
     <body>
-        <div class="container">
+        <div class="container h-100 scroll">
             <div class="row">
                 <div class="col-12">
                     <h1 class="text-center">Approval</h1>
@@ -141,7 +141,7 @@ echo $header ?>
                                                     echo '<select id="role" name="role">' . "\n";
                                                     if (isset($user['roles'])) {
                                                         foreach ($user['roles'] as $role) {
-                                                            echo '<option value="' . $role['value'] . '" title="'. $role['name'] .'">' . $role['name'] . '</option>' . "\n";
+                                                            echo '<option value="' . $role['name'] . '">' . $role['name'] . '</option>' . "\n";
                                                         }
                                                     }
                                                     echo '</select>' . "\n";
@@ -149,13 +149,13 @@ echo $header ?>
                                                     echo '<td>' . "\n";
                                                     if (isset($user['roles'])) {
                                                         echo '<button class="btn btn-success" value="' . $user['uuid'] . '" id="approved-' . $user['id'] . '">Approve</button>' . "\n";
-                                                        echo '<button class="btn btn-danger" id="denyied-' . $user['id'] . '">Deny</button>' . "\n";
+                                                        echo '<button class="btn btn-danger" value="' . $user['uuid'] . '" id="denied-' . $user['id'] . '">denied</button>' . "\n";
                                                     }
                                                     // echo '<button class="btn btn-success" id="approved-' . $user['id'] . '">Approve</button>';
                                                     // echo '<button class="btn btn-danger" id="denyied">Deny</button>';
                                                     echo '</td>' . "\n";
                                                     echo '</tr>' . "\n";
-                                                    echo '</form>' . "\n";
+                                                    echo '</form>';
                                                 }
                                             }
                                             ?>
@@ -167,10 +167,8 @@ echo $header ?>
                                                     button.addEventListener("click", function() {
                                                         // Get the value of the button that was clicked
                                                         var uuid = this.value;
-                                                        console.log(this.title);
-                                                        console.log(uuid);
 
-                                                        var role = $('#role').val();
+                                                        var role_name = $('#role').val();
                                                         console.log(role);
 
                                                         $.ajax({
@@ -178,8 +176,8 @@ echo $header ?>
                                                             type: 'POST',
                                                             data: {
                                                                 uuid: uuid,
-                                                                role: role,
-                                                                role_name: role_name
+                                                                role_name: role_name,
+
                                                             },
                                                             success: function(data) {
                                                                 console.log(data);
@@ -201,44 +199,41 @@ echo $header ?>
                                                 });
                                             </script>
                                             <script>
-                                                $(function() {
-                                                    $('[id$="_deny"]').click(function(e) {
-                                                        e.preventDefault();
-                                                        var val = this.form.checkVality();
-                                                        if (val) {
-                                                            var uuid = $(this).attr('uuid').split('_')[0];
-                                                            var role = $(this).closest('tr').find(
-                                                                'select[name=role]').val();
-                                                            console.info(role);
-                                                            $.ajax({
-                                                                url: '/php/db_handling/handling/deny.php',
-                                                                type: 'POST',
-                                                                data: {
-                                                                    uuid: uuid,
-                                                                    role: role
-                                                                },
-                                                                success: function(data) {
-                                                                    if ($.trim(data) === "100") {
-                                                                        Notiflix.Notify.success(
-                                                                            'Your request has been submitted'
-                                                                        );
-                                                                        // Remove the row from the table
-                                                                        $(this).closest('tr')
-                                                                            .remove();
-                                                                    } else if ($.trim(data) ===
-                                                                        "200") {
-                                                                        Notiflix.Notify.failure(
-                                                                            'There were errors while saving the data, Error: ' +
-                                                                            data);
-                                                                    }
-                                                                },
-                                                                error: function(data) {
-                                                                    Notiflix.Notify.failure(
-                                                                        'Something went wrong, Error: ' +
-                                                                        data);
+                                                var buttons = document.querySelectorAll(".btn-danger");
+
+                                                // Loop through the buttons and add a click event listener to each one
+                                                buttons.forEach(function(button) {
+                                                    button.addEventListener("click", function() {
+                                                        // Get the value of the button that was clicked
+                                                        var uuid = this.value;
+
+                                                        var role_name = $('#role').val();
+                                                        console.log(role);
+
+                                                        $.ajax({
+                                                            url: '/php/db_handling/handling/denied.php',
+                                                            type: 'POST',
+                                                            data: {
+                                                                uuid: uuid,
+
+
+                                                            },
+                                                            success: function(data) {
+                                                                console.log(data);
+                                                                if ($.trim(data) === "100") {
+                                                                    Notiflix.Notify.success('Your role has been submitted');
                                                                 }
-                                                            });
-                                                        }
+                                                                if ($.trim(data) === "200") {
+                                                                    Notiflix.Notify.failure('There were errors while saving the data, Error: ' + data);
+                                                                }
+                                                                if ($.trim(data) === "300") {
+                                                                    Notiflix.Notify.failure('No Data, Error: ' + data);
+                                                                }
+                                                            },
+                                                            error: function(data) {
+                                                                Notiflix.Notify.failure('Something is not right, Error: ' + data);
+                                                            }
+                                                        });
                                                     });
                                                 });
                                             </script>

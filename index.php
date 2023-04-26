@@ -36,8 +36,8 @@ setAccessPages($role);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="
@@ -70,13 +70,127 @@ if ($_DEV && in_array($role, array('employee', 'manager', 'admin'))) {
 
 
 
-    <div class="container h-100 scroll">
-        <div class="d-flex justify-content-left form-container">
-            <div class="user_card">
-                <div class="d-flex justify-content-center p-5">
+    <div class="container h-100 scroll user-input">
+        <div class="scheduling_card">
+            <div class="d-flex justify-content-start p-5">
+                <h3>Shifts</h3>
+            </div>
+            <!-- make each day from monday to sunday have the input be dropdown -->
+            <div class="d-flex justify-content-start form-container">
+                <form action="">
+                    <div class="input-group mb-1">
+                        <div class="input-group-append text">
+                            <p>Monday</p>
+                        </div>
+                        <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                            <?php
+                            foreach ($time as $key => $value) {
+                                echo '<option value="' . $value . '">' . $value . '</option>';
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="input-group mb-1">
+                        <div class="input-group-append text">
+                            <p>Tuesday</p>
+                        </div>
+                        <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                            <?php
+                            foreach ($time as $key => $value) {
+                                echo '<option value="' . $value . '">' . $value . '</option>';
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="input-group mb-1">
+                        <div class="input-group-append text">
+                            <p>Wednesday</p>
+                        </div>
+                        <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                            <?php
+                            foreach ($time as $key => $value) {
+                                echo '<option value="' . $value . '">' . $value . '</option>';
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="input-group mb-1">
+                        <div class="input-group-append text">
+                            <p>Thursday</p>
+                        </div>
+                        <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                            <?php
+                            foreach ($time as $key => $value) {
+                                echo '<option value="' . $value . '">' . $value . '</option>';
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="input-group mb-1">
+                        <div class="input-group-append text">
+                            <p>Friday</p>
+                        </div>
+                        <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                            <?php
+                            foreach ($time as $key => $value) {
+                                echo '<option value="' . $value . '">' . $value . '</option>';
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="input-group mb-1">
+                        <div class="input-group-append text">
+                            <p>Saturday</p>
+                        </div>
+                        <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                            <?php
+                            foreach ($time as $key => $value) {
+                                echo '<option value="' . $value . '">' . $value . '</option>';
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="input-group mb-1">
+                        <div class="input-group-append text">
+                            <p>Sunday</p>
+                        </div>
+                        <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                            <?php
+                            foreach ($time as $key => $value) {
+                                echo '<option value="' . $value . '">' . $value . '</option>';
+                            }
+                            ?>
+                        </select>
+                    </div>
+                </form>
+            </div>
+
+
+
+
+
+
+            <!-- <div class="d-flex justify-content-center form-container">
+            <div class="scheduling_card">
+                <div class="d-flex justify-content-start p-5">
+                    <h3>Shifts</h3>
+                </div>
+                <div class="d-flex justify-content-start form-container">
+                    <form action="">
+                        <div class="input-group mb-1">
+                            <div class="input-group-append text">
+                                <p>Monday</p>
+                            </div>
+                            <input type="text" placeholder="9am-4pm" name="monday-pref" id="monday-pref" class="form-control form-control-sm input_user ">
+                        </div>
+                    </form>
+                </div>
+
+
+                <div class="d-flex justify-content-end p-5">
                     <h3>Wanted days</h3>
                 </div>
-                <div class="d-flex justify-content-center form-container">
+                <div class="d-flex justify-content-end form-container">
                     <form action="">
                         <div class="input-group mb-1">
                             <div class="input-group-append text">
@@ -114,15 +228,13 @@ if ($_DEV && in_array($role, array('employee', 'manager', 'admin'))) {
                             </div>
                             <input type="text" placeholder="9am-4pm" name="saturday" id="saturday-pref" class="form-control form-control-sm input_user ">
                         </div>
-                        <!-- <div class="input-group mb-1">
-                            <input type="number" placeholder="Hours" name="hours" id="hours" class="form-control form-control-sm input_user" min=1 max=40 >
-                        </div> -->
+                        
                         <div class="d-flex justify-content-center mt-3 submit-container">
                             <button type="button" name="button" id="submit-pref" class="btn submit_btn">submit</button>
                         </div>
                     </form>
                 </div>
-            </div>
+            </div> -->
             <div class="user_card">
                 <div class="d-flex justify-content-center p-5">
                     <h3>Special request</h3>

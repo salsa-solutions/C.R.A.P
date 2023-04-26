@@ -30,32 +30,23 @@ C.R.A.P is a highly efficient and localized scheduling program designed to cater
 ## Pricing
 
 One line = $0.10
-Current work price = $314.10
+Current work price = $329.60
 
 ``` bash
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
-PHP                             32            408            159           2424
-CSS                             10             95             42            550
-SQL                              2             70            142            183
+PHP                             32            433            161           2537
+CSS                             10             95             42            570
+SQL                              2             72            148            189
 -------------------------------------------------------------------------------
-SUM:                            44            573            343           3157
+SUM:                            44            600            351           3296
 -------------------------------------------------------------------------------
 ```
 Current retial price: 500$ + 50$ a year to renew subscription
 
-## Conditions
-
-If hosted on my own hardware you owe 5 dollars a month for up keep
-
-Feature requests are always welcome as i want to make it to your needs but going back
-to the same deal with buying the software, however many lines of code it takes to implament it
-is how much it will cost, i can give a estimate of how much it will cost (avg is probally no more than a dollar)
-
-If you decide to host the software on your own hardware, then you will no longer have to pay 5 dollar up keep.
-
-but in order to have the software running with everything you need you would have to install all the required software and set it up properly, i can do it for $100.00 per server
+## Install
+Installtion of c.r.a.p will be used with a docker image that is deployed once registard, it will include a licence file and config file(incase in system doesnt work)
 
 ## TODO
 

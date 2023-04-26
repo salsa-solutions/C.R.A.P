@@ -74,7 +74,7 @@ https://cdn.jsdelivr.net/npm/notiflix/dist/notiflix-3.2.5.min.css
                         <div class="form-group">
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" name="rememberme" class="custom-control-input" id="customControlInline">
-                                <label for="customControlInline" class="custom-control-label">Remember Me</label>
+                                <label for="customControlInline" class="custom-control-label" style="color: white">Remember Me</label>
                             </div>
                         </div>
 

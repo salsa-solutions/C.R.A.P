@@ -1,10 +1,15 @@
 <?php
-session_start();
 require_once('/var/www/html/config.php');
 require_once('/var/www/html/pages/page-index.php');
 require_once('/var/www/html/php/functions/permissons.php');
 
-if (!isset($_SESSION['session_id']) && !isset($_SESSION['name']) && !isset($_SESSION['username']) && !isset($_SESSION['role']) && !isset($_SESSION['role_name']) && !isset($_SESSION['uuid'])) {
+
+session_start();
+$session_uuid = session_id();
+
+
+
+if (!isset($session_uuid) || !isset($_SESSION['name']) && !isset($_SESSION['username']) && !isset($_SESSION['role']) && !isset($_SESSION['role_name']) && !isset($_SESSION['uuuuid'])) {
     header('Location: ' . $login_page_url . '');
 }
 
@@ -12,15 +17,12 @@ $name = $_SESSION['name'];
 $username = $_SESSION['username'];
 $role = $_SESSION['role'];
 $role_name = $_SESSION['role_name'];
-$uid = $_SESSION['uuid'];
+$uuid = $_SESSION['uuid'];
 
 $WEB_TITLE = 'Scheduling';
-// to turn off a site uncomment the following line:
-// $_DEV = true;
+
+
 setAccessPages($role);
-if ($role == 'employee') {
-    header("Location: " . $home_page_url . "");
-}
 
 ?>
 
@@ -59,142 +61,170 @@ if ($role == 'employee') {
 
         <div class="container h-100 scroll">
             <div class="row">
-                <div class="col-md-12">
-                    <h1>Scheduling</h1>
+                <div class="col-12">
+                    <h1 class="text-center"><?php echo $WEB_TITLE; ?></h1>
                 </div>
             </div>
-            <div class="row row_container">
-                <div class="col-md-12">
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Monday</th>
-                                    <th scope="col">Tuesday</th>
-                                    <th scope="col">Wednesday</th>
-                                    <th scope="col">Thursday</th>
-                                    <th scope="col">Friday</th>
-                                    <th scope="col">Saturday</th>
-                                    <!-- <th scope="col">hours</th> -->
-                                </tr>
-                            </thead>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h3 class="text-center">Pending Schedules</h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <table class="table table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Status</th>
+                                                <th scope="col">Monday</th>
+                                                <th scope="col">Tuesday</th>
+                                                <th scope="col">Wednesday</th>
+                                                <th scope="col">Thursday</th>
+                                                <th scope="col">Friday</th>
+                                                <th scope="col">Saturday</th>
+                                                <th scope="col">Sunday</th>
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <?php
+                                        function getUserRoles()
+                                        {
+                                            include('/var/www/html/config.php');
+                                            $result = $db->prepare("SELECT * FROM users ORDER BY username ASC");
+                                            $result->execute();
+                                            $i = 0;
+                                            $users = array();
+                                            while ($row = $result->fetch()) {
+                                                $user = array();
+                                                $user['id'] = $row['id'];
+                                                $user['username'] = $row['username'];
+                                                $user['name'] = $row['name'];
+                                                $user['registration_date'] = $row['registration_date'];
+                                                $user['active'] = $row['active'];
+                                                $user['uuid'] = $row['uuid'];
+                                                $user['role'] = $row['role'];
+                                                if ($user['role'] == 'pending') {
+                                                    $roles = array();
+                                                    $result2 = $db->prepare("SELECT * FROM roles ORDER BY role_name ASC");
+                                                    $result2->execute();
+                                                    while ($row2 = $result2->fetch()) {
+                                                        $roles[] = array('value' => $row2['role'], 'name' => $row2['role_name']);
+                                                    }
+                                                    $user['roles'] = $roles;
+                                                }
+                                                $users[] = $user;
+                                                $i++;
+                                            }
+                                            if ($i == 0) {
+                                                $users[] = array('message' => 'No new users registered');
+                                            }
+                                            return $users;
+                                        }
+                                        ?>
 
+                                        <tbody>
+                                            <?php
+                                            $users = getUserRoles();
+                                            foreach ($users as $user) {
+                                                if ($user['role'] == 'pending') {
+                                                    echo '<form action="">' . "\n";
+                                                    echo '<tr>' . "\n";
+                                                    echo '<td id="username">' . $user['username'] . '</td>' . "\n";
+                                                    echo '<td id="name">' . $user['name'] . '</td>' . "\n";
+                                                    echo '<td id="date">' . $user['registration_date'] . '</td>' . "\n";
+                                                    echo '<td id="status">' . $user['active'] . '</td>' . "\n";
+                                                    echo '<td id="role_selection">' . "\n";
+                                                    echo '<label for="role"></label>' . "\n";
+                                                    echo '<select id="role" name="role">' . "\n";
+                                                    if (isset($user['roles'])) {
+                                                        foreach ($user['roles'] as $role) {
+                                                            echo '<option value="' . $role['name'] . '">' . $role['name'] . '</option>' . "\n";
+                                                        }
+                                                    }
+                                                    echo '</select>' . "\n";
+                                                    echo '</td>' . "\n";
+                                                    echo '<td>' . "\n";
+                                                    if (isset($user['roles'])) {
+                                                        echo '<button class="btn btn-success" value="' . $user['uuid'] . '" id="approved-' . $user['id'] . '">Approve</button>' . "\n";
+                                                    }
+                                                    // echo '<button class="btn btn-success" id="approved-' . $user['id'] . '">Approve</button>';
+                                                    // echo '<button class="btn btn-danger" id="denyied">Deny</button>';
+                                                    echo '</td>' . "\n";
+                                                    echo '</tr>' . "\n";
+                                                    echo '</form>';
+                                                }
+                                            }
+                                            ?>
+                                            <script>
+                                                var buttons = document.querySelectorAll(".btn-success");
 
-                            <?php
-                            include('/var/www/html/config.php');
-                            $result = $db->prepare("SELECT * FROM availability ORDER BY name ASC");
-                            $result->execute();
-                            for ($i = 0; $row = $result->fetch(); $i++) {
-                                if ($row['approved'] == 'pending') {
+                                                // Loop through the buttons and add a click event listener to each one
+                                                buttons.forEach(function(button) {
+                                                    button.addEventListener("click", function() {
+                                                        // Get the value of the button that was clicked
+                                                        var uuid = this.value;
 
+                                                        var role_name = $('#role').val();
+                                                        console.log(role);
 
-
-                            ?>
-                                    <tbody>
-                                        <form action="">
-                                            <td><?php echo $row['name']; ?></td>
-                                            <td><?php echo $row['approved']; ?></td>
-                                            <td><input style="width: 90px ;" id="<?php echo $row['uuid'] ?>_monday-sched" placeholder="<?php echo $row['monday']; ?>"></td>
-                                            <td><input style="width: 90px ;" id="<?php echo $row['uuid'] ?>_tuesday-sched" placeholder="<?php echo $row['tuesday']; ?>"></td>
-                                            <td><input style="width: 90px ;" id="<?php echo $row['uuid'] ?>_wednesday-sched" placeholder="<?php echo $row['wednesday']; ?>"></td>
-                                            <td><input style="width: 90px ;" id="<?php echo $row['uuid'] ?>_thursday-sched" placeholder="<?php echo $row['thursday']; ?>"></td>
-                                            <td><input style="width: 90px ;" id="<?php echo $row['uuid'] ?>_friday-sched" placeholder="<?php echo $row['friday']; ?>"></td>
-                                            <td><input style="width: 90px ;" id="<?php echo $row['uuid'] ?>_saturday-sched" placeholder="<?php echo $row['saturday']; ?>"></td>
-                                            <!-- <td><input style="width: 90px ;" id="hours" placeholder="<?php //echo $row['username']; 
-                                                                                                            ?>"></td> -->
-                                            <td><button type="button" name="button" id="<?php echo $row['uuid'] ?>_submit_approved_sched" class="btn">submit</button></td>
-                                        </form>
-                                        <script>
-                                            $(function() {
-                                                $('#<?php echo $row['uuid'] ?>_submit_approved_sched').click(function(e) {
-
-                                                    var valid = this.form.checkValidity();
-
-                                                    if (valid) {
-                                                        var id = '<?php echo $row['uuid'] ?>';
-                                                        var approved = '<?php echo $name; ?>';
-                                                        var name = "<?php echo $row['name']; ?>";
-                                                        var username = "<?php echo $row['username']; ?>";
-                                                        var monday_sched = $(
-                                                                '#<?php echo $row['uuid'] ?>_monday-sched')
-                                                            .val();
-                                                        var tuesday_sched = $(
-                                                                '#<?php echo $row['uuid'] ?>_tuesday-sched')
-                                                            .val();
-                                                        var wednesday_sched = $(
-                                                                '#<?php echo $row['uuid'] ?>_wednesday-sched')
-                                                            .val();
-                                                        var thursday_sched = $(
-                                                                '#<?php echo $row['uuid'] ?>_thursday-sched')
-                                                            .val();
-                                                        var friday_sched = $(
-                                                                '#<?php echo $row['uuid'] ?>_friday-sched')
-                                                            .val();
-                                                        var saturday_sched = $(
-                                                                '#<?php echo $row['uuid'] ?>_saturday-sched')
-                                                            .val();
-                                                        // var hours = $('#hours-sched').val();
-                                                        // console.log(hours);
-                                                        e.preventDefault();
                                                         $.ajax({
-                                                            url: '/php/db/handling/add_current.php',
+                                                            url: '/php/db_handling/handling/approved.php',
                                                             type: 'POST',
                                                             data: {
-                                                                id: id,
-                                                                approved: approved,
-                                                                name: name,
-                                                                username: username,
-                                                                monday: monday_sched,
-                                                                tuesday: tuesday_sched,
-                                                                wednesday: wednesday_sched,
-                                                                thursday: thursday_sched,
-                                                                friday: friday_sched,
-                                                                saturday: saturday_sched
+                                                                uuid: uuid,
+                                                                role_name: role_name,
+
                                                             },
                                                             success: function(data) {
-
+                                                                console.log(data);
+                                                                if ($.trim(data) === "100") {
+                                                                    Notiflix.Notify.success(
+                                                                        'Your role has been submitted'
+                                                                    );
+                                                                }
+                                                                if ($.trim(data) === "200") {
+                                                                    Notiflix.Notify.failure(
+                                                                        'There were errors while saving the data, Error: ' +
+                                                                        data);
+                                                                }
+                                                                if ($.trim(data) === "300") {
+                                                                    Notiflix.Notify.failure(
+                                                                        'No Data, Error: ' +
+                                                                        data);
+                                                                }
                                                             },
                                                             error: function(data) {
-                                                                Swal.fire(
-                                                                    'Errors',
-                                                                    'huh... well that didnt happen',
-                                                                    data,
-                                                                    'error'
-                                                                )
-
+                                                                Notiflix.Notify.failure(
+                                                                    'Something is not right, Error: ' +
+                                                                    data);
                                                             }
                                                         });
-                                                    }
+                                                    });
                                                 });
-                                            });
-                                        </script>
-                                    </tbody>
-
-
-                        <?php
-                                }
-                            }
-                            if ($i == 0) {
-                                echo '<td colspan="8">No schedules have been posted yet.</td>';
-                            }
-                        }
-                        ?>
-
-                        </table>
+                                            </script>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                <?php } ?>
                 </div>
             </div>
-        </div>
-
-        <!-- <input class="input-group input-group-append " type="text" placeholder="<?php echo $monday; ?>"> -->
 
 
 
 
 
-        </div>
 
-        <?php require("/var/www/html/php/template.php");
-        echo $footer ?>
+
+
+
+
+            <?php require("/var/www/html/php/template.php");
+            echo $footer ?>

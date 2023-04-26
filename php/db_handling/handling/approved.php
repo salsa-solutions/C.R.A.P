@@ -1,5 +1,6 @@
 <?php
 require_once('/var/www/html/config.php');
+require_once('/var/www/html/php/functions/userPermissions.php');
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -10,8 +11,11 @@ error_reporting(E_ALL);
   session_start();
   if(isset($_POST)){
     $uuid              = $_POST['uuid'];
-    $role              = $_POST['role'];
     $role_name         = $_POST['role_name'];
+    $role              = getRoleFromName($role_name);
+    echo $role;
+
+
     
     $sql = "UPDATE users SET role='$role', role_name='$role_name' WHERE uuid='$uuid'";
     $stmtinsert = $db->prepare($sql);
