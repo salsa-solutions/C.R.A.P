@@ -9,9 +9,9 @@ error_reporting(E_ALL);
 
 <?php
   if(isset($_POST)){
-    $id                = $_POST['uid'];
+    $uuid                = $_POST['uuid'];
 
-    $sql = "DELETE FROM users WHERE id='$id'";
+    $sql = "DELETE FROM users WHERE uuid='$uuid'";
     $stmtinsert = $db->prepare($sql);
     $result = $stmtinsert->execute();
     if ($result) {

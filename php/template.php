@@ -37,7 +37,7 @@ $footer = <<<FOOTER
     <div class="f-container">
         <footer>
             <p>You are logged in as: $name </p>
-            <p>Role: $role </p>
+            <p>Role: $role_name </p>
         </footer>
     </div>
 </div>

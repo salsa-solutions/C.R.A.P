@@ -1,14 +1,12 @@
-test.php
-test.html
-test.css
-test.js
-test.sql
-test.py
+# files
 thefixer.sh
 git.sh
-docker/docker.sh
 cloc.sh
 README.md
 DEPENDS.md
 LICENSE.md
+# folders
 phpMyAdmin
+test
+docker
+doc

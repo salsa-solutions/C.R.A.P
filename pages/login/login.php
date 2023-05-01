@@ -3,7 +3,7 @@ require_once '/var/www/html/config.php';
 require_once '/var/www/html/pages/page-index.php';
 session_start();
 
-if (isset($session_id) && isset($_SESSION['name']) && isset($_SESSION['username']) && isset($_SESSION['role']) && isset($_SESSION['role_name']) && isset($_SESSION['uid'])) {
+if (isset($session_id) && isset($_SESSION['name']) && isset($_SESSION['username']) && isset($_SESSION['role']) && isset($_SESSION['role_name']) && isset($_SESSION['uuid'])) {
     header('Location: ' . $home_page_url . '');
 }
 $WEB_TITLE = 'Login';
@@ -74,7 +74,7 @@ https://cdn.jsdelivr.net/npm/notiflix/dist/notiflix-3.2.5.min.css
                         <div class="form-group">
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" name="rememberme" class="custom-control-input" id="customControlInline">
-                                <label for="customControlInline" class="custom-control-label">Remember Me</label>
+                                <label for="customControlInline" class="custom-control-label" style="color: white">Remember Me</label>
                             </div>
                         </div>
 

@@ -12,6 +12,7 @@ error_reporting(E_ALL);
     
     if(isset($_POST)){
         $date              = $currentDate->format('Y-m-d H:i:s');
+        $uuid              = $_POST['uuid'];
         $name              = $_POST['name'];
         $username          = $_POST['username'];
         $monday            = empty($_POST['monday']) ? 'OFF' : $_POST['monday'];
@@ -21,13 +22,13 @@ error_reporting(E_ALL);
         $friday            = empty($_POST['friday']) ? 'OFF' : $_POST['friday'];
         $saturday          = empty($_POST['saturday']) ? 'OFF' : $_POST['saturday'];
         // $hours             = $_POST['hours']; add them back to $sql var if wanted
-        $sql = "INSERT INTO wanted_days (date, name, username, monday, tuesday, wednesday, thursday, friday, saturday ) VALUES(?,?,?,?,?,?,?,?,?)";
+        $sql = "INSERT INTO wanted_days (uuid, date, name, username, monday, tuesday, wednesday, thursday, friday, saturday ) VALUES(?,?,?,?,?,?,?,?,?,?)";
         $stmtinsert = $db->prepare($sql);
-        $result = $stmtinsert->execute([$date, $name, $username, $monday, $tuesday, $wednesday, $thursday, $friday, $saturday]);
+        $result = $stmtinsert->execute([$uuid, $date, $name, $username, $monday, $tuesday, $wednesday, $thursday, $friday, $saturday]);
         if ($result) {
-            echo 'Successfully saved.';
+            echo 100;
         } else {
-            echo 'There were erros while saving the data.';
+            echo 200;
         }
     }else{
         echo "No data";

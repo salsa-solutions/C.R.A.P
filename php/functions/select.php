@@ -9,7 +9,7 @@ error_reporting(E_ALL);
 
 function getUsersDropdown($db)
 {
-  $query = "SELECT name, role, uid FROM users";
+  $query = "SELECT name, role, uuid FROM users";
   $stmt = $db->prepare($query);
   $stmt->execute();
   $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -21,7 +21,7 @@ function getUsersDropdown($db)
   foreach ($users as $user) {
     $fullname = $user['name'];
     $role = $user['role'];
-    $id = $user['uid'];
+    $id = $user['uuid'];
 
     // Add the fullname to the dropdown menu as an option with the user ID as the value
     $dropdown .= '<option value="' . $id . '">' . $fullname . ' - '. $role . '</option>';
@@ -34,6 +34,49 @@ function getUsersDropdown($db)
   $dropdown .= '</select>';
 
   // Return the dropdown menu, roles array, and ids array as an array
-  return array('dropdown' => $dropdown, 'role' => $roles, 'uid' => $ids);
+  return array('dropdown' => $dropdown, 'role' => $roles, 'uuid' => $ids);
 }
 
+function generate_time_options($start_time, $end_time, $interval = 15)
+{
+  $times = array();
+  $current_time = strtotime($start_time);
+  $end_time = strtotime($end_time);
+
+  while ($current_time <= $end_time) {
+    $times[] = date('h:i A', $current_time);
+    $current_time += $interval * 60;
+  }
+
+  $html = '';
+  foreach ($times as $time) {
+    $html .= '<option value="' . $time . '"> ' . $time . '</option>';
+  }
+  
+
+  return $html;
+}
+
+// get all the roles from roles table
+
+function getRolesDropdown($db)
+{
+  $query = "SELECT name FROM roles";
+  $stmt = $db->prepare($query);
+  $stmt->execute();
+  $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+  $dropdown = '<select name="role_name">';
+
+  foreach ($roles as $role) {
+    $role_name = $role['name'];
+
+    // Add the fullname to the dropdown menu as an option with the user ID as the value
+    $dropdown .= '<option value="' . $role_name . '">' . $role_name . '</option>';
+  }
+
+  $dropdown .= '</select>';
+
+  // Return the dropdown menu, roles array, and ids array as an array
+  return $dropdown;
+}

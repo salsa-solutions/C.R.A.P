@@ -7,19 +7,24 @@
 
 
 <?php
+
+    
     $currentDate = new DateTime();
     // echo '<pre>'; print_r($_POST); echo '</pre>';
     require_once('/var/www/html/config.php');
     if($_DEV_DB){
-        echo 'sign up are disabled due to maintenance';
+        echo 'sign up is disabled due to maintenance';
     }else{
         if(isset($_POST)){
+            
+            $uuid              = uuid_create(UUID_TYPE_RANDOM);
             $date              = $currentDate->format('Y-m-d H:i:s');
             $name              = $_POST['firstname'] . ' ' . $_POST['lastname'];
             $email             = $_POST['email'];
             $phone             = $_POST['phone'];
             $username          = $_POST['username'];
             $password          = password_hash($_POST['password'], PASSWORD_DEFAULT);
+            // echo $uuid;
             // if first user is created, make them admin
             $sql_make_admin = "SELECT * FROM users";
             $stmt = $db->prepare($sql_make_admin);
@@ -35,11 +40,11 @@
                 $active            = 'true';
             }
 
-            $sql = "INSERT INTO users (registration_date, role, role_name, name, email, phone, username, password, active) VALUES(?,?,?,?,?,?,?,?,?)";
+            $sql = "INSERT INTO users (uuid, registration_date, role, role_name, name, email, phone, username, password, active) VALUES(?,?,?,?,?,?,?,?,?,?)";
 
 
             $stmtinsert = $db->prepare($sql);
-            $result = $stmtinsert->execute([$date, $role, $role_name, $name, $email, $phone, $username, $password, $active]);
+            $result = $stmtinsert->execute([$uuid, $date, $role, $role_name, $name, $email, $phone, $username, $password, $active]);
             if ($result) {
                 echo 'Successfully saved.';
             } else {

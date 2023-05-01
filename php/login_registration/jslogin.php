@@ -104,7 +104,7 @@ if ($_DEV_DB) {
       $_SESSION['username'] = $username;
       $_SESSION['role'] = $user['role'];
       $_SESSION['role_name'] = $user['role_name'];
-      $_SESSION['uid'] = $user['uid'];
+      $_SESSION['uuid'] = $user['uuid'];
       $_SESSION['session_id'] = session_id();
       // setcookie('name', password_hash($user['username'], PASSWORD_DEFAULT),time() + (10 * 365 * 24 * 60 * 60), '/'); 
       // setcookie('password', password_hash($user_password, PASSWORD_DEFAULT),time() + (10 * 365 * 24 * 60 * 60), '/');

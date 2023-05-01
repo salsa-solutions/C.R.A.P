@@ -1,44 +1,32 @@
 <?php
 require_once('/var/www/html/config.php');
+require_once('/var/www/html/php/functions/userPermissions.php');
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 ?>
 
-
 <?php
+  session_start();
   if(isset($_POST)){
-    $id                = $_POST['uid'];
+    $uuid              = $_POST['uuid'];
+    $role_name         = $_POST['role_name'];
+    $role              = getRoleFromName($role_name);
+    echo $role;
+
+
     
-    $sql = "UPDATE users SET approved='approved' WHERE id='$id'";
+    $sql = "UPDATE users SET role='$role', role_name='$role_name' WHERE uuid='$uuid'";
     $stmtinsert = $db->prepare($sql);
     $result = $stmtinsert->execute();
     if ($result) {
-        echo 'Successfully saved.';
+        echo 100;
     } else {
-        echo 'There were errors while saving the data.';
+        echo 200;
     }
   }else{
-    echo "No data";
-  }
-?>
-
-<?php
-  if(isset($_POST)){
-    $id                = $_POST['uid'];
-    $role              = $_POST['role'];
-    
-    $sql = "UPDATE users SET role='$role' WHERE id='$id'";
-    $stmtinsert = $db->prepare($sql);
-    $result = $stmtinsert->execute();
-    if ($result) {
-        echo 'Successfully saved.';
-    } else {
-        echo 'There were errors while saving the data.';
-    }
-  }else{
-    echo "No data";
+    echo 300;
   }
 
 
