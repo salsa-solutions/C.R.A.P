@@ -36,8 +36,9 @@ function setAccessPages($role) {
 
 function setPagePermissions($role, $mode)
 {
-
-    if (($mode == 'admin' && $role == 'admin') || $role == 'dev') {
+    if ($role == 'dev') {
+        return 'dev';
+    } elseif (($mode == 'admin' && $role == 'admin') || $role == 'dev') {
         return 'admin';
     } elseif (($mode == 'manager' && $role == 'manager') || $role == 'dev' || $role == 'admin') {
         return 'manager';

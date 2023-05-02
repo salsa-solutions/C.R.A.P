@@ -15,12 +15,7 @@ error_reporting(E_ALL);
         $date              = $currentDate->format('Y-m-d H:i:s');
         $name              = $_POST['name'];
         $username          = $_POST['username'];
-        $monday            = empty($_POST['monday']) ? 'OFF' : $_POST['monday'];
-        $tuesday           = empty($_POST['tuesday']) ? 'OFF' : $_POST['tuesday'];
-        $wednesday         = empty($_POST['wednesday']) ? 'OFF' : $_POST['wednesday'];
-        $thursday          = empty($_POST['thursday']) ? 'OFF' : $_POST['thursday'];
-        $friday            = empty($_POST['friday']) ? 'OFF' : $_POST['friday'];
-        $saturday          = empty($_POST['saturday']) ? 'OFF' : $_POST['saturday'];
+        $day_id            = $_POST['day_id'];
         
         $sql = "INSERT INTO availability (uuid, date, name, username, monday, tuesday, wednesday, thursday, friday, saturday ) VALUES(?,?,?,?,?,?,?,?,?,?)";
         $stmtinsert = $db->prepare($sql);

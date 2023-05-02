@@ -93,7 +93,7 @@ footer {
 
 .user_card {
     color: white;
-    height: 600px;
+    height: flex;
     width: 350px;
     margin-top: 50px;
     margin-bottom: auto;
