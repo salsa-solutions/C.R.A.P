@@ -100,7 +100,7 @@ function get_shift_options($db, $day)
       $end_time = date('h:i A', strtotime($row['end_time']));
       $option_value = $row['id'];
       $option_label = "{$start_time} - {$end_time} ({$row['employee_max']})";
-      $options .= "<option value=\"{$option_value}\">{$option_label}</option>";
+      $options .= "<option value=\"{$option_value}\">{$option_label}</option> \r\n";
     }
   }
   if (empty($options)) {

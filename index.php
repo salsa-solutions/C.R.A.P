@@ -71,12 +71,12 @@ if ($_DEV && in_array($role, array('employee', 'manager', 'admin'))) {
 
 
 
-    <div class="container h-100 scroll user-input ">
-        <div class="user_card">
-            <div class="d-flex justify-content-center p-5">
-                <h3>Shifts</h3>
-            </div>
-            <div class="d-flex justify-content-center form-container">
+    <div class="container h-100 scroll ">
+        <div class="form-container">
+            <div class="user-input-card">
+                <div class="d-flex justify-content-center p-5">
+                    <h3>Shifts</h3>
+                </div>
                 <form action="">
                     <div class="input-group mb-1">
                         <div class="input-group-append text">
@@ -84,7 +84,7 @@ if ($_DEV && in_array($role, array('employee', 'manager', 'admin'))) {
                         </div>
                         <select name="monday-shift" id="1" class="form-control form-control-sm input_user">
                             <?php echo get_shift_options($db, 'monday'); ?>
-                            
+
                         </select>
                     </div>
                     <div class="input-group mb-1">
@@ -147,30 +147,29 @@ if ($_DEV && in_array($role, array('employee', 'manager', 'admin'))) {
                     </div>
                 </form>
             </div>
-        </div>
 
 
 
-        <div class="user_card">
-            <div class="d-flex justify-content-center p-5">
-                <h3>Special request</h3>
-            </div>
-            <form action="">
-                <div class="d-flex justify-content-center form-container">
-                    <div class=" mb-1">
-                        <textarea type="text" name="textarea" id="message" cols="30" rows="10" placeholder="I need so and so off because... " class="form-control form-control-sm input_user " required></textarea>
+            <div class="user-input-card">
+                <div class="d-flex justify-content-center p-5">
+                    <h3>Special request</h3>
+                </div>
+                <form action="">
+                    <div class="d-flex justify-content-center form-container">
+                        <div class=" mb-1">
+                            <textarea type="text" name="textarea" id="message" cols="30" rows="10" placeholder="I need so and so off because... " class="form-control form-control-sm input_user " required></textarea>
 
 
-                        <!-- <text type="text" placeholder="I need so and so off because... " name="request" id="message"  class="form-control form-control-sm input_user input-size"  > -->
+                            <!-- <text type="text" placeholder="I need so and so off because... " name="request" id="message"  class="form-control form-control-sm input_user input-size"  > -->
+                        </div>
+
                     </div>
-
-                </div>
-                <div class="d-flex justify-content-center mt-3 submit-container">
-                    <button type="button" name="button" id="submit_sr" class="btn submit_btn">submit</button>
-                </div>
-            </form>
+                    <div class="d-flex justify-content-center mt-3 submit-container">
+                        <button type="button" name="button" id="submit_sr" class="btn submit_btn">submit</button>
+                    </div>
+                </form>
+            </div>
         </div>
-
     </div>
 
     </div>
@@ -181,7 +180,7 @@ if ($_DEV && in_array($role, array('employee', 'manager', 'admin'))) {
 
     <script>
         $(function() {
-            $('#submit_avil').click(function(e) {
+            $('#submit_shift').click(function(e) {
 
                 var valid = this.form.checkValidity();
 
@@ -202,12 +201,7 @@ if ($_DEV && in_array($role, array('employee', 'manager', 'admin'))) {
                             uuid: uuid,
                             name: name,
                             username: username,
-                            monday: monday_avil,
-                            tuesday: tuesday_avil,
-                            wednesday: wednesday_avil,
-                            thursday: thursday_avil,
-                            friday: friday_avil,
-                            saturday: saturday_avil
+                            day_id: day_id,
                         },
                         success: function(data) {
                             Notiflix.Notify.success('Your request has been submited');
@@ -230,37 +224,37 @@ if ($_DEV && in_array($role, array('employee', 'manager', 'admin'))) {
                     var uuid = "<?php echo $uuid; ?>";
                     var name = "<?php echo $name; ?>";
                     var username = "<?php echo $username; ?>";
-                    var day_id = 
-                    // console.log(hours);
-                    $.ajax({
-                        url: '/php/db_handling/handling/add_pref.php',
-                        type: 'POST',
-                        data: {
-                            uuid: uuid,
-                            name: name,
-                            username: username,
-                            monday: monday_pref,
-                            tuesday: tuesday_pref,
-                            wednesday: wednesday_pref,
-                            thursday: thursday_pref,
-                            friday: friday_pref,
-                            saturday: saturday_pref,
-                            // hours: hours
-                        },
-                        success: function(data) {
-                            if ($.trim(data) === "100") {
+                    var day_id =
+                        // console.log(hours);
+                        $.ajax({
+                            url: '/php/db_handling/handling/add_pref.php',
+                            type: 'POST',
+                            data: {
+                                uuid: uuid,
+                                name: name,
+                                username: username,
+                                monday: monday_pref,
+                                tuesday: tuesday_pref,
+                                wednesday: wednesday_pref,
+                                thursday: thursday_pref,
+                                friday: friday_pref,
+                                saturday: saturday_pref,
+                                // hours: hours
+                            },
+                            success: function(data) {
+                                if ($.trim(data) === "100") {
 
-                                Notiflix.Notify.success('Your request has been submited');
+                                    Notiflix.Notify.success('Your request has been submited');
+                                }
+                                if ($.trim(data) === "200") {
+                                    Notiflix.Notify.failure(
+                                        'There were erros while saving the data, Error:' + data);
+                                }
+                            },
+                            error: function(data) {
+                                Notiflix.Notify.failure('Somthings not right, Error:' + data);
                             }
-                            if ($.trim(data) === "200") {
-                                Notiflix.Notify.failure(
-                                    'There were erros while saving the data, Error:' + data);
-                            }
-                        },
-                        error: function(data) {
-                            Notiflix.Notify.failure('Somthings not right, Error:' + data);
-                        }
-                    });
+                        });
                 }
             });
         });
