@@ -158,9 +158,6 @@ if ($_DEV && in_array($role, array('employee', 'manager', 'admin'))) {
                     <div class="d-flex justify-content-center form-container">
                         <div class=" mb-1">
                             <textarea type="text" name="textarea" id="message" cols="30" rows="10" placeholder="I need so and so off because... " class="form-control form-control-sm input_user " required></textarea>
-
-
-                            <!-- <text type="text" placeholder="I need so and so off because... " name="request" id="message"  class="form-control form-control-sm input_user input-size"  > -->
                         </div>
 
                     </div>
@@ -180,7 +177,7 @@ if ($_DEV && in_array($role, array('employee', 'manager', 'admin'))) {
 
     <script>
         $(function() {
-            $('#submit_shift').click(function(e) {
+            $('#submit-shift').click(function(e) {
 
                 var valid = this.form.checkValidity();
 
@@ -188,14 +185,10 @@ if ($_DEV && in_array($role, array('employee', 'manager', 'admin'))) {
                     var uuid = "<?php echo $uuid; ?>";
                     var name = "<?php echo $name; ?>";
                     var username = "<?php echo $username; ?>";
-                    var monday_avil = $('#monday-avil').val();
-                    var tuesday_avil = $('#tuesday-avil').val();
-                    var wednesday_avil = $('#wednesday-avil').val();
-                    var thursday_avil = $('#thursday-avil').val();
-                    var friday_avil = $('#friday-avil').val();
-                    var saturday_avil = $('#saturday-avil').val();
+                    var day_id = $();
+                    var shift_id = $('#' + day_id).val();
                     $.ajax({
-                        url: '/php/db_handling/handling/add_avil.php',
+                        url: '/php/db_handling/handling/submit_selected_shift.php',
                         type: 'POST',
                         data: {
                             uuid: uuid,
@@ -214,7 +207,7 @@ if ($_DEV && in_array($role, array('employee', 'manager', 'admin'))) {
             });
         });
     </script>
-    <script>
+    <!-- <script>
         $(function() {
             $('#submit-shift').click(function(e) {
 
@@ -258,7 +251,7 @@ if ($_DEV && in_array($role, array('employee', 'manager', 'admin'))) {
                 }
             });
         });
-    </script>
+    </script> -->
     <script>
         $(function() {
             $('#submit_sr').click(function(e) {

@@ -7,6 +7,7 @@ require_once('/var/www/html/php/functions/permissons.php');
 require_once('/var/www/html/php/functions/userPermissions.php');
 require_once('/var/www/html/php/functions/userId.php');
 require_once('/var/www/html/php/functions/time.php');
+require_once('/var/www/html/php/functions/select.php');
 // to turn off a page uncomment the following line:
 // $_DEV = true;
 
@@ -193,13 +194,18 @@ https://cdn.jsdelivr.net/npm/notiflix/dist/notiflix-3.2.5.min.css
                 <div class="form-group row">
                     <label for="start_time" class="col-sm-2 col-form-label">Start Time:</label>
                     <div class="col-sm-10">
-                        <input type="time" class="form-control" id="start-time" name="start-time">
+                        <!-- <input type="time" class="form-control" id="start-time" name="start-time"> -->
+                        <select name="start-time" id="start-time" class="form-control">
+                            <?php echo generate_time_options('9:00AM', '10:00PM', $interval = 15); ?>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="end_time" class="col-sm-2 col-form-label">End Time:</label>
                     <div class="col-sm-10">
-                        <input type="time" class="form-control" id="end-time" name="end-time">
+                        <select name="end-time" id="end-time" class="form-control">
+                            <?php echo generate_time_options('9:00AM', '10:00PM', $interval = 15); ?>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -210,9 +216,7 @@ https://cdn.jsdelivr.net/npm/notiflix/dist/notiflix-3.2.5.min.css
                     <label for="employee_type" class="col-sm-2 col-form-label">Employee Type:</label>
                     <div class="col-sm-4">
                         <select class="form-control" id="role-name" name="role-name">
-                            <option value="full-time">Full Time</option>
-                            <option value="part-time">Part Time</option>
-                            <option value="contractor">Contractor</option>
+                            <?php echo getRolesDropdown($db); ?>
                         </select>
                     </div>
                 </div>
@@ -241,7 +245,7 @@ https://cdn.jsdelivr.net/npm/notiflix/dist/notiflix-3.2.5.min.css
                         var employee_max = $('#employee-max').val();
                         var role_name = $('#role-name').val();
                         var day = $('#day').val();
-                        
+
                         // var hours = $('#hours').val();
                         // console.log(hours);
                         $.ajax({
