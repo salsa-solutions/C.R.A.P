@@ -227,6 +227,35 @@ https://cdn.jsdelivr.net/npm/notiflix/dist/notiflix-3.2.5.min.css
                 </div>
             </form>
         </div>
+        <br>
+        <!-- make a list of shifts from the sql db and put it into a weekly calender with everyday listed and the shifts that coradate to that day is listed with role name included -->
+        <div class="">
+            <h2>Shifts</h2>
+            <table>
+                <tr>
+                    <th>Day</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Max Employees</th>
+                    <th>Employee Type</th>
+                </tr>
+                <?php
+                // Retrieve availability from the database
+                $stmt = $pdo->query("SELECT * FROM shifts ORDER BY id ASC");
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    echo "<tr>";
+                    echo "<td>{$row['day']}</td>";
+                    echo "<td>{$row['start_time']}</td>";
+                    echo "<td>{$row['end_time']}</td>";
+                    echo "<td>{$row['employee_max']}</td>";
+                    echo "<td>{$row['role_name']}</td>";
+                    echo "</tr>";
+                }
+                if ($stmt->rowCount() == 0) {
+                    echo "<tr><td colspan=\"8\">No shifts found</td></tr>";
+                }
+                ?>
+            </table>
 
         <script>
             $(function() {

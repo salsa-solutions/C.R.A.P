@@ -101,7 +101,7 @@ function get_shift_options($db, $day)
       $end_time = date('h:i A', strtotime($row['end_time']));
       $option_value = $row['id'];
       $option_label = "{$start_time} - {$end_time} ({$row['employee_max']})";
-      $options .= "<option value=\"{$option_value}\">{$option_label}</option> \r\n";
+      $options .= "<option  value=\"{$option_value}\">{$option_label}</option> \r\n";
     }
   }
   if (empty($options)) {
@@ -109,3 +109,11 @@ function get_shift_options($db, $day)
   }
   return $options;
 }
+// require_once('/var/www/html/config.php');
+// echo Get_shift_options($db, 'Monday');
+// echo get_shift_options($db, 'tuesday');
+// echo get_shift_options($db, 'wednesday');
+// echo get_shift_options($db, 'thursday');
+// echo get_shift_options($db, 'friday');
+// echo get_shift_options($db, 'saturday');
+// echo get_shift_options($db, 'sunday');

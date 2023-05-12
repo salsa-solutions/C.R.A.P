@@ -12,7 +12,7 @@ error_reporting(E_ALL);
 $currentDate = new DateTime();
 
 // $day = "tusday";
-$week = getCurrentWorkWeek();
+
 // $role_name = "test";
 
 if (isset($_POST)) {
@@ -27,24 +27,16 @@ if (isset($_POST)) {
     $role_name         = $_POST['role_name'];
     $week              = getCurrentWorkWeek();
     $day               = $_POST['day'];
+
+    // check if var is empty
+
     if (empty($uuid) || empty($name) || empty($username) || empty($start_time) || empty($end_time) || empty($employee_max) || empty($role_name) || empty($week) || empty($day)) {
         echo 300;
         exit();
     }
 
     echo $week;
-    // check if var is empty
 
-    // $uuid = "123e4567-e89b-12d3-a456-426655440000";
-    // $date = "2023-04-23";
-    // $name = "Shift A";
-    // $username = "john.doe";
-    // $start_time = "08:00 AM";
-    // $end_time = "3:00 PM";
-    // $employee_max = 10;
-    // $role_name = "Manager";
-    // $week              = strval($week);
-    // $day = "Saturday";
 
     $sql = "INSERT INTO shifts (uuid, date, name, username, start_time, end_time, employee_max, role_name, week, day)
         VALUES (:uuid, :date, :name, :username, :start_time, :end_time, :employee_max, :role_name, :week, :day)";
