@@ -151,4 +151,3 @@ if [ "$new_branch" = true ]
 then
   git checkout dev
 fi
-echo "haha, fuck you kyle. im goin hume"
