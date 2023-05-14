@@ -94,8 +94,8 @@ then
   if [ "$debug_mode" = true ]
   then
     echo "Files added in git add:"
-    git status --short | awk '{print $2}'
-    $add_list = git status --short | awk '{print $2}'
+    
+    
   fi
 else
   if [[ $# -gt 0 ]]
@@ -112,7 +112,7 @@ then
   echo "  Branch: $branch"
   echo "  New Branch: $new_branch"
   echo "  Add All: $add_all"
-  echo "  Files: $add_list"
+  echo "  Files: " git status --short | awk '{print $2}'
   echo "  Number of Files: $#"
   echo "  Push Changes: $push_changes"
   echo "  Show Diff: $show_diff"
