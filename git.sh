@@ -112,7 +112,9 @@ then
   echo "  Branch: $branch"
   echo "  New Branch: $new_branch"
   echo "  Add All: $add_all"
-  echo "  Files: " + git status --short | awk '{print $2}' + ""
+  echo "  Files: "
+  git status --short | awk '{print $2}'
+  echo ""
   echo "  Number of Files: $#"
   echo "  Push Changes: $push_changes"
   echo "  Show Diff: $show_diff"
