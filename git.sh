@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Default values
-commit_message=""
+commit_message="Automated commit"
 branch="dev"
 new_branch=false
 add_all=false
@@ -94,31 +94,29 @@ else
 fi
 
 # Check if commit message is empty
-if [[ "$commit_message" == "" ]] && [ "$show_diff" = false ]
-then
-  echo "No commit message provided. Please specify a commit message using the -c or --commit option."
-  exit 1
-fi
+# if [[ "$commit_message" == "" ]] && [ "$show_diff" = false ]
+# then
+#   echo "No commit message provided. Please specify a commit message using the -c or --commit option."
+#   exit 1
+# fi
 
 # Commit changes if both add and commit options are true
-if [ "$add_all" = true ]
+if [ "$add_all" = true ] && [ "$commit_message" != "Automated commit" ]
 then
   # Commit changes
   username=$(git config user.name)
   commit_message="$commit_message ($(date +%Y-%m-%d)) [branch: $branch, author: $username]"
   git commit -m "$commit_message"
 
-  # Push changes if not showing diff and there are changes to commit
-  if [ "$show_diff" = false ] && [[ $(git status --porcelain) ]]
+  # Push changes if specified
+  if [ "$push_changes" = true ]
   then
-    git push origin $branch
+    git push origin "$branch"
   fi
-else
-  echo "No changes to commit. Skipping the commit step."
-fi
 
-# Revert back to default branch
-if [ "$new_branch" = true ]
-then
-  git checkout dev
+  # Revert back to default branch
+  if [ "$new_branch" = true ]
+  then
+    git checkout dev
+  fi
 fi
