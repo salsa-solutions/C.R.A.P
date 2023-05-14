@@ -88,10 +88,15 @@ then
   exit 0
 fi
 
-# Add changes
 if [ "$add_all" = true ]
 then
   git add --all
+  if [ "$debug_mode" = true ]
+  then
+    echo "Files added in git add:"
+    git status --short | awk '{print $2}'
+    $add_list = git status --short | awk '{print $2}'
+  fi
 else
   if [[ $# -gt 0 ]]
   then
@@ -107,7 +112,7 @@ then
   echo "  Branch: $branch"
   echo "  New Branch: $new_branch"
   echo "  Add All: $add_all"
-  echo "  Files: $@"
+  echo "  Files: $add_list"
   echo "  Number of Files: $#"
   echo "  Push Changes: $push_changes"
   echo "  Show Diff: $show_diff"
