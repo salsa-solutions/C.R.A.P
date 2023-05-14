@@ -6,6 +6,7 @@ branch="dev"
 new_branch=false
 add_all=false
 show_diff=false
+debug_mode=false
 
 # Define help menu
 help_menu() {
@@ -16,6 +17,7 @@ help_menu() {
   echo "  -b, --branch <name>    specify branch (default: dev)"
   echo "  -n, --new <name>       create new branch and switch to it"
   echo "  -c, --commit <msg>     custom commit message (default: Automated commit)"
+  echo "  -D, --debug            enable debug mode"
   echo "  -d, --diff             show git diff --stat before committing or when it's the only argument"
   echo "  -h, --help             display this help menu"
   echo ""
@@ -50,6 +52,10 @@ do
       shift
       shift
       ;;
+    -D|--debug)
+      debug_mode=true
+      shift
+      ;;
     -d|--diff)
       show_diff=true
       shift
@@ -72,18 +78,18 @@ fi
 # Create new branch if option is provided
 if [ "$new_branch" = true ]
 then
-  git checkout -b $branch
+  git checkout -b "$branch"
 fi
 
 # Show git diff --stat and skip all other steps
-if [ "$show_diff" = true ] && [ "$#" -eq 0 ]
+if [ "$show_diff" = true ] && [[ "$#" -eq 1 ]]
 then
   git diff --stat
   exit 0
 fi
+
 # Add changes
 if [ "$add_all" = true ]
-
 then
   git add --all
 else
@@ -93,30 +99,44 @@ else
   fi
 fi
 
-# Check if commit message is empty
-# if [[ "$commit_message" == "" ]] && [ "$show_diff" = false ]
-# then
-#   echo "No commit message provided. Please specify a commit message using the -c or --commit option."
-#   exit 1
-# fi
-
-# Commit changes if both add and commit options are true
-if [ "$add_all" = true ] && [ "$commit_message" != "Automated commit" ]
+# Debug mode: Output script variables
+if [ "$debug_mode" = true ]
 then
+  echo "Debug Mode:"
+  echo "  Commit Message: $commit_message"
+  echo "  Branch: $branch"
+  echo "  New Branch: $new_branch"
+  echo "  Add All: $add_all"
+  echo "  Show Diff: $show_diff"
+  echo "  Debug Mode: $debug_mode"
+  echo ""
+fi
+
+# Check if changes were made
+if git diff-index --quiet HEAD --; then
+  echo "No changes to commit. Skipping the commit step."
+else
   # Commit changes
-  username=$(git config user.name)
-  commit_message="$commit_message ($(date +%Y-%m-%d)) [branch: $branch, author: $username]"
-  git commit -m "$commit_message"
-
-  # Push changes if specified
-  if [ "$push_changes" = true ]
+  if [ "$commit_message" != "Automated commit" ]
   then
-    git push origin "$branch"
-  fi
+    username=$(git config user.name)
+    commit_message+=" ($(date +%Y-%m-%d)) [branch: $branch, author: $username]"
+    git commit -m "$commit_message"
+    echo "Changes committed with message: $commit_message"
 
-  # Revert back to default branch
-  if [ "$new_branch" = true ]
-  then
-    git checkout dev
+    # Push changes if add and commit are true
+    if [ "$add_all" = true ] && [ "$commit_message" != "Automated commit" ]
+    then
+      git push origin "$branch"
+      echo "Changes pushed to $branch branch."
+    fi
+  else
+    echo "Warning: No commit message set. Use the -m or --commit option to provide a commit message."
   fi
+fi
+
+# Revert back to default branch
+if [ "$new_branch" = true ]
+then
+  git checkout dev
 fi
