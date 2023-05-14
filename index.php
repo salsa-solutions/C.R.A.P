@@ -185,8 +185,14 @@ if ($_DEV && in_array($role, array('employee', 'manager', 'admin'))) {
                     var uuid = "<?php echo $uuid; ?>";
                     var name = "<?php echo $name; ?>";
                     var username = "<?php echo $username; ?>";
-                    var day_id = $();
-                    var shift_id = $('#' + day_id).val();
+                    var monday = $('#1').val();
+                    var tuesday = $('#2').val();
+                    var wednesday = $('#3').val();
+                    var thursday = $('#4').val();
+                    var friday = $('#5').val();
+                    var saturday = $('#6').val();
+                    var sunday = $('#7').val();
+                    var day_id = [monday, tuesday, wednesday, thursday, friday, saturday, sunday];
                     $.ajax({
                         url: '/php/db_handling/handling/submit_selected_shift.php',
                         type: 'POST',
@@ -207,51 +213,6 @@ if ($_DEV && in_array($role, array('employee', 'manager', 'admin'))) {
             });
         });
     </script>
-    <!-- <script>
-        $(function() {
-            $('#submit-shift').click(function(e) {
-
-                var valid = this.form.checkValidity();
-
-                if (valid) {
-                    var uuid = "<?php echo $uuid; ?>";
-                    var name = "<?php echo $name; ?>";
-                    var username = "<?php echo $username; ?>";
-                    var day_id =
-                        // console.log(hours);
-                        $.ajax({
-                            url: '/php/db_handling/handling/add_pref.php',
-                            type: 'POST',
-                            data: {
-                                uuid: uuid,
-                                name: name,
-                                username: username,
-                                monday: monday_pref,
-                                tuesday: tuesday_pref,
-                                wednesday: wednesday_pref,
-                                thursday: thursday_pref,
-                                friday: friday_pref,
-                                saturday: saturday_pref,
-                                // hours: hours
-                            },
-                            success: function(data) {
-                                if ($.trim(data) === "100") {
-
-                                    Notiflix.Notify.success('Your request has been submited');
-                                }
-                                if ($.trim(data) === "200") {
-                                    Notiflix.Notify.failure(
-                                        'There were erros while saving the data, Error:' + data);
-                                }
-                            },
-                            error: function(data) {
-                                Notiflix.Notify.failure('Somthings not right, Error:' + data);
-                            }
-                        });
-                }
-            });
-        });
-    </script> -->
     <script>
         $(function() {
             $('#submit_sr').click(function(e) {
