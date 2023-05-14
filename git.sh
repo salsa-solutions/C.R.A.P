@@ -10,7 +10,7 @@ debug_mode=false
 
 # Define help menu
 help_menu() {
-  echo "Usage: ./git-script.sh [OPTIONS] [FILES]"
+  echo "Usage: ./git-script.sh -aDd -b <branch> -n <name> -c <msg>"
   echo ""
   echo "OPTIONS:"
   echo "  -a, --all              add all changes"
@@ -92,12 +92,6 @@ fi
 if [ "$add_all" = true ]
 then
   git add --all
-  if [ "$debug_mode" = true ]
-  then
-    echo "Files added in git add:"
-    
-    
-  fi
 else
   if [[ $# -gt 0 ]]
   then
@@ -105,10 +99,10 @@ else
   fi
 fi
 
-# Debug mode: Output script variables
-if [ "$debug_mode" = true ]
+if [ "$debug_mode" = true ] 
 then
   echo "Debug Mode:"
+  echo "  PWD: $(pwd)"
   echo "  Commit Message: $commit_message"
   echo "  Branch: $branch"
   echo "  New Branch: $new_branch"
@@ -142,7 +136,7 @@ else
       echo "Changes pushed to $branch branch."
     fi
   else
-    echo "Warning: No commit message set. Use the -m or --commit option to provide a commit message."
+    echo "Warning: No commit message set. Use the -c or --commit option to provide a commit message."
   fi
 fi
 
