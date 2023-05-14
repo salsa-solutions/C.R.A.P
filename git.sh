@@ -82,7 +82,7 @@ then
 fi
 
 # Show git diff --stat and skip all other steps
-if [ "$show_diff" = true ] && [[ "$#" -eq 1 ]]
+if [ "$show_diff" = true ] && [[ "$#" -eq 0 ]]
 then
   git diff --stat
   exit 0
@@ -140,4 +140,4 @@ if [ "$new_branch" = true ]
 then
   git checkout dev
 fi
-d
+echo "haha, fuck you kyle. im goin hume"
