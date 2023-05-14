@@ -140,3 +140,4 @@ if [ "$new_branch" = true ]
 then
   git checkout dev
 fi
+d
