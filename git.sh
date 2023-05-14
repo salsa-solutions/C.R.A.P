@@ -49,6 +49,7 @@ do
       ;;
     -c|--commit)
       commit_message="$2"
+      push_changes=true
       shift
       shift
       ;;
