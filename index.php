@@ -185,6 +185,7 @@ if ($_DEV && in_array($role, array('employee', 'manager', 'admin'))) {
                     var uuid = "<?php echo $uuid; ?>";
                     var name = "<?php echo $name; ?>";
                     var username = "<?php echo $username; ?>";
+                    var approved = false;
                     var monday = $('#1').val();
                     var tuesday = $('#2').val();
                     var wednesday = $('#3').val();
@@ -200,6 +201,7 @@ if ($_DEV && in_array($role, array('employee', 'manager', 'admin'))) {
                             uuid: uuid,
                             name: name,
                             username: username,
+                            approved: approved,
                             day_id: day_id,
                         },
                         success: function(data) {

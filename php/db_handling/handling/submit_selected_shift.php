@@ -3,77 +3,149 @@ require_once('/var/www/html/config.php');
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+require_once('/var/www/html/config.php');
+$pdo = $db;
 
-function sort_shifts_by_week($db, $tableId)
-{
-    // Define the days of the week in the desired order
-    $weekDays = array('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');
-
-    // Initialize an empty array to hold the sorted shifts
-    $sortedShifts = array();
-
-    // Get the shifts for the given table ID from the database
-    $sql = "SELECT shifts.start_time, shifts.end_time, shifts.day FROM shifts INNER JOIN tables ON shifts.id = shifts WHERE tables.id = :id";
-    $stmt = $db->prepare($sql);
-    $stmt->bindParam(':id', $tableId);
-    $stmt->execute();
-
-    // Initialize an array to hold shifts for each day of the week
-    $shiftsByDay = array();
-    foreach ($weekDays as $day) {
-        $shiftsByDay[$day] = array();
-    }
-
-    // Fetch shifts and group them by day
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $day = $row['day'];
-        $shiftsByDay[$day][] = array('start_time' => $row['start_time'], 'end_time' => $row['end_time']);
-    }
-
-    // Sort shifts within each day by start time
-    foreach ($weekDays as $day) {
-        usort($shiftsByDay[$day], function ($a, $b) {
-            return strtotime($a['start_time']) - strtotime($b['start_time']);
-        });
-    }
-
-    // Build the sorted shifts array in the desired order
-    foreach ($weekDays as $day) {
-        $sortedShifts[$day] = $shiftsByDay[$day];
-    }
-
-    return $sortedShifts;
-}
 
 
 ?>
 
-<?php  
-    $currentDate = new DateTime();
-    
-    if(isset($_POST)){
-        $uuid              = $_POST['uuid'];
-        $approved          = $_POST['approved'];
-        $date              = $currentDate->format('Y-m-d H:i:s');
-        $name              = $_POST['name'];
-        $username          = $_POST['username'];
-        $day_id            = $_POST['day_id'];
+<?php
+$currentDate = new DateTime();
 
-        echo sort_shifts_by_week($db, $day_id);
+if (isset($_POST)) {
+    $uuid              = $_POST['uuid'];
+    $approved          = $_POST['approved'];
+    $date              = $currentDate->format('Y-m-d H:i:s');
+    $name              = $_POST['name'];
+    $username          = $_POST['username'];
+    $day_id            = $_POST['day_id'];
+    // echo $uuid;
+    // echo "<br>";
+    // echo $approved;
+    // echo "<br>";
+    // echo $date;
+    // echo "<br>";
+    // echo $name;
+    // echo "<br>";
+    // echo $username;
+    // echo "<br>";
+    // print_r( $day_id);
 
-        
+    function insertPendingShifts($uuid, $approved, $date, $name, $username, $day_id, $pdo)
+    {
+        // Check if there is an existing entry for the UUID
+        $existingStmt = $pdo->prepare("SELECT COUNT(*) FROM pending_shifts WHERE uuid = ?");
+        $existingStmt->execute([$uuid]);
+        $existingCount = $existingStmt->fetchColumn();
 
+        if ($existingCount > 0) {
+            // Update the existing entry in the pending_shifts table
 
-        
-        $sql = "INSERT INTO availability (uuid, date, name, username, monday, tuesday, wednesday, thursday, friday, saturday ) VALUES(?,?,?,?,?,?,?,?,?,?)";
-        $stmtinsert = $db->prepare($sql);
-        $result = $stmtinsert->execute([$uuid, $date, $name, $username, $monday, $tuesday, $wednesday, $thursday, $friday, $saturday]);
-        if ($result) {
-            echo 'Successfully saved.';
+            // Prepare a statement to update the shift information
+            $stmt = $pdo->prepare("UPDATE pending_shifts SET approved = ?, date = ?, name = ?, username = ?, monday = ?, tuesday = ?, wednesday = ?, thursday = ?, friday = ?, saturday = ?, sunday = ? WHERE uuid = ?");
+
+            // Create an array to hold the values for each day of the week
+            $shiftValues = [$approved, $date, $name, $username];
+
+            // Iterate over the 7 days of the week
+            for ($i = 0; $i < 7; $i++) {
+                $currentDay = date('l', strtotime('Sunday +' . $i . ' days'));
+
+                // Get the index for the current day in the day_id array
+                $dayIndex = $i % count($day_id);
+
+                // Check if the dayId starts with "false-"
+                if (strpos($day_id[$dayIndex], 'false-') === 0) {
+                    // Set the day to 'off'
+                    $shiftValues[] = 'off';
+                } else {
+                    // Get the shift ID for the current day
+                    $shiftId = $day_id[$dayIndex];
+
+                    // Fetch the shift information from the shifts table
+                    $shiftStmt = $pdo->prepare("SELECT * FROM shifts WHERE id = ?");
+                    $shiftStmt->execute([$shiftId]);
+                    $shiftData = $shiftStmt->fetch(PDO::FETCH_ASSOC);
+
+                    // Decrease the employee_max value by one
+                    $maxEmployees = $shiftData['employee_max'] - 1;
+
+                    // Update the shifts table with the decreased employee_max value
+                    $updateShiftStmt = $pdo->prepare("UPDATE shifts SET employee_max = ? WHERE id = ?");
+                    $updateShiftStmt->execute([$maxEmployees, $shiftId]);
+
+                    // Combine the start and end time into one string
+                    $shiftTime = $shiftData['start_time'] . ' - ' . $shiftData['end_time'];
+
+                    // Store the shift time for the current day
+                    $shiftValues[] = $shiftTime;
+                }
+            }
+
+            // Add the UUID at the end of the shift values array
+            $shiftValues[] = $uuid;
+
+            // Update the shift information in the pending_shifts table
+            $stmt->execute($shiftValues);
         } else {
-            echo 'There were erros while saving the data.';
+            // Insert a new entry into the pending_shifts table
+
+            // Prepare a statement to insert into pending_shifts table
+            $stmt = $pdo->prepare("INSERT INTO pending_shifts (uuid, approved, date, name, username, monday, tuesday, wednesday, thursday, friday, saturday, sunday) 
+                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+            // Create an array to hold the values for each day of the week
+            $shiftValues = [$uuid, $approved, $date, $name, $username];
+
+            // Iterate over the 7 days of the week
+            for ($i = 0; $i < 7;
+                $i++
+            ) {
+                // Get the index for the current day in the day_id array
+                $dayIndex = $i % count($day_id);
+
+                // Check if the dayId starts with "false-"
+                if (strpos($day_id[$dayIndex], 'false-') === 0) {
+                    // Set the day to 'off'
+                    $shiftValues[] = 'off';
+                } else {
+                    // Get the shift ID for the current day
+                    $shiftId = $day_id[$dayIndex];
+
+                    // Fetch the shift information from the shifts table
+                    $shiftStmt = $pdo->prepare("SELECT * FROM shifts WHERE id = ?");
+                    $shiftStmt->execute([$shiftId]);
+                    $shiftData = $shiftStmt->fetch(PDO::FETCH_ASSOC);
+
+                    // Decrease the employee_max value by one
+                    $maxEmployees = $shiftData['employee_max'] - 1;
+                    
+
+                    // Update the shifts table with the decreased employee_max value
+                    $updateShiftStmt = $pdo->prepare("UPDATE shifts SET employee_max = ? WHERE id = ?");
+                    $updateShiftStmt->execute([$maxEmployees, $shiftId]);
+
+                    // Combine the start and end time into one string
+                    $shiftTime = $shiftData['start_time'] . ' - ' . $shiftData['end_time'];
+
+                    // Store the shift time for the current day
+                    $shiftValues[] = $shiftTime;
+                }
+            }
+
+            // Add the UUID at the end of the shift values array
+            // $shiftValues[] = $uuid;
+            // print_r($shiftValues);
+
+            // Update the shift information in the pending_shifts table
+            $stmt->execute($shiftValues);
         }
-    }else{
-        echo "No data";
     }
+    // Example usage
+
+
+    InsertPendingShifts($uuid, $approved, $date, $name, $username, $day_id, $pdo);
+}
+
 ?>
