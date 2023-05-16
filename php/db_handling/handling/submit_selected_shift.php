@@ -15,24 +15,13 @@ $currentDate = new DateTime();
 
 if (isset($_POST)) {
     $uuid              = $_POST['uuid'];
-    $approved          = $_POST['approved'];
+    $status            = $_POST['status'];
     $date              = $currentDate->format('Y-m-d H:i:s');
     $name              = $_POST['name'];
     $username          = $_POST['username'];
     $day_id            = $_POST['day_id'];
-    // echo $uuid;
-    // echo "<br>";
-    // echo $approved;
-    // echo "<br>";
-    // echo $date;
-    // echo "<br>";
-    // echo $name;
-    // echo "<br>";
-    // echo $username;
-    // echo "<br>";
-    // print_r( $day_id);
 
-    function insertPendingShifts($uuid, $approved, $date, $name, $username, $day_id, $pdo)
+    function insertPendingShifts($uuid, $status, $date, $name, $username, $day_id, $pdo)
     {
         // Check if there is an existing entry for the UUID
         $existingStmt = $pdo->prepare("SELECT COUNT(*) FROM pending_shifts WHERE uuid = ?");
@@ -43,10 +32,10 @@ if (isset($_POST)) {
             // Update the existing entry in the pending_shifts table
 
             // Prepare a statement to update the shift information
-            $stmt = $pdo->prepare("UPDATE pending_shifts SET approved = ?, date = ?, name = ?, username = ?, monday = ?, tuesday = ?, wednesday = ?, thursday = ?, friday = ?, saturday = ?, sunday = ? WHERE uuid = ?");
+            $stmt = $pdo->prepare("UPDATE pending_shifts SET status = ?, date = ?, name = ?, username = ?, monday = ?, tuesday = ?, wednesday = ?, thursday = ?, friday = ?, saturday = ?, sunday = ? WHERE uuid = ?");
 
             // Create an array to hold the values for each day of the week
-            $shiftValues = [$approved, $date, $name, $username];
+            $shiftValues = [$status, $date, $name, $username];
 
             // Iterate over the 7 days of the week
             for ($i = 0; $i < 7; $i++) {
@@ -92,14 +81,16 @@ if (isset($_POST)) {
             // Insert a new entry into the pending_shifts table
 
             // Prepare a statement to insert into pending_shifts table
-            $stmt = $pdo->prepare("INSERT INTO pending_shifts (uuid, approved, date, name, username, monday, tuesday, wednesday, thursday, friday, saturday, sunday) 
+            $stmt = $pdo->prepare("INSERT INTO pending_shifts (uuid, status, date, name, username, monday, tuesday, wednesday, thursday, friday, saturday, sunday) 
                             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
             // Create an array to hold the values for each day of the week
-            $shiftValues = [$uuid, $approved, $date, $name, $username];
+            $shiftValues = [$uuid, $status, $date, $name, $username];
 
             // Iterate over the 7 days of the week
-            for ($i = 0; $i < 7;
+            for (
+                $i = 0;
+                $i < 7;
                 $i++
             ) {
                 // Get the index for the current day in the day_id array
@@ -120,7 +111,7 @@ if (isset($_POST)) {
 
                     // Decrease the employee_max value by one
                     $maxEmployees = $shiftData['employee_max'] - 1;
-                    
+
 
                     // Update the shifts table with the decreased employee_max value
                     $updateShiftStmt = $pdo->prepare("UPDATE shifts SET employee_max = ? WHERE id = ?");
@@ -145,7 +136,7 @@ if (isset($_POST)) {
     // Example usage
 
 
-    InsertPendingShifts($uuid, $approved, $date, $name, $username, $day_id, $pdo);
+    InsertPendingShifts($uuid, $status, $date, $name, $username, $day_id, $pdo);
 }
 
 ?>

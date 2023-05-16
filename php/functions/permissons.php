@@ -23,7 +23,7 @@ function setAccessPages($role) {
         $test_page = NULL;
         $test_page_php = NULL;
         $test_page_html = NULL;
-    } elseif ($role == 'employee' || 'pending' || !isset($role)) {
+    } else{
         $managment_page = NULL;
         $admin_page = NULL;
         $scheduling_page = NULL;
@@ -36,7 +36,7 @@ function setAccessPages($role) {
 
 function setPagePermissions($role, $mode)
 {
-    if ($role == 'dev') {
+    if ($mode == 'dev' || $role == 'dev') {
         return 'dev';
     } elseif (($mode == 'admin' && $role == 'admin') || $role == 'dev') {
         return 'admin';

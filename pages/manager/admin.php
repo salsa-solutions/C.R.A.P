@@ -101,44 +101,6 @@ https://cdn.jsdelivr.net/npm/notiflix/dist/notiflix-3.2.5.min.css
             ?>
         </div>
         <br>
-        <br>
-        <br>
-        <div class="availability-box">
-            <h2>Availability</h2>
-            <table>
-                <tr>
-                    <th>Date</th>
-                    <th>Name</th>
-                    <th>Monday</th>
-                    <th>Tuesday</th>
-                    <th>Wednesday</th>
-                    <th>Thursday</th>
-                    <th>Friday</th>
-                    <th>Saturday</th>
-                </tr>
-                <?php
-                // Retrieve availability from the database
-                $stmt = $pdo->query("SELECT * FROM availability ORDER BY id ASC");
-                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    echo "<tr>";
-                    echo "<td>{$row['date']}</td>";
-                    echo "<td>{$row['name']}</td>";
-                    echo "<td>{$row['monday']}</td>";
-                    echo "<td>{$row['tuesday']}</td>";
-                    echo "<td>{$row['wednesday']}</td>";
-                    echo "<td>{$row['thursday']}</td>";
-                    echo "<td>{$row['friday']}</td>";
-                    echo "<td>{$row['saturday']}</td>";
-                    echo "</tr>";
-                }
-                if ($stmt->rowCount() == 0) {
-                    echo "<tr><td colspan=\"8\">No availability found</td></tr>";
-                }
-                ?>
-            </table>
-        </div>
-        <br>
-        <br>
         <div class="wanted-days-box">
             <h2>Wanted Days</h2>
             <table>
@@ -154,7 +116,7 @@ https://cdn.jsdelivr.net/npm/notiflix/dist/notiflix-3.2.5.min.css
                 </tr>
                 <?php
                 // Retrieve availability from the database
-                $stmt = $pdo->query("SELECT * FROM wanted_days ORDER BY id ASC");
+                $stmt = $pdo->query("SELECT * FROM pending_shifts ORDER BY id ASC");
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     echo "<tr>";
                     echo "<td>{$row['date']}</td>";
