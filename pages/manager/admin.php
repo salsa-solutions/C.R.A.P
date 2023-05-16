@@ -7,6 +7,7 @@ require_once('/var/www/html/php/functions/permissons.php');
 require_once('/var/www/html/php/functions/userPermissions.php');
 require_once('/var/www/html/php/functions/userId.php');
 require_once('/var/www/html/php/functions/time.php');
+require_once('/var/www/html/php/functions/select.php');
 // to turn off a page uncomment the following line:
 // $_DEV = true;
 
@@ -100,44 +101,6 @@ https://cdn.jsdelivr.net/npm/notiflix/dist/notiflix-3.2.5.min.css
             ?>
         </div>
         <br>
-        <br>
-        <br>
-        <div class="availability-box">
-            <h2>Availability</h2>
-            <table>
-                <tr>
-                    <th>Date</th>
-                    <th>Name</th>
-                    <th>Monday</th>
-                    <th>Tuesday</th>
-                    <th>Wednesday</th>
-                    <th>Thursday</th>
-                    <th>Friday</th>
-                    <th>Saturday</th>
-                </tr>
-                <?php
-                // Retrieve availability from the database
-                $stmt = $pdo->query("SELECT * FROM availability ORDER BY id ASC");
-                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    echo "<tr>";
-                    echo "<td>{$row['date']}</td>";
-                    echo "<td>{$row['name']}</td>";
-                    echo "<td>{$row['monday']}</td>";
-                    echo "<td>{$row['tuesday']}</td>";
-                    echo "<td>{$row['wednesday']}</td>";
-                    echo "<td>{$row['thursday']}</td>";
-                    echo "<td>{$row['friday']}</td>";
-                    echo "<td>{$row['saturday']}</td>";
-                    echo "</tr>";
-                }
-                if ($stmt->rowCount() == 0) {
-                    echo "<tr><td colspan=\"8\">No availability found</td></tr>";
-                }
-                ?>
-            </table>
-        </div>
-        <br>
-        <br>
         <div class="wanted-days-box">
             <h2>Wanted Days</h2>
             <table>
@@ -153,7 +116,7 @@ https://cdn.jsdelivr.net/npm/notiflix/dist/notiflix-3.2.5.min.css
                 </tr>
                 <?php
                 // Retrieve availability from the database
-                $stmt = $pdo->query("SELECT * FROM wanted_days ORDER BY id ASC");
+                $stmt = $pdo->query("SELECT * FROM pending_shifts ORDER BY id ASC");
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     echo "<tr>";
                     echo "<td>{$row['date']}</td>";
@@ -193,13 +156,18 @@ https://cdn.jsdelivr.net/npm/notiflix/dist/notiflix-3.2.5.min.css
                 <div class="form-group row">
                     <label for="start_time" class="col-sm-2 col-form-label">Start Time:</label>
                     <div class="col-sm-10">
-                        <input type="time" class="form-control" id="start-time" name="start-time">
+                        <!-- <input type="time" class="form-control" id="start-time" name="start-time"> -->
+                        <select name="start-time" id="start-time" class="form-control">
+                            <?php echo generate_time_options('9:00AM', '10:00PM', $interval = 15); ?>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="end_time" class="col-sm-2 col-form-label">End Time:</label>
                     <div class="col-sm-10">
-                        <input type="time" class="form-control" id="end-time" name="end-time">
+                        <select name="end-time" id="end-time" class="form-control">
+                            <?php echo generate_time_options('9:00AM', '10:00PM', $interval = 15); ?>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -210,9 +178,7 @@ https://cdn.jsdelivr.net/npm/notiflix/dist/notiflix-3.2.5.min.css
                     <label for="employee_type" class="col-sm-2 col-form-label">Employee Type:</label>
                     <div class="col-sm-4">
                         <select class="form-control" id="role-name" name="role-name">
-                            <option value="full-time">Full Time</option>
-                            <option value="part-time">Part Time</option>
-                            <option value="contractor">Contractor</option>
+                            <?php echo getRolesDropdown($db); ?>
                         </select>
                     </div>
                 </div>
@@ -223,6 +189,35 @@ https://cdn.jsdelivr.net/npm/notiflix/dist/notiflix-3.2.5.min.css
                 </div>
             </form>
         </div>
+        <br>
+        <!-- make a list of shifts from the sql db and put it into a weekly calender with everyday listed and the shifts that coradate to that day is listed with role name included -->
+        <div class="">
+            <h2>Shifts</h2>
+            <table>
+                <tr>
+                    <th>Day</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Max Employees</th>
+                    <th>Employee Type</th>
+                </tr>
+                <?php
+                // Retrieve availability from the database
+                $stmt = $pdo->query("SELECT * FROM shifts ORDER BY id ASC");
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    echo "<tr>";
+                    echo "<td>{$row['day']}</td>";
+                    echo "<td>{$row['start_time']}</td>";
+                    echo "<td>{$row['end_time']}</td>";
+                    echo "<td>{$row['employee_max']}</td>";
+                    echo "<td>{$row['role_name']}</td>";
+                    echo "</tr>";
+                }
+                if ($stmt->rowCount() == 0) {
+                    echo "<tr><td colspan=\"8\">No shifts found</td></tr>";
+                }
+                ?>
+            </table>
 
         <script>
             $(function() {
@@ -241,7 +236,7 @@ https://cdn.jsdelivr.net/npm/notiflix/dist/notiflix-3.2.5.min.css
                         var employee_max = $('#employee-max').val();
                         var role_name = $('#role-name').val();
                         var day = $('#day').val();
-                        
+
                         // var hours = $('#hours').val();
                         // console.log(hours);
                         $.ajax({

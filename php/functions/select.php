@@ -61,22 +61,74 @@ function generate_time_options($start_time, $end_time, $interval = 15)
 
 function getRolesDropdown($db)
 {
-  $query = "SELECT name FROM roles";
+  $query = "SELECT role_name, role FROM roles";
   $stmt = $db->prepare($query);
   $stmt->execute();
   $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-  $dropdown = '<select name="role_name">';
 
+  $dropdown = "";
   foreach ($roles as $role) {
-    $role_name = $role['name'];
+    $role_name = $role['role_name'];
+    $role_id = $role['role'];
 
     // Add the fullname to the dropdown menu as an option with the user ID as the value
-    $dropdown .= '<option value="' . $role_name . '">' . $role_name . '</option>';
+    $dropdown .= '<option value="' . $role_id . '">' . $role_name . '</option>';
   }
 
-  $dropdown .= '</select>';
+
 
   // Return the dropdown menu, roles array, and ids array as an array
   return $dropdown;
 }
+
+function get_shift_options($db, $day)
+{
+  $options = "";
+  $sql = "SELECT id, start_time, end_time, employee_max, role_name, day FROM shifts WHERE day = :day";
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam(':day', $day);
+  $stmt->execute();
+
+  // Check if there are any shifts
+  if ($stmt->rowCount() == 0) {
+    $options = "<option value=\"false-{$day}\">No Shifts Found</option>";
+  } else {
+    $options = "<option value=\"false-{$day}\">Select a shift</option>";
+
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+      $show_option = false;
+
+      // Determine whether to show this shift based on employee max and role name
+      if ($row['employee_max'] > 0 && !empty($row['role_name'])) {
+        $start_time = date('h:i A', strtotime($row['start_time']));
+        $end_time = date('h:i A', strtotime($row['end_time']));
+        $option_value = $row['id'];
+        $option_label = "{$start_time} - {$end_time} ({$row['employee_max']})";
+        $options .= "<option value=\"{$option_value}\">{$option_label}</option>";
+        $show_option = true;
+      }
+
+      // Create the option tag if this shift should be shown
+      if ($show_option) {
+        // Additional processing for each shift if needed
+      }
+    }
+    $options .= "<option value=\"false-{$day}\">OFF</option>";
+  }
+
+  
+
+  return $options;
+}
+
+// require_once('/var/www/html/config.php');
+// echo '<select>';
+// echo Get_shift_options($db, 'Monday');
+// echo get_shift_options($db, 'tuesday');
+// echo get_shift_options($db, 'wednesday');
+// echo get_shift_options($db, 'thursday');
+// echo get_shift_options($db, 'friday');
+// echo get_shift_options($db, 'saturday');
+// echo get_shift_options($db, 'sunday');
+// echo '</select>';

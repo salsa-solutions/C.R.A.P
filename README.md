@@ -1,7 +1,7 @@
 # Centralized. Regional. Attendance. Program
 
 ## What is this program
-C.R.A.P. is a highly efficient and localized scheduling program designed to cater to the needs of businesses and organizations of all sizes. Our program is not only user-friendly, but also incredibly lightweight, secure, and affordable. At Salsa, we understand the importance of a reliable scheduling system, and our program is designed to deliver on that promise while also providing an exceptional user experience. Our cutting-edge technology ensures that your data is always secure, while our streamlined design guarantees a hassle-free experience for both you and your team. With C.R.A.P, scheduling has never been easier or more accessible.
+C.R.A.P. is a highly efficient and localized scheduling program designed to cater to the needs of businesses and organizations of all sizes. Our program is not only user-friendly, but also incredibly lightweight, secure, and affordable. At Salsa, we understand the importance of a reliable scheduling system, and our program is designed to deliver on that promise while also providing an exceptional user experience. Our cutting-edge technology ensures that your data is always secure, while our streamlined design guarantees a hassle-free experience for both you and your team. With C.R.A.P., scheduling has never been easier or more accessible.
 
 ## Features
 
@@ -35,23 +35,24 @@ C.R.A.P. is a highly efficient and localized scheduling program designed to cate
 ## Pricing
 
 One line = $0.10 \
-Current work price = $329.60
+Current work price = $329.50
 
 ``` bash
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
-PHP                             32            433            161           2537
-CSS                             10             95             42            570
+PHP                             32            472            208           2504
+CSS                             11            110             43            608
 SQL                              2             72            148            189
 -------------------------------------------------------------------------------
-SUM:                            44            600            351           3296
+SUM:                            45            654            399           3301
 -------------------------------------------------------------------------------
+
 ```
 Current retial price: 400$ + 50$ a year to renew subscription
 
 ## Install
-Installation of c.r.a.p will be used with a docker image that is deployed once registered, it will include a license file and config file(in case in system doesn't work)
+Installation of c.r.a.p will be used with a docker image that is deployed once registered, it will include a license file and config file(in case the system doesn't work)
 
 ## TODO
 

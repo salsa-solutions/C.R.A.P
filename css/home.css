@@ -8,6 +8,9 @@ html {
     /* margin-bottom: 100px; */
 }
 
+
+/* log out button */
+
 .btn_logout {
     /* position: relative; */
     float: right !important;
@@ -15,6 +18,9 @@ html {
     background: rgb(0, 0, 0) !important;
     color: white !important;
 }
+
+
+/* submit button */
 
 .submit_btn {
     width: 75%;
@@ -27,9 +33,15 @@ html {
     outline: 0px !important;
 }
 
+
+/* keeping button at the bottom and center of the page */
+
 .submit_container {
     padding: 0 2rem;
 }
+
+
+/* footer */
 
 .f-container {
     position: relative;
@@ -55,59 +67,39 @@ footer p {
     padding: 0px;
     margin: 0px;
     line-height: 1.2;
-}
-
-
-/* Option 1 */
-
-
-/* .f-container {
-    padding-top: 20%;
-} */
-
-
-/* Option 2 */
-
-footer {
     top: 145px;
 }
 
-.scheduling_card {
-    color: white;
-    height: 600px;
-    width: 900px;
-    margin-top: 50px;
-    margin-bottom: auto;
-    margin-left: 50px;
-    background: #19138d;
-    position: relative;
+
+/* UI of the form and how it looks */
+
+.form-container {
+    background-color: #19138d;
     display: flex;
+    align-items: center;
     justify-content: center;
-    flex-direction: column;
-    padding: 10px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    border-radius: 5px;
+    width: fit-content + 10px;
+    height: fit-content + 10%;
+    margin-top: 5%;
+    padding-bottom: 1%;
+    border-radius: 100px;
 }
 
-.user_card {
+.user-input-card {
+    display: inline-block;
     color: white;
-    height: 600px;
+    height: flex;
     width: 350px;
     margin-top: 50px;
     margin-bottom: auto;
     margin-left: 50px;
     background: #19138d;
     position: relative;
-    display: flex;
     justify-content: center;
     flex-direction: column;
     padding: 10px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    border-radius: 5px;
+    border-radius: 50px;
+    border: white 2px solid;
 }
 
 .text {

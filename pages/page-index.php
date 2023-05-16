@@ -3,9 +3,9 @@
 // page urls
 
 // manager
-$admin_page_url= '/pages/admin/admin.php';
-$scheduling_page_url= '/pages/admin/scheduling.php';
-$approval_page_url = '/pages/admin/approval.php';
+$admin_page_url= '/pages/manager/admin.php';
+$scheduling_page_url= '/pages/manager/scheduling.php';
+$approval_page_url = '/pages/manager/approval.php';
 
 // regular user 
 $home_page_url = '/index.php';

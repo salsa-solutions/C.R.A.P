@@ -2,7 +2,11 @@
 <?php
 // set_include_path(get_include_path() . PATH_SEPARATOR . '/pages/page-index.php');
 // // include_path('/pages/page-index.php');
-
+// // manager
+// $managment_page
+// $admin_page= '<
+// $scheduling_page
+// $approval_page 
 $header = <<<HEADER
 
 
