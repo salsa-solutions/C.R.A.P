@@ -27,79 +27,72 @@ help_menu() {
 }
 
 # Parse arguments
-while [[ $# -gt 0 ]]
-do
+while [[ $# -gt 0 ]]; do
   key="$1"
 
   case $key in
-    -a|--all)
-      add_all=true
-      shift
-      ;;
-    -b|--branch)
-      branch="$2"
-      shift
-      shift
-      ;;
-    -n|--new)
-      branch="$2"
-      new_branch=true
-      shift
-      shift
-      ;;
-    -c|--commit)
-      commit_message="$2"
-      shift
-      shift
-      ;;
-    -D|--debug)
-      debug_mode=true
-      shift
-      ;;
-    -d|--diff)
-      show_diff=true
-      shift
-      ;;
-    -h|--help)
-      help_menu
-      ;;
-    *)
-      break
-      ;;
+  -a | --all)
+    add_all=true
+    shift
+    ;;
+  -b | --branch)
+    branch="$2"
+    shift
+    shift
+    ;;
+  -n | --new)
+    branch="$2"
+    new_branch=true
+    shift
+    shift
+    ;;
+  -c | --commit)
+    commit_message="$2"
+    shift
+    shift
+    ;;
+  -D | --debug)
+    debug_mode=true
+    shift
+    ;;
+  -d | --diff)
+    show_diff=true
+    shift
+    ;;
+  -h | --help)
+    help_menu
+    ;;
+  *)
+    break
+    ;;
   esac
 done
 
 # Check if any files are specified
-if [[ $# -eq 0 && "$add_all" = false && "$show_diff" = false ]]
-then
+if [[ $# -eq 0 && "$add_all" = false && "$show_diff" = false ]]; then
   help_menu
 fi
 
 # Create new branch if option is provided
-if [ "$new_branch" = true ]
-then
+if [ "$new_branch" = true ]; then
   git checkout -b "$branch"
 fi
 
 # Show git diff --stat and skip all other steps
-if [ "$show_diff" = true ] && [[ "$#" -eq 1 ]]
-then
+if [ "$show_diff" = true ] && [[ "$#" -eq 1 ]]; then
   git diff --stat
   exit 0
 fi
 
-if [ "$add_all" = true ]
-then
+if [ "$add_all" = true ]; then
   git add --all
 else
-  if [[ $# -gt 0 ]]
-  then
+  if [[ $# -gt 0 ]]; then
     git add "$@"
   fi
 fi
 
-if [ "$debug_mode" = true ] 
-then
+if [ "$debug_mode" = true ]; then
   echo "Debug Mode:"
   echo "  PWD: $(pwd)"
   echo "  Commit Message: $commit_message"
@@ -110,30 +103,27 @@ then
   git status --short | awk '{print $2}'
   echo ""
   echo "  Number of Files: $#"
-  echo " Show Diff: $show_diff"
-  echo " Debug Mode: $debug_mode"
+  echo "  Show Diff: $show_diff"
+  echo "  Debug Mode: $debug_mode"
   echo ""
 fi
 
 if git diff-index --quiet HEAD --; then
   echo "No changes to commit. Skipping the commit step."
 else
-  if [ "$commit_message" != "Automated commit" ]
-    then
-      username=$(git config user.name)
-      commit_message+=" ($(date +%Y-%m-%d)) [branch: $branch, author: $username]"
-      git commit -m "$commit_message"
-      echo "Changes committed with message: $commit_message"
-      if [ "$add_all" = true ] && [ "$commit_message" != "Automated commit" ]
-then
-  git push origin "$branch"
-  echo "Changes pushed to $branch branch."
+  if [ "$commit_message" != "Automated commit" ]; then
+    username=$(git config user.name)
+    commit_message+=" ($(date +%Y-%m-%d)) [branch: $branch, author: $username]"
+    git commit -m "$commit_message"
+    echo "Changes committed with message: $commit_message"
+    if [ "$add_all" = true ] && [ "$commit_message" != "Automated commit" ]; then
+      git push origin "$branch"
+      echo "Changes pushed to $branch branch."
+    fi
+  else
+    echo "Warning: No commit message set. Use the -c or --commit option to provide a commit message."
+  fi
 fi
-else
-echo "Warning: No commit message set. Use the -c or --commit option to provide a commit message."
-fi
-fi
-if [ "$new_branch" = true ]
-then
-git checkout dev
+if [ "$new_branch" = true ]; then
+  git checkout dev
 fi
