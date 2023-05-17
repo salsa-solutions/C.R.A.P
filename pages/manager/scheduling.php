@@ -110,7 +110,7 @@ setAccessPages($role);
                                         <td>
                                             <select name="monday" id="">
                                                 <option value=""><?php echo $row['monday']; ?></option>
-                                                <?php echo Get_shift_options($db, 'Monday', True); ?>
+                                                <?php echo Get_shift_options($db, 'Monday', True, $roleFilter=null); ?>
                                             </select>
                                         </td>
                                         <td><?php echo $row['monday']; ?></td>

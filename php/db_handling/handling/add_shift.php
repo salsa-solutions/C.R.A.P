@@ -24,7 +24,7 @@ if (isset($_POST)) {
     $start_time        = $_POST['start_time'];
     $end_time          = $_POST['end_time'];
     $employee_max      = $_POST['employee_max'];
-    $role_name         = $_POST['role_name'];
+    $role_name              = $_POST['role_name'];
     $week              = getCurrentWorkWeek();
     $day               = $_POST['day'];
 

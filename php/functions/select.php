@@ -70,10 +70,10 @@ function getRolesDropdown($db)
   $dropdown = "";
   foreach ($roles as $role) {
     $role_name = $role['role_name'];
-    $role_id = $role['role'];
+    // $role_id = $role['role'];
 
     // Add the fullname to the dropdown menu as an option with the user ID as the value
-    $dropdown .= '<option value="' . $role_id . '">' . $role_name . '</option>';
+    $dropdown .= '<option value="' . $role_name . '">' . $role_name . '</option>';
   }
 
 
@@ -85,11 +85,11 @@ function getRolesDropdown($db)
 function get_shift_options($db, $day, $includeRoleName = false, $roleFilter = null)
 {
   $options = "";
-  $sql = "SELECT id, start_time, end_time, employee_max, role_name, day FROM shifts WHERE day = :day";
+  $sql = "SELECT id, start_time, end_time, employee_max, role_name, role, day FROM shifts WHERE day = :day";
 
-  if (!is_null($roleFilter)) {
-    $sql .= " AND role_name = :role";
-  }
+  // if (!is_null($roleFilter)) {
+  //   $sql .= " AND role_name = :role";
+  // }
 
   $stmt = $db->prepare($sql);
   $stmt->bindParam(':day', $day);

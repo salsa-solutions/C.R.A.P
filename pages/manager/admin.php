@@ -175,7 +175,7 @@ https://cdn.jsdelivr.net/npm/notiflix/dist/notiflix-3.2.5.min.css
                     <div class="col-sm-4">
                         <input type="number" class="form-control" id="employee-max" name="employee-max">
                     </div>
-                    <label for="employee_type" class="col-sm-2 col-form-label">Employee Type:</label>
+                    <label for="employee_type" class="col-sm-2 col-form-label">Select postion:</label>
                     <div class="col-sm-4">
                         <select class="form-control" id="role-name" name="role-name">
                             <?php echo getRolesDropdown($db); ?>
