@@ -82,12 +82,22 @@ function getRolesDropdown($db)
   return $dropdown;
 }
 
-function get_shift_options($db, $day)
+function get_shift_options($db, $day, $includeRoleName = false, $roleFilter = null)
 {
   $options = "";
   $sql = "SELECT id, start_time, end_time, employee_max, role_name, day FROM shifts WHERE day = :day";
+
+  if (!is_null($roleFilter)) {
+    $sql .= " AND role_name = :role";
+  }
+
   $stmt = $db->prepare($sql);
   $stmt->bindParam(':day', $day);
+
+  if (!is_null($roleFilter)) {
+    $stmt->bindParam(':role', $roleFilter);
+  }
+
   $stmt->execute();
 
   // Check if there are any shifts
@@ -104,7 +114,12 @@ function get_shift_options($db, $day)
         $start_time = date('h:i A', strtotime($row['start_time']));
         $end_time = date('h:i A', strtotime($row['end_time']));
         $option_value = $row['id'];
-        $option_label = "{$start_time} - {$end_time} ({$row['employee_max']})";
+        $option_label = "{$start_time} - {$end_time}";
+
+        if ($includeRoleName) {
+          $option_label .= " ({$row['role_name']})";
+        }
+
         $options .= "<option value=\"{$option_value}\">{$option_label}</option>";
         $show_option = true;
       }
@@ -117,10 +132,10 @@ function get_shift_options($db, $day)
     $options .= "<option value=\"false-{$day}\">OFF</option>";
   }
 
-  
-
   return $options;
 }
+
+
 
 // require_once('/var/www/html/config.php');
 // echo '<select>';

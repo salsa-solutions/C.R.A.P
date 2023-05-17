@@ -49,7 +49,7 @@ setAccessPages($role);
   <link rel="stylesheet" href="/css/home.css">
   <link rel="stylesheet" href="/css/nav.css">
   <link rel="stylesheet" href="/css/settings.css">
-  <title><?php echo $WEB_TITLE; ?> | Capriotti's Regional Attendance Program</title>
+  <title><?php echo $WEB_TITLE; ?> | <?php echo $WEBSITE_NAME ?></title>
 
 </head>
 <?php require("/var/www/html/php/template.php");

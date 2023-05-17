@@ -49,7 +49,6 @@ do
       ;;
     -c|--commit)
       commit_message="$2"
-      push_changes=true
       shift
       shift
       ;;
@@ -83,7 +82,7 @@ then
 fi
 
 # Show git diff --stat and skip all other steps
-if [ "$show_diff" = true ] && [[ "$#" -eq 0 ]]
+if [ "$show_diff" = true ] && [[ "$#" -eq 1 ]]
 then
   git diff --stat
   exit 0
@@ -111,37 +110,30 @@ then
   git status --short | awk '{print $2}'
   echo ""
   echo "  Number of Files: $#"
-  echo "  Push Changes: $push_changes"
-  echo "  Show Diff: $show_diff"
-  echo "  Debug Mode: $debug_mode"
+  echo " Show Diff: $show_diff"
+  echo " Debug Mode: $debug_mode"
   echo ""
 fi
 
-# Check if changes were made
 if git diff-index --quiet HEAD --; then
   echo "No changes to commit. Skipping the commit step."
 else
-  # Commit changes
   if [ "$commit_message" != "Automated commit" ]
-  then
-    username=$(git config user.name)
-    commit_message+=" ($(date +%Y-%m-%d)) [branch: $branch, author: $username]"
-    git commit -m "$commit_message"
-    echo "Changes committed with message: $commit_message"
-
-    # Push changes if add and commit are true
-    if [ "$add_all" = true ] && [ "$commit_message" != "Automated commit" ]
     then
-      git push origin "$branch"
-      echo "Changes pushed to $branch branch."
-    fi
-  else
-    echo "Warning: No commit message set. Use the -c or --commit option to provide a commit message."
-  fi
+      username=$(git config user.name)
+      commit_message+=" ($(date +%Y-%m-%d)) [branch: $branch, author: $username]"
+      git commit -m "$commit_message"
+      echo "Changes committed with message: $commit_message"
+      if [ "$add_all" = true ] && [ "$commit_message" != "Automated commit" ]
+then
+  git push origin "$branch"
+  echo "Changes pushed to $branch branch."
 fi
-
-# Revert back to default branch
+else
+echo "Warning: No commit message set. Use the -c or --commit option to provide a commit message."
+fi
+fi
 if [ "$new_branch" = true ]
 then
-  git checkout dev
+git checkout dev
 fi

@@ -2,6 +2,7 @@
 require_once('/var/www/html/config.php');
 require_once('/var/www/html/pages/page-index.php');
 require_once('/var/www/html/php/functions/permissons.php');
+require_once('/var/www/html/php/functions/select.php');
 
 
 session_start();
@@ -109,9 +110,7 @@ setAccessPages($role);
                                         <td>
                                             <select name="monday" id="">
                                                 <option value=""><?php echo $row['monday']; ?></option>
-                                                <option value="">
-                                                    <input type="text">
-                                                </option>
+                                                <?php echo Get_shift_options($db, 'Monday', True); ?>
                                             </select>
                                         </td>
                                         <td><?php echo $row['monday']; ?></td>
