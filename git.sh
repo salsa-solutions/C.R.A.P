@@ -79,7 +79,7 @@ if [ "$new_branch" = true ]; then
 fi
 
 # Show git diff --stat and skip all other steps
-if [ "$show_diff" = true ] && [[ "$#" -eq 1 ]]; then
+if [ "$show_diff" = true ] && [[ "$#" -eq 0 ]]; then
   git diff --stat
   exit 0
 fi

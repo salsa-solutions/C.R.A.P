@@ -24,7 +24,7 @@ function getUsersDropdown($db)
     $id = $user['uuid'];
 
     // Add the fullname to the dropdown menu as an option with the user ID as the value
-    $dropdown .= '<option value="' . $id . '">' . $fullname . ' - '. $role . '</option>';
+    $dropdown .= '<option value="' . $id . '">' . $fullname . ' - ' . $role . '</option>';
 
     // Save the role and user ID to the roles and ids arrays
     $roles[$id] = $role;
@@ -52,7 +52,7 @@ function generate_time_options($start_time, $end_time, $interval = 15)
   foreach ($times as $time) {
     $html .= '<option value="' . $time . '"> ' . $time . '</option>';
   }
-  
+
 
   return $html;
 }
@@ -82,14 +82,14 @@ function getRolesDropdown($db)
   return $dropdown;
 }
 
-function get_shift_options($db, $day, $includeRoleName = false, $roleFilter = null)
+function get_shift_options($db, $day, $includeRoleName = false, $roleFilter = null, $userName = null)
 {
   $options = "";
   $sql = "SELECT id, start_time, end_time, employee_max, role_name, role, day FROM shifts WHERE day = :day";
 
-  // if (!is_null($roleFilter)) {
-  //   $sql .= " AND role_name = :role";
-  // }
+  if (!is_null($roleFilter)) {
+    $sql .= " AND role_name = :role";
+  }
 
   $stmt = $db->prepare($sql);
   $stmt->bindParam(':day', $day);
@@ -114,7 +114,13 @@ function get_shift_options($db, $day, $includeRoleName = false, $roleFilter = nu
         $start_time = date('h:i A', strtotime($row['start_time']));
         $end_time = date('h:i A', strtotime($row['end_time']));
         $option_value = $row['id'];
-        $option_label = "{$start_time} - {$end_time}";
+        $option_label = "";
+
+        if (!is_null($userName)) {
+          $option_label .= $userName . " - ";
+        }
+
+        $option_label .= "{$start_time} - {$end_time}";
 
         if ($includeRoleName) {
           $option_label .= " ({$row['role_name']})";
@@ -134,6 +140,8 @@ function get_shift_options($db, $day, $includeRoleName = false, $roleFilter = nu
 
   return $options;
 }
+
+
 
 
 
