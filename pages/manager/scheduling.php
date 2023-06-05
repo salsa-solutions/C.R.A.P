@@ -84,6 +84,7 @@ setAccessPages($role);
                                 <div class="col-12">
                                     <table class="table table-striped table-bordered table-hover">
                                         <thead>
+
                                             <tr>
 
                                                 <th scope="col">Monday</th>
@@ -105,67 +106,69 @@ setAccessPages($role);
                                             for ($i = 0; $row = $result->fetch(); $i++) {
                                                 $userName = $row['name'];
                                             ?>
+                                                <form action="">
 
-                                                <!-- <td><?php echo $row['name']; ?></td>
+                                                    <!-- <td><?php echo $row['name']; ?></td>
                                                 <td><?php echo $row['status']; ?></td> -->
-                                                <td>
-                                                    <select name="monday" style="font-size: small;" id="">
-                                                        <option value=""><?php echo $row['name'] . " - ";
-                                                                            echo $row['monday']; ?></option>
-                                                        <?php echo get_shift_options($db, 'Monday', false, null, $userName); ?>
-                                                    </select>
-                                                </td>
-                                                <td>
-                                                    <select name="tuesday" style="font-size: small;" id="">
-                                                        <option value=""><?php echo $row['name'] . " - ";
-                                                                            echo $row['tuesday']; ?></option>
-                                                        <?php echo Get_shift_options($db, 'Tuesday', false); ?>
-                                                    </select>
-                                                </td>
 
+                                                    <td>
+                                                        <select name="monday" style="font-size: small;" id="">
+                                                            <option value="<?php echo $row['uuid'] ?>"><?php echo $row['name'] . " - ";
+                                                                                                        echo $row['monday']; ?></option>
+                                                            <?php echo get_shift_options($db, 'Monday', false, null, $userName); ?>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select name="tuesday" style="font-size: small;" id="">
+                                                            <option value="<?php echo $row[''] ?>"><?php echo $row['name'] . " - ";
+                                                                                                    echo $row['tuesday']; ?></option>
+                                                            <?php echo Get_shift_options($db, 'Tuesday', false); ?>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select name="wednesday" style="font-size: small;" id="">
+                                                            <option value="<?php echo $row['uuid'] ?>"><?php echo $row['name'] . " - ";
+                                                                                                        echo $row['wednesday']; ?></option>
+                                                            <?php echo Get_shift_options($db, 'Wednesday', false); ?>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select name="thursday" style="font-size: small;" id="">
+                                                            <option value="<?php echo $row['uuid'] ?>">
+                                                                <?php echo $row['name'] . " - ";
+                                                                echo $row['thursday']; ?>
+                                                            </option>
+                                                            <?php echo Get_shift_options($db, 'Thursday', false); ?>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select name="friday" style="font-size: small;" id="">
+                                                            <option value="<?php echo $row['friday']; ?>">
+                                                                <?php echo $row['name'] . " - ";
+                                                                echo $row['friday']; ?></option>
+                                                            <?php echo Get_shift_options($db, 'Friday', false); ?>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select name="saturday" style="font-size: small;" id="">
+                                                            <option value="<?php echo $row['saturday']; ?>">
+                                                                <?php echo $row['name'] . " - ";
+                                                                echo $row['saturday']; ?></option>
+                                                            <?php echo Get_shift_options($db, 'Saturday', false); ?>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select name="sunday" style="font-size: small;" id="">
+                                                            <option value="<?php echo $row['saturday']; ?>">
+                                                                <?php echo $row['name'] . " - ";
+                                                                echo $row['sunday']; ?></option>
+                                                            <?php echo Get_shift_options($db, 'Sunday', false); ?>
+                                                        </select>
+                                                    </td>
 
-                                                <td>
-                                                    <select name="wednesday" style="font-size: small;" id="">
-                                                        <option value=""><?php echo $row['name'] . " - ";
-                                                                            echo $row['wednesday']; ?></option>
-                                                        <?php echo Get_shift_options($db, 'Wednesday', false); ?>
-                                                    </select>
-                                                </td>
-                                                <td>
-                                                    <select name="thursday" style="font-size: small;" id="">
-                                                        <option value=""><?php echo $row['name'] . " - ";
-                                                                            echo $row['thursday']; ?></option>
-                                                        <?php echo Get_shift_options($db, 'Thursday', false); ?>
-                                                    </select>
-                                                </td>
-                                                <td>
-                                                    <select name="friday" style="font-size: small;" id="">
-                                                        <option value="<?php echo $row['friday']; ?>">
-                                                            <?php echo $row['name'] . " - ";
-                                                            echo $row['friday']; ?></option>
-                                                        <?php echo Get_shift_options($db, 'Friday', false); ?>
-                                                    </select>
-                                                </td>
-                                                <td>
-                                                    <select name="saturday" style="font-size: small;" id="">
-                                                        <option value="<?php echo $row['saturday']; ?>">
-                                                            <?php echo $row['name'] . " - ";
-                                                            echo $row['saturday']; ?></option>
-                                                        <?php echo Get_shift_options($db, 'Saturday', false); ?>
-                                                    </select>
-                                                </td>
-                                                <td>
-                                                    <select name="sunday" style="font-size: small;" id="">
-                                                        <option value="<?php echo $row['saturday']; ?>">
-                                                            <?php echo $row['name'] . " - ";
-                                                            echo $row['sunday']; ?></option>
-                                                        <?php echo Get_shift_options($db, 'Sunday', false); ?>
-                                                    </select>
-                                                </td>
-
-                                                <td>
-                                                    <button class="btn btn-success" value="<?php echo $row['uuid']  ?>" id="approved-<?php echo $row['uuid']  ?>">Approve</button>
-                                                </td>
+                                                    <td>
+                                                        <button class="btn btn-success" value="<?php echo $row['uuid']  ?>" id="approved-<?php echo $row['uuid']  ?>">Approve</button>
+                                                    </td>
 
                                         </tbody>
                                     <?php
@@ -174,6 +177,7 @@ setAccessPages($role);
                                                 echo '<td colspan="8">Schedule has not been posted yet</td>';
                                             }
                                     ?>
+                                    </form>
                                     </table>
                                     <script>
                                         var buttons = document.querySelectorAll(".btn-success");
@@ -181,42 +185,37 @@ setAccessPages($role);
                                         // Loop through the buttons and add a click event listener to each one
                                         buttons.forEach(function(button) {
                                             button.addEventListener("click", function() {
-                                                // Get the value of the button that was clicked
-                                                var uuid = this.value;
 
-                                                var role_name = $('#role').val();
-                                                console.log(role);
-
+                                                var uuid = "<?php echo $uuid; ?>";
+                                                var name = "<?php echo $name; ?>";
+                                                var username = "<?php echo $username; ?>";
+                                                var status = 'pending';
+                                                var monday = $('#1').val();
+                                                var tuesday = $('#2').val();
+                                                var wednesday = $('#3').val();
+                                                var thursday = $('#4').val();
+                                                var friday = $('#5').val();
+                                                var saturday = $('#6').val();
+                                                var sunday = $('#7').val();
+                                                var day_id = [monday, tuesday, wednesday, thursday, friday, saturday, sunday];
                                                 $.ajax({
                                                     url: '/php/db_handling/handling/add_current.php',
                                                     type: 'POST',
                                                     data: {
                                                         uuid: uuid,
-                                                        role_name: role_name,
-
+                                                        name: name,
+                                                        username: username,
+                                                        status: status,
+                                                        day_id: day_id,
                                                     },
                                                     success: function(data) {
-                                                        console.log(data);
-                                                        if ($.trim(data) === "100") {
-                                                            Notiflix.Notify.success(
-                                                                'Your role has been submitted');
-                                                        }
-                                                        if ($.trim(data) === "200") {
-                                                            Notiflix.Notify.failure(
-                                                                'There were errors while saving the data, Error: ' +
-                                                                data);
-                                                        }
-                                                        if ($.trim(data) === "300") {
-                                                            Notiflix.Notify.failure(
-                                                                'No Data, Error: ' + data);
-                                                        }
+                                                        Notiflix.Notify.success('Your request has been submited');
                                                     },
                                                     error: function(data) {
-                                                        Notiflix.Notify.failure(
-                                                            'Something is not right, Error: ' +
-                                                            data);
+                                                        Notiflix.Notify.failure('Somthings not right, Error code:' + data);
                                                     }
                                                 });
+
                                             });
                                         });
                                     </script>
