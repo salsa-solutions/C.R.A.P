@@ -16,7 +16,7 @@ $currentDate = new DateTime();
 // $role_name = "test";
 
 if (isset($_POST)) {
- 
+
     $date              = $currentDate->format('Y-m-d');
     $uuid              = $_POST['uuid'];
     $name              = $_POST['name'];
@@ -24,16 +24,16 @@ if (isset($_POST)) {
     $start_time        = $_POST['start_time'];
     $end_time          = $_POST['end_time'];
     $employee_max      = $_POST['employee_max'];
-    $role_name              = $_POST['role_name'];
+    $role_name         = $_POST['role_name'];
     $week              = getCurrentWorkWeek();
     $day               = $_POST['day'];
 
     // check if var is empty
 
-    if (empty($uuid) || empty($name) || empty($username) || empty($start_time) || empty($end_time) || empty($employee_max) || empty($role_name) || empty($week) || empty($day)) {
-        echo 300;
-        exit();
-    }
+    // if (empty($uuid) || empty($name) || empty($username) || empty($start_time) || empty($end_time) || empty($employee_max) || empty($role_name) || empty($week) || empty($day)) {
+    //     echo 300;
+    //     exit();
+    // }
 
     echo $week;
 
@@ -55,7 +55,7 @@ if (isset($_POST)) {
     $stmt->bindParam(':day', $day);
 
     $result = $stmt->execute();
-    
+
     if ($result) {
         echo 100;
         // exit();

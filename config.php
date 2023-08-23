@@ -11,12 +11,12 @@ $_DEV_DB = false;
 $WEBSITE_NAME = 'Greek Star Attendance Program';
 $db_user = "tibthink";
 $db_pass = "Halsnewram";
-if($_DEV_DB){
+if ($_DEV_DB) {
   $db_name = "beta_churro_useraccounts";
   $log_db_name = "beta_churro_useraccounts_logs";
-}else{
-  $db_name = "churro_useraccounts";
-  $log_db_name = "churro_useraccounts_logs";
+} else {
+  $db_name = "churro_db";
+  $log_db_name = "churro_db_logs";
 }
 
 

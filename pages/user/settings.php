@@ -122,6 +122,7 @@ if ($_DEV && in_array($role, array('employee', 'manager', 'admin'))) {
           </select>
           <br>
           <button class="button" type="submit" id="update_user">Save Changes</button>
+          <button class="button" type="submit" id="delete-user">Delete User</button>
         </form>
         <script>
           $(document).ready(function() {
@@ -138,7 +139,7 @@ if ($_DEV && in_array($role, array('employee', 'manager', 'admin'))) {
           });
         </script>
       </div>
-      <br>
+      <!-- <br>
       <div class="settings container scroll">
         <h3>Add New User</h3>
         <form>
@@ -171,7 +172,7 @@ if ($_DEV && in_array($role, array('employee', 'manager', 'admin'))) {
           <br>
           <button class="button" type="submit" id="add_user">Add User</button>
         </form>
-      </div>
+      </div> -->
       <br>
       <div class="settings container scroll">
         <h3>Add New Role</h3>
@@ -191,6 +192,7 @@ if ($_DEV && in_array($role, array('employee', 'manager', 'admin'))) {
 
           <br>
           <button class="button" type="submit" id="submit-role">Add Role</button>
+
         </form>
         <br>
         <br>

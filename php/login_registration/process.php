@@ -34,6 +34,16 @@
                 $role_name         = 'Admin';
                 $role              = 'admin';
                 $active            = 'true';
+                $role_description  = 'Administrator role';
+                $created_by_uuid   = '01100011011100100110000101110000';
+                $created_date      = $currentDate->format('Y-m-d');
+                $created_by        = 'System';
+
+                $sql_role = "INSERT INTO roles (role, role_name, role_description, created_by_uuid, created_date, created_by) VALUES(?,?,?,?,?,?)";
+                $stmt_role = $db->prepare($sql_role);
+                $stmt_role->execute([$role, $role_name, $role_description, $created_by_uuid, $created_date, $created_by]);
+
+
             }else{
                 $role_name         = 'Pending';
                 $role              = 'pending';

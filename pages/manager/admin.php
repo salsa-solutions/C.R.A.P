@@ -44,8 +44,10 @@ setAccessPages($role);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="
@@ -54,7 +56,9 @@ setAccessPages($role);
     <link href="
 https://cdn.jsdelivr.net/npm/notiflix/dist/notiflix-3.2.5.min.css
 " rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/css/home.css">
     <link rel="stylesheet" href="/css/admin/info.css">
     <link rel="stylesheet" href="/css/scrollbar.css">
@@ -82,202 +86,133 @@ https://cdn.jsdelivr.net/npm/notiflix/dist/notiflix-3.2.5.min.css
     } else {
     ?>
 
-        <h1>Manager Portal</h1>
+    <h1>Manager Portal</h1>
 
-        <div class="messages-container">
-            <h2>Messages</h2>
-            <?php
+
+
+
+
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Admin Panel</title>
+        <div class="container">
+            <!-- Messages Box -->
+            <div class="messages">
+                <h2>Messages</h2>
+                <?php
             // Connect to the database
             $pdo = $db;
 
             // Retrieve messages from the database
             $stmt = $pdo->query("SELECT * FROM messages ORDER BY id ASC");
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                echo "<div class='message-box'><strong>{$row['name']}</strong> <small>({$row['date']})</small>:<br> {$row['message']}</div>";
+                echo "<div class='message'><span class='name'>{$row['name']}</span> <span class='timestamp'>[{$row['date']}]</span><p>{$row['message']}</p> <button class='delete-message' id='{$row['id']}' onclick='deleteMessage({$row['id']})'>delete</button></div>";
             }
             if ($stmt->rowCount() == 0) {
-                echo "<p>No messages</p>";
+                echo "<div class='message'><p>No messages</p></div>";
             }
             ?>
+
+            </div>
+
+            <!-- Add Shift Box -->
+            <div class="add-shift">
+                <h2>Add Shift</h2>
+                <label>Day of the Week:</label>
+                <input type="text" />
+                <label>Start Time:</label>
+                <input type="time" />
+                <label>End Time:</label>
+                <input type="time" />
+                <label>Max Number of Employees:</label>
+                <input type="number" />
+                <label>Position:</label>
+                <select>
+                    <option value="Manager">Manager</option>
+                    <option value="Cashier">Cashier</option>
+                    <!-- Add other positions as required -->
+                </select>
+            </div>
+
+            <!-- Shifts Box -->
+            <!-- Shifts Box -->
+            <div class="shifts">
+                <style>
+
+                </style>
+
+
+                <table class="shifts-table">
+                    <thead>
+                        <tr>
+                            <th>Day of the Week</th>
+                            <th>Day</th>
+                            <th>Start Time</th>
+                            <th>End Time</th>
+                            <th>Max Number of Employees</th>
+                            <th>Position</th>
+                            <th>Edit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Monday</td>
+                            <td>August 23, 2021</td>
+                            <td>9:00 AM</td>
+                            <td>5:00 PM</td>
+                            <td>5</td>
+                            <td>Manager</td>
+                            <td><button class="edit-btn">Edit</button></td>
+                        </tr>
+                        <tr>
+                            <td>Tuesday</td>
+                            <td>August 24, 2021</td>
+                            <td>10:00 AM</td>
+                            <td>6:00 PM</td>
+                            <td>4</td>
+                            <td>Cashier</td>
+                            <td><button class="edit-btn">Edit</button></td>
+                        </tr>
+                        <!-- Add other rows as required -->
+                    </tbody>
+                </table>
+
+            </div>
         </div>
-        <br>
-        <div class="wanted-days-box">
-            <h2>Wanted Days</h2>
-            <table>
-                <tr>
-                    <th>Date</th>
-                    <th>Name</th>
-                    <th>Monday</th>
-                    <th>Tuesday</th>
-                    <th>Wednesday</th>
-                    <th>Thursday</th>
-                    <th>Friday</th>
-                    <th>Saturday</th>
-                </tr>
-                <?php
-                // Retrieve availability from the database
-                $stmt = $pdo->query("SELECT * FROM pending_shifts ORDER BY id ASC");
-                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    echo "<tr>";
-                    echo "<td>{$row['date']}</td>";
-                    echo "<td>{$row['name']}</td>";
-                    echo "<td>{$row['monday']}</td>";
-                    echo "<td>{$row['tuesday']}</td>";
-                    echo "<td>{$row['wednesday']}</td>";
-                    echo "<td>{$row['thursday']}</td>";
-                    echo "<td>{$row['friday']}</td>";
-                    echo "<td>{$row['saturday']}</td>";
-                    echo "</tr>";
-                }
-                if ($stmt->rowCount() == 0) {
-                    echo "<tr><td colspan=\"8\">No prefered days found</td></tr>";
-                }
-                ?>
-            </table>
-        </div>
-        <br>
-        <div class="shift-container">
-            <h2>Add Shifts</h2>
-            <form>
-                <div class="form-group row">
-                    <label for="day" class="col-sm-2 col-form-label">Day:</label>
-                    <div class="col-sm-10">
-                        <select class="form-control" name="day" id="day">
-                            <option value="monday">Monday</option>
-                            <option value="tuesday">Tuesday</option>
-                            <option value="wednesday">Wednesday</option>
-                            <option value="thursday">Thursday</option>
-                            <option value="friday">Friday</option>
-                            <option value="saturday">Saturday</option>
-                            <option value="sunday">Sunday</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="start_time" class="col-sm-2 col-form-label">Start Time:</label>
-                    <div class="col-sm-10">
-                        <!-- <input type="time" class="form-control" id="start-time" name="start-time"> -->
-                        <select name="start-time" id="start-time" class="form-control">
-                            <?php echo generate_time_options('9:00AM', '10:00PM', $interval = 15); ?>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="end_time" class="col-sm-2 col-form-label">End Time:</label>
-                    <div class="col-sm-10">
-                        <select name="end-time" id="end-time" class="form-control">
-                            <?php echo generate_time_options('9:00AM', '10:00PM', $interval = 15); ?>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="employee_max" class="col-sm-2 col-form-label">Max Employees:</label>
-                    <div class="col-sm-4">
-                        <input type="number" class="form-control" id="employee-max" name="employee-max">
-                    </div>
-                    <label for="employee_type" class="col-sm-2 col-form-label">Select postion:</label>
-                    <div class="col-sm-4">
-                        <select class="form-control" id="role-name" name="role-name">
-                            <?php echo getRolesDropdown($db); ?>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-sm-10">
-                        <button type="submit" id="submit-shifts" class="btn btn-primary">Add Shift</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <br>
-        <!-- make a list of shifts from the sql db and put it into a weekly calender with everyday listed and the shifts that coradate to that day is listed with role name included -->
-        <div class="">
-            <h2>Shifts</h2>
-            <table>
-                <tr>
-                    <th>Day</th>
-                    <th>Start Time</th>
-                    <th>End Time</th>
-                    <th>Max Employees</th>
-                    <th>Employee Type</th>
-                </tr>
-                <?php
-                // Retrieve availability from the database
-                $stmt = $pdo->query("SELECT * FROM shifts ORDER BY id ASC");
-                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    echo "<tr>";
-                    echo "<td>{$row['day']}</td>";
-                    echo "<td>{$row['start_time']}</td>";
-                    echo "<td>{$row['end_time']}</td>";
-                    echo "<td>{$row['employee_max']}</td>";
-                    echo "<td>{$row['role_name']}</td>";
-                    echo "</tr>";
-                }
-                if ($stmt->rowCount() == 0) {
-                    echo "<tr><td colspan=\"8\">No shifts found</td></tr>";
-                }
-                ?>
-            </table>
 
         <script>
-            $(function() {
-                $('#submit-shifts').click(function(e) {
+        function deleteMessage(id) {
+            // Create a new XMLHttpRequest object
+            var xhr = new XMLHttpRequest();
 
-                    var valid = this.form.checkValidity();
+            // Set up the request
+            xhr.open('POST', '/php/db_handling/handling/delete-message.php', true);
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
-                    if (valid) {
+            // Set up the data to be sent
+            var data = 'id=' + encodeURIComponent(id);
 
+            // Send the request
+            xhr.send(data);
 
-                        var uuid = "<?php echo $uuid; ?>";
-                        var name = "<?php echo $name; ?>";
-                        var username = "<?php echo $username; ?>";
-                        var start_time = $('#start-time').val();
-                        var end_time = $('#end-time').val();
-                        var employee_max = $('#employee-max').val();
-                        var role_name = $('#role-name').val();
-                        var day = $('#day').val();
-
-                        // var hours = $('#hours').val();
-                        // console.log(hours);
-                        $.ajax({
-                            url: '/php/db_handling/handling/add_shift.php',
-                            type: 'POST',
-                            data: {
-                                uuid: uuid,
-                                name: name,
-                                username: username,
-                                start_time: start_time,
-                                end_time: end_time,
-                                employee_max: employee_max,
-                                role_name: role_name,
-                                day: day
-                                // hours: hours
-                            },
-                            success: function(data) {
-                                if (data === "100") {
-
-                                    Notiflix.Notify.success('Your request has been submited');
-                                }
-                                if (data === "200") {
-                                    Notiflix.Notify.failure(
-                                        'There were erros while saving the data, Error:' + data);
-                                }
-                                if (data === "300") {
-                                    Notiflix.Notify.failure(
-                                        'No Data, Error:' + data);
-                                }
-                            },
-                            error: function(data) {
-                                Notiflix.Notify.failure('Somthings not right, Error:' + data);
-                            }
-                        });
-                    }
-                });
-            });
+            // Handle the response
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    // Reload the page to update the messages
+                    location.reload();
+                }
+            };
+        }
         </script>
 
+</body>
 
-    <?php
+
+<?php
     }
     require("/var/www/html/php/template.php");
     echo $footer;

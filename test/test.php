@@ -1,51 +1,87 @@
-<?php 
-// $string = "test";
-// only show the first 2 characters
-// echo substr($string, 0, 2);
-// echo $string[];
-
-// show error reporting
+<?php
+//show errors
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-require_once '/var/www/html/config.php';
-$pdo = $db;
-// Assuming you have already connected to the SQL database
+require_once('/var/www/html/config.php');
 
-function insertPendingShifts($uuid, $approved, $date, $name, $username, $dayIdArray, $pdo)
+
+// $uuid       = $_POST['uuid'];
+// $status     = $_POST['status'];
+// $date       = $currentDate->format('Y-m-d H:i:s');
+// $name       = $_POST['name'];
+// $username   = $_POST['username'];
+// $day_id     = $_POST['day_id'];
+
+
+// make test inputs
+$uuid = 'test';
+$status = 'test';
+$date = 'test';
+
+$name = 'test';
+$username = 'test';
+$day_id = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 'monday-off', 'tuesday-off', 'wednesday-off', 'thursday-off', 'friday-off', 'saturday-off', 'sunday-off'];
+
+
+// Retrieve shift information from the 'shifts' table
+
+
+try {
+
+    $pdo = $db;
+
+    $information = [];
+    $stmt = $pdo->query("SELECT day, role FROM shifts");
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $information[$row['day']] = $row['id'];
+    }
+} catch (PDOException $e) {
+    echo "Error retrieving shift information: " . $e->getMessage();
+    exit();
+}
+
+function sortShifts($day_id, $information)
 {
-    // Prepare a statement to insert into pending_shifts table
-    $stmt = $pdo->prepare("INSERT INTO pending_shifts (uuid, approved, date, name, username) VALUES (?, ?, ?, ?, ?)");
+    global $uuid, $status, $date, $name, $username, $db;
+    // Existing code ...
 
-    foreach ($dayIdArray as $dayId) {
-        // Check if the dayId starts with "false-" followed by a day
-        if (strpos($dayId, 'false-') === 0) {
-            // Extract the day from the dayId
-            $day = substr($dayId, 6);
+    // SQL insert statements array
+    $sqlInserts = [];
 
-            // Set the day to "off" in the pending_shifts table
-            $stmt->execute([$uuid, $approved, $date, $name, $username]);
-        } else {
-            // Fetch the shift information from the shifts table
-            $shiftStmt = $pdo->prepare("SELECT * FROM shifts WHERE id = ?");
-            $shiftStmt->execute([$dayId]);
-            $shiftData = $shiftStmt->fetch(PDO::FETCH_ASSOC);
+    foreach ($day_id as $id) {
+        if (strpos($id, '-off') === false) {
+            if (isset($information[$id])) {
+                $weekDays[$information[$id]][] = $id;
 
-            // Insert the shift information into the pending_shifts table
-            $stmt->execute([$uuid, $approved, $date, $name, $username]);
+                // Generate SQL insert statement
+                $sqlInserts[] = "INSERT INTO your_table (uuid, status, date, name, username, day_id) VALUES (?, ?, ?, ?, ?, ?)";
+            }
         }
+    }
+
+    // Display the sorted days and corresponding numbers
+    foreach ($weekDays as $day => $numbers) {
+        // Existing code ...
+    }
+
+    // Execute SQL inserts
+
+
+    try {
+        $pdo = $db;
+
+        foreach ($sqlInserts as $sqlInsert) {
+            $stmt = $pdo->prepare($sqlInsert);
+            $stmt->execute([$uuid, $status, $date, $name, $username, $day_id]);
+        }
+
+        echo "SQL inserts executed successfully.";
+    } catch (PDOException $e) {
+        echo "Error executing SQL inserts: " . $e->getMessage();
     }
 }
 
-// Example usage
-$uuid = 'abc123';
-$approved = true;
-$date = '2023-05-15';
-$name = 'John Doe';
-$username = 'johndoe';
-$dayIdArray = [1, 2, 'false-3'];
+// Existing code ...
 
-insertPendingShifts($uuid, $approved, $date, $name, $username, $dayIdArray, $pdo);
-
-
-?>
+sortShifts($day_id, $information);

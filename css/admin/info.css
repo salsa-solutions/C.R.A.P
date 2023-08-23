@@ -1,54 +1,127 @@
-    table {
-        border-collapse: collapse;
-        width: 100%;
-    }
-    
-    th,
-    td {
-        text-align: center;
-        padding: 8px;
-    }
-    
-    th {
-        background-color: #ddd;
-    }
-    
-    tr:nth-child(even) {
-        background-color: #f2f2f2;
-    }
-    
-    .messages-container {
-        margin-top: 20px;
-        padding: 20px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        background-color: #f9f9f9;
-    }
-    
-    .message-box {
-        margin-bottom: 10px;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        background-color: #fff;
-    }
-    
-    .message-box strong {
-        font-weight: bold;
-    }
-    
-    .message-box small {
-        font-size: 12px;
-        color: #888;
-        margin-left: 10px;
-    }
-    
-    .availability-box {
-        background-color: lightblue;
-        padding: 10px;
-    }
-    
-    .wanted-days-box {
-        background-color: lightgreen;
-        padding: 10px;
-    }
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.messages {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-height: 550px;
+    overflow-y: scroll;
+}
+
+.messages h2 {
+    margin-bottom: 10px;
+}
+
+.message {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.message .name {
+    font-weight: bold;
+}
+
+.message .timestamp {
+    color: grey;
+}
+
+  .add-shift {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .add-shift h2 {
+    margin-bottom: 10px;
+  }
+
+  .add-shift label {
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  .add-shift input,
+  .add-shift select {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+
+  .add-shift input[type="submit"] {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .add-shift input[type="submit"]:hover {
+    background-color: #555;
+  }
+
+  .shifts {
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    grid-column: 1 / span 2;
+    display: table;
+    width: 100%;
+  }
+
+  .shifts .shift {
+    display: table-row;
+  }
+
+  .shifts .shift .cell {
+    display: table-cell;
+    padding: 10px;
+    border: 1px solid #ddd;
+  }
+  .shifts-table {
+border-collapse: collapse;
+width: 100%;
+}
+
+.shifts-table th,
+.shifts-table td {
+text-align: left;
+padding: 8px;
+border: 1px solid #ddd;
+}
+
+.shifts-table th {
+background-color: #f2f2f2;
+}
+
+.shifts-table td button {
+background-color: #333;
+color: #fff;
+border: none;
+padding: 5px 10px;
+border-radius: 5px;
+cursor: pointer;
+}
+
+.shifts-table td button:hover {
+background-color: #555;
+}
