@@ -1,5 +1,5 @@
 # Centralized. Regional. Attendance. Program
-## Version: 0.147.0 Alpha
+## Version: 0.171.0 Alpha
 
 ## What is this program
 C.R.A.P. is a highly efficient and localized scheduling program designed to cater to the needs of businesses and organizations of all sizes. Our program is not only user-friendly, but also incredibly lightweight, secure, and affordable. At Salsa, we understand the importance of a reliable scheduling system, and our program is designed to deliver on that promise while also providing an exceptional user experience. Our cutting-edge technology ensures that your data is always secure, while our streamlined design guarantees a hassle-free experience for both you and your team. With C.R.A.P., scheduling has never been easier or more accessible.
@@ -42,12 +42,13 @@ Current work price = $329.50
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
-PHP                             32            472            208           2504
-CSS                             11            110             43            608
+PHP                             34            494            172           2460
+CSS                             11            120             43            671
 SQL                              2             72            148            189
 -------------------------------------------------------------------------------
-SUM:                            45            654            399           3301
+SUM:                            47            686            363           3320
 -------------------------------------------------------------------------------
+
 
 ```
 Current retial price: 400$ + 50$ a year to renew subscription
