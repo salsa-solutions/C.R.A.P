@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 25, 2023 at 03:00 AM
--- Server version: 10.5.18-MariaDB-0+deb11u1
+-- Generation Time: Sep 12, 2023 at 11:32 PM
+-- Server version: 10.5.19-MariaDB-0+deb11u2
 -- PHP Version: 7.4.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `churro_useraccounts`
+-- Database: `churro_db`
 --
 
 -- --------------------------------------------------------
@@ -60,7 +60,8 @@ CREATE TABLE `current_schedule` (
   `wednesday` varchar(9) NOT NULL,
   `thursday` varchar(9) NOT NULL,
   `friday` varchar(9) NOT NULL,
-  `saturday` varchar(9) NOT NULL
+  `saturday` varchar(9) NOT NULL,
+  `sunday` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
@@ -74,6 +75,28 @@ CREATE TABLE `messages` (
   `date` varchar(100) NOT NULL,
   `name` varchar(100) NOT NULL,
   `message` mediumtext NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pending_shifts`
+--
+
+CREATE TABLE `pending_shifts` (
+  `id` int(11) NOT NULL,
+  `uuid` varchar(100) NOT NULL,
+  `date` varchar(100) NOT NULL,
+  `status` varchar(100) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `monday` varchar(100) NOT NULL,
+  `tuesday` varchar(100) NOT NULL,
+  `wednesday` varchar(100) NOT NULL,
+  `thursday` varchar(100) NOT NULL,
+  `friday` varchar(100) NOT NULL,
+  `saturday` varchar(100) NOT NULL,
+  `sunday` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
@@ -106,10 +129,10 @@ CREATE TABLE `shifts` (
   `username` varchar(15) NOT NULL,
   `start_time` varchar(8) NOT NULL,
   `end_time` varchar(8) NOT NULL,
-  `employee_max` varchar(255) NOT NULL,
-  `role_name` varchar(50) NOT NULL,
+  `max_employees` varchar(255) NOT NULL,
+  `position` varchar(100) NOT NULL,
   `week` varchar(13) NOT NULL,
-  `day` varchar(11) NOT NULL
+  `day_of_week` varchar(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -121,7 +144,9 @@ CREATE TABLE `shifts` (
 CREATE TABLE `site_settings` (
   `site_name` varchar(100) NOT NULL,
   `theme` varchar(10) NOT NULL,
-  `icon_path` int(100) NOT NULL
+  `icon_path` int(100) NOT NULL,
+  `start_time` time(6) NOT NULL,
+  `end_time` time(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -144,46 +169,20 @@ CREATE TABLE `users` (
   `active` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `wanted_days`
---
-
-CREATE TABLE `wanted_days` (
-  `id` int(11) NOT NULL,
-  `uuid` varchar(100) NOT NULL,
-  `date` varchar(100) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `username` varchar(100) NOT NULL,
-  `monday` varchar(9) NOT NULL,
-  `tuesday` varchar(9) NOT NULL,
-  `wednesday` varchar(9) NOT NULL,
-  `thursday` varchar(9) NOT NULL,
-  `friday` varchar(9) NOT NULL,
-  `saturday` varchar(9) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `availability`
---
-ALTER TABLE `availability`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `current_schedule`
---
-ALTER TABLE `current_schedule`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `messages`
 --
 ALTER TABLE `messages`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `pending_shifts`
+--
+ALTER TABLE `pending_shifts`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -205,31 +204,19 @@ ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `wanted_days`
---
-ALTER TABLE `wanted_days`
-  ADD PRIMARY KEY (`id`);
-
---
 -- AUTO_INCREMENT for dumped tables
 --
-
---
--- AUTO_INCREMENT for table `availability`
---
-ALTER TABLE `availability`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `current_schedule`
---
-ALTER TABLE `current_schedule`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `pending_shifts`
+--
+ALTER TABLE `pending_shifts`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -248,12 +235,6 @@ ALTER TABLE `shifts`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `wanted_days`
---
-ALTER TABLE `wanted_days`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 

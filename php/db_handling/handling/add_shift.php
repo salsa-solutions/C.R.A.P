@@ -13,58 +13,54 @@ $currentDate = new DateTime();
 
 // $day = "tusday";
 
-// $role_name = "test";
+// $position = "test";
 
 if (isset($_POST)) {
 
     $date              = $currentDate->format('Y-m-d');
-    $uuid              = $_POST['uuid'];
-    $name              = $_POST['name'];
-    $username          = $_POST['username'];
-    $start_time        = $_POST['start_time'];
-    $end_time          = $_POST['end_time'];
-    $employee_max      = $_POST['employee_max'];
-    $role_name         = $_POST['role_name'];
+    $uuid              = isset($_POST['uuid']) ? $_POST['uuid'] : '';
+    $name              = isset($_POST['name']) ? $_POST['name'] : '';
+    $username          = isset($_POST['username']) ? $_POST['username'] : '';
+    $start_time        = isset($_POST['start_time']) ? $_POST['start_time'] : '';
+    $end_time          = isset($_POST['end_time']) ? $_POST['end_time'] : '';
+    $max_employees      = isset($_POST['max_employees']) ? $_POST['max_employees'] : '';
+    $position         = isset($_POST['position']) ? $_POST['position'] : '';
     $week              = getCurrentWorkWeek();
-    $day               = $_POST['day'];
+    $day               = isset($_POST['day_of_week']) ? $_POST['day_of_week'] : '';
 
-    // check if var is empty
+    // Check if the variables are empty before echoing
+    if (!empty($uuid) && !empty($name) && !empty($username) && !empty($start_time) && !empty($end_time) && !empty($max_employees) && !empty($position) && !empty($week) && !empty($day)) {
+        $sql = "INSERT INTO shifts (uuid, date, name, username, start_time, end_time, max_employees, position, week, day_of_week)
+        VALUES (:uuid, :date, :name, :username, :start_time, :end_time, :max_employees, :position, :week, :day_of_week)";
+        $stmt = $db->prepare($sql);
 
-    // if (empty($uuid) || empty($name) || empty($username) || empty($start_time) || empty($end_time) || empty($employee_max) || empty($role_name) || empty($week) || empty($day)) {
-    //     echo 300;
-    //     exit();
-    // }
+        // Bind the variables to the placeholders
+        $stmt->bindParam(':uuid', $uuid);
+        $stmt->bindParam(':date', $date);
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':start_time', $start_time);
+        $stmt->bindParam(':end_time', $end_time);
+        $stmt->bindParam(':max_employees', $max_employees);
+        $stmt->bindParam(':position', $position);
+        $stmt->bindParam(':week', $week);
+        $stmt->bindParam(':day_of_week', $day);
 
-    echo $week;
+        $result = $stmt->execute();
 
-
-    $sql = "INSERT INTO shifts (uuid, date, name, username, start_time, end_time, employee_max, role_name, week, day)
-        VALUES (:uuid, :date, :name, :username, :start_time, :end_time, :employee_max, :role_name, :week, :day)";
-    $stmt = $db->prepare($sql);
-
-    // Bind the variables to the placeholders
-    $stmt->bindParam(':uuid', $uuid);
-    $stmt->bindParam(':date', $date);
-    $stmt->bindParam(':name', $name);
-    $stmt->bindParam(':username', $username);
-    $stmt->bindParam(':start_time', $start_time);
-    $stmt->bindParam(':end_time', $end_time);
-    $stmt->bindParam(':employee_max', $employee_max);
-    $stmt->bindParam(':role_name', $role_name);
-    $stmt->bindParam(':week', $week);
-    $stmt->bindParam(':day', $day);
-
-    $result = $stmt->execute();
-
-    if ($result) {
-        echo 100;
-        // exit();
+        if ($result) {
+            echo 100;
+            exit();
+        } else {
+            echo 200;
+            exit();
+        }
     } else {
-        echo 200;
-        exit();
-    }
-} else {
     echo 300;
     exit();
+
 }
+}
+
 ?>
+

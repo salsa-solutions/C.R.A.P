@@ -1,218 +1,108 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin Panel</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-      }
-
-      .container {
-        max-width: 800px;
-        margin: 50px auto;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
-      }
-
-      .messages {
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      }
-
-      .messages h2 {
-        margin-bottom: 10px;
-      }
-
-      .message {
-        border: 1px solid #ddd;
-        padding: 10px;
-        margin-bottom: 10px;
-      }
-
-      .message .name {
-        font-weight: bold;
-      }
-
-      .message .timestamp {
-        color: grey;
-      }
-
-      .add-shift {
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      }
-
-      .add-shift h2 {
-        margin-bottom: 10px;
-      }
-
-      .add-shift label {
-        display: block;
-        margin-bottom: 10px;
-      }
-
-      .add-shift input,
-      .add-shift select {
-        display: block;
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        margin-bottom: 10px;
-      }
-
-      .add-shift input[type="submit"] {
-        background-color: #333;
-        color: #fff;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 5px;
-        cursor: pointer;
-      }
-
-      .add-shift input[type="submit"]:hover {
-        background-color: #555;
-      }
-
-      .shifts {
-        background-color: #f5f5f5;
-        padding: 20px;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        grid-column: 1 / span 2;
-        display: table;
-        width: 100%;
-      }
-
-      .shifts .shift {
-        display: table-row;
-      }
-
-      .shifts .shift .cell {
-        display: table-cell;
-        padding: 10px;
-        border: 1px solid #ddd;
-      }
-      .shifts-table {
-    border-collapse: collapse;
-    width: 100%;
-  }
-
-  .shifts-table th,
-  .shifts-table td {
-    text-align: left;
-    padding: 8px;
-    border: 1px solid #ddd;
-  }
-
-  .shifts-table th {
-    background-color: #f2f2f2;
-  }
-
-  .shifts-table td button {
-    background-color: #333;
-    color: #fff;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-
-  .shifts-table td button:hover {
-    background-color: #555;
-  }
-      
-    </style>
-  </head>
-
-  <body>
-    <div class="container">
-      <!-- Messages Box -->
-      <div class="messages">
-        <h2>Messages</h2>
-        <div class="message">
-          <span class="name">John Doe</span>
-          <span class="timestamp">[2023-08-22 10:30]</span>
-          <p>This is a sample message from John Doe.</p>
-        </div>
-        <div class="messages">
-          <span class="name">Jane Doe</span>
-          <span class="timestamp">[2023-08-22 10:30]</span>
-          <p>This is a sample message from Jane Doe.</p>
-        </div>
-      </div>
-
-      <!-- Add Shift Box -->
-      <div class="add-shift">
-        <h2>Add Shift</h2>
-        <label>Day of the Week:</label>
-        <input type="text" />
-        <label>Start Time:</label>
-        <input type="time" />
-        <label>End Time:</label>
-        <input type="time" />
-        <label>Max Number of Employees:</label>
-        <input type="number" />
-        <label>Position:</label>
-        <select>
-          <option value="Manager">Manager</option>
-          <option value="Cashier">Cashier</option>
-          <!-- Add other positions as required -->
-        </select>
-      </div>
-
-      <!-- Shifts Box -->
-      <!-- Shifts Box -->
-      <div class="shifts">
-<style>
-
-</style>
+<div class="shifts">
+<link rel="stylesheet" href="/css/admin/info.css">
 
 
   <table class="shifts-table">
-    <thead>
-      <tr>
-        <th>Day of the Week</th>
-        <th>Day</th>
-        <th>Start Time</th>
-        <th>End Time</th>
-        <th>Max Number of Employees</th>
-        <th>Position</th>
-        <th>Edit</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Monday</td>
-        <td>August 23, 2021</td>
-        <td>9:00 AM</td>
-        <td>5:00 PM</td>
-        <td>5</td>
-        <td>Manager</td>
-        <td><button class="edit-btn">Edit</button></td>
-      </tr>
-      <tr>
-        <td>Tuesday</td>
-        <td>August 24, 2021</td>
-        <td>10:00 AM</td>
-        <td>6:00 PM</td>
-        <td>4</td>
-        <td>Cashier</td>
-        <td><button class="edit-btn">Edit</button></td>
-      </tr>
-      <!-- Add other rows as required -->
-    </tbody>
+      <thead>
+          <tr> 
+              <th>Day of the Week</th>
+              <th>Day</th>
+              <script>
+                function editShift(event) {
+                  // Get the table row that was clicked
+                  const row = event.target.parentNode.parentNode;
+
+                  // Get the cells in the row
+                  const cells = row.getElementsByTagName("td");
+
+                  // Loop through the cells and replace the text with input boxes
+                  for (let i = 2; i < cells.length - 1; i++) {
+                    const cell = cells[i];
+                    const text = cell.innerText;
+                    const input = document.createElement("input");
+                    input.type = "text";
+                    input.value = text;
+                    cell.innerHTML = "";
+                    cell.appendChild(input);
+                  }
+
+                  // Change the edit button to a save button
+                  const editBtn = row.querySelector(".edit-btn");
+                  editBtn.innerText = "Save";
+                  editBtn.onclick = function() { saveShift(event); };
+                }
+
+                function saveShift(event) {
+                  // Get the table row that was clicked
+                  const row = event.target.parentNode.parentNode;
+
+                  // Get the cells in the row
+                  const cells = row.getElementsByTagName("td");
+
+                  // Get the values from the input boxes
+                  const startTime = cells[2].querySelector("input").value;
+                  const endTime = cells[3].querySelector("input").value;
+                  const maxEmployees = cells[4].querySelector("input").value;
+                  const position = cells[5].querySelector("input").value;
+
+                  // make a post request to the server to save the changes
+                  const url = "/php/db_handling/editting/save-changes.php";
+                  const data = {
+                    startTime: startTime,
+                    endTime: endTime,
+                    maxEmployees: maxEmployees,
+                    position: position
+                  };
+                  const request = new XMLHttpRequest();
+                  request.open("POST", url);
+                  request.setRequestHeader("Content-Type", "application/json");
+                  request.send(JSON.stringify(data));
+
+                  
+
+
+
+                  // Loop through the cells and replace the input boxes with text
+                  for (let i = 2; i < cells.length - 1; i++) {
+                    const cell = cells[i];
+                    const input = cell.querySelector("input");
+                    const value = input.value;
+                    cell.innerHTML = value;
+                  }
+
+                  // Change the save button back to an edit button
+                  const editBtn = row.querySelector(".edit-btn");
+                  editBtn.innerText = "Edit";
+                  editBtn.onclick = function() { editShift(event); };
+                }
+              </script>
+              <th>End Time</th>
+              <th>Max Number of Employees</th>
+              <th>Position</th>
+              <th>Edit</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr>
+              <td>Monday</td>
+              <td>August 23, 2021</td>
+              <td>9:00 AM</td>
+              <td>5:00 PM</td>
+              <td>5</td>
+              <td>Manager</td>
+              <td><button class="edit-btn" onclick="editShift(event)">Edit</button></td>
+          </tr>
+          <tr>
+              <td>Tuesday</td>
+              <td>August 24, 2021</td>
+              <td>10:00 AM</td>
+              <td>6:00 PM</td>
+              <td>4</td>
+              <td>Cashier</td>
+              <td><button class="edit-btn" onclick="editShift(event)">Edit</button></td>
+          </tr>
+          <!-- Add other rows as required -->
+      </tbody>
   </table>
 
-    </div>
-  </body>
-</html>
+</div>

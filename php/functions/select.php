@@ -61,7 +61,7 @@ function generate_time_options($start_time, $end_time, $interval = 15)
 
 function getRolesDropdown($db)
 {
-  $query = "SELECT role_name, role FROM roles";
+  $query = "SELECT position, role FROM roles";
   $stmt = $db->prepare($query);
   $stmt->execute();
   $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -69,11 +69,11 @@ function getRolesDropdown($db)
 
   $dropdown = "";
   foreach ($roles as $role) {
-    $role_name = $role['role_name'];
+    $position = $role['position'];
     // $role_id = $role['role'];
 
     // Add the fullname to the dropdown menu as an option with the user ID as the value
-    $dropdown .= '<option value="' . $role_name . '">' . $role_name . '</option>';
+    $dropdown .= '<option value="' . $position . '">' . $position . '</option>';
   }
 
 
@@ -85,17 +85,17 @@ function getRolesDropdown($db)
 function get_shift_options($db, $day, $includeRoleName = false, $roleFilter = null, $userName = null)
 {
   $options = "";
-  $sql = "SELECT id, start_time, end_time, employee_max, role_name, role, day FROM shifts WHERE day = :day";
+  $sql = "SELECT id, start_time, end_time, max_employees, position, day_of_week FROM shifts WHERE day_of_week = :day_of_week";
 
   if (!is_null($roleFilter)) {
-    $sql .= " AND role_name = :role";
+    $sql .= " AND position = :position";
   }
 
   $stmt = $db->prepare($sql);
-  $stmt->bindParam(':day', $day);
+  $stmt->bindParam(':day_of_week', $day);
 
   if (!is_null($roleFilter)) {
-    $stmt->bindParam(':role', $roleFilter);
+    $stmt->bindParam(':position', $roleFilter);
   }
 
   $stmt->execute();
@@ -110,7 +110,7 @@ function get_shift_options($db, $day, $includeRoleName = false, $roleFilter = nu
       $show_option = false;
 
       // Determine whether to show this shift based on employee max and role name
-      if ($row['employee_max'] > 0 && !empty($row['role_name'])) {
+      if ($row['max_employees'] > 0 && !empty($row['position'])) {
         $start_time = date('h:i A', strtotime($row['start_time']));
         $end_time = date('h:i A', strtotime($row['end_time']));
         $option_value = $row['id'];
@@ -123,7 +123,7 @@ function get_shift_options($db, $day, $includeRoleName = false, $roleFilter = nu
         $option_label .= "{$start_time} - {$end_time}";
 
         if ($includeRoleName) {
-          $option_label .= " ({$row['role_name']})";
+          $option_label .= " ({$row['position']})";
         }
 
         $options .= "<option value=\"{$option_value}\">{$option_label}</option>";

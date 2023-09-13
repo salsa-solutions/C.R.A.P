@@ -9,7 +9,7 @@ error_reporting(E_ALL);
 
 <?php
   if(isset($_POST)){
-    $uuid                = $_POST['id'];
+    $id                = $_POST['id'];
 
     $sql = "DELETE FROM messages WHERE id='$id'";
     $stmtinsert = $db->prepare($sql);
