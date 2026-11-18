@@ -9,8 +9,8 @@ error_reporting(E_ALL);
 $_DEV = false;
 $_DEV_DB = false;
 $WEBSITE_NAME = 'Greek Star Attendance Program';
-$db_user = "tibthink";
-$db_pass = "Halsnewram";
+$db_user = "root";
+$db_pass = "password";
 if($_DEV_DB){
   $db_name = "beta_churro_useraccounts";
   $log_db_name = "beta_churro_useraccounts_logs";
